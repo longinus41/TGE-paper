@@ -1,0 +1,32 @@
+% !TEX root = main.tex
+
+\section{Preliminary Analysis}
+\subsection{Typical accounts}
+On Ethereum, there are two kinds of accounts, namely external owned accounts (EOAs, for short) and smart contracts (SCs). EOAs are controlled by public-private key pair while SCs are controlled by codes inside. The major difference between is that SCs have executable code whereas EOAs do not have it. Other than that, they do not look a whole lot different on Ethereum system. Both of them have unique address, the address of EOA is determined by the public key and the address of SC is defined when the contract is created.  
+
+However the real identities behind these addresses can be multitudinous. These addresses can be classified into various categories according to user roles on the blockchain. Here we take the category of address and the identity behind it as the same, although an individual or a group may has multiple address.
+
+1) \emph{Miners \& Mining Pools}
+
+Similar to Bitcoin, Ethereum takes \emph{Proof-of-Work} as its consensus protocol.\footnote{Although Ethereum \emph{Casper} will abandon the PoW protocol, the current Ethereum is on the third stage \emph{Metropolis} which still mainly relies on solving hash problem.} The miners are the nodes who try to solve the cryptographic puzzle and become validators of blocks. Whoever is first to find a valid hash gets to add the block and collect the reward in the form of ETH.
+
+In the early stage, most people are called \textbf{standalone miners} who take part in the mining process independently. With the more individuals and groups into this high profit industry, the mining competition gradually becomes fiercer. And an efficient solution is working together to solve the PoW problems. People with mining machines can register on a special institution where aggregates all the registrants' computing power to solve mining problem and distributes the reward to the registrants according to their proportion of contributed computing power. The centralized institution is \textbf{mining pool} and these registrants are so called \textbf{cooperative miners}.
+
+In the survey of [?], miners takes the large proportion of Ethereum addresses. And, more remarkable, the percentage of standalone miners declined and dropped to almost zero in the end of 2017. 
+
+2) \emph{Exchanges}
+
+The exchanges play an important role in the ecosystem of Ethereum where provide some form of platform for trading between ETH, fiat money (e.g., USD) and even other digital currency (e.g., BTC and ERC20 tokens). The exchanges are generally divided into two types: \textbf{centralized exchanges} and \textbf{decentralized exchanges}, and an exchange address can be both EOA, as well as SC. 
+
+The general mechanism of centralized exchange is shown in Fig.?. The centralized exchange supply an open-outcry market where buyers and sellers are brought together on a trading floor and cry out bids. The centralized exchange allocates one deposit address to each user who wants to make transaction in the exchange. Note that users do not have the private key of these deposit addresses, that is to say the deposit addresses still belong to the exchange. In recharge process, user transfers coins to the given deposit address from her own wallet address and these coins will be transferred to the exchange root address automatically. In turn, users send requests to exchange to withdraw their coins. The exchange charges the user a commission for both recharge and withdraw services.
+
+There are some differences in decentralized exchange, which is shown in Fig.?. First, users register to the decentralized exchange will get a new address and corresponding private key, so the address belongs to user itself instead of exchange. User calls the smart contract in the decentralized exchange address to start a transaction. Intuitively, the transaction will take a long time for making match and confirming compared with in centralized way.
+
+Since most ERC20 token transactions happen via smart contracts and in a decentralized mechanism, some big exchanges which support both ETH and ERC20 token transaction (e.g., Binance and Huobi) are mixture of centralized and decentralized exchange.
+
+3) \emph{DApps}
+
+4) \emph{Phishes \& Hacks}
+
+\subsection{Trading graph of blockchain}
+
