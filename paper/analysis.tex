@@ -1,7 +1,7 @@
 % !TEX root = main.tex
 
 \section{Preliminary Analysis}
-\subsection{Typical accounts}
+\subsection{Accounts}
 On Ethereum, there are two kinds of accounts, namely external owned accounts (EOAs, for short) and smart contracts (SCs). EOAs are controlled by public-private key pair while SCs are controlled by codes inside. The major difference between is that SCs have executable code whereas EOAs do not have it. Other than that, they do not look a whole lot different on Ethereum system. Both of them have unique address, the address of EOA is determined by the public key and the address of SC is defined when the contract is created.  
 
 However the real identities behind these addresses can be multitudinous. These addresses can be classified into various categories according to user roles on the blockchain. Here we take the category of address and the identity behind it as the same, although an individual or a group may has multiple address.
@@ -28,5 +28,10 @@ Since most ERC20 token transactions happen via smart contracts and in a decentra
 
 4) \emph{Phishes \& Hacks}
 
-\subsection{Trading graph of blockchain}
+\subsection{Transactions}
+In the Ethereum, transaction is the basic unit in each block which represents an action between two accounts. Transaction can be categorized as external one and internal one based on the sponsor of the transaction. A transaction is the external one if it is sent from an EOA while the internal one results from executing a smart contract due to an external transaction. And an external transaction may lead to many internal transactions\cite{chen2018infocom}.
 
+Four types of transaction can be found by parsing Ethereum blocks, including \emph{CALL}, \emph{CRATE}, \emph{REWARD} and \emph{SUICIDE}. The \emph{CALL} method  ETH transfer and smart contract invoke 
+
+
+\subsection{Trading graph of blockchain}
