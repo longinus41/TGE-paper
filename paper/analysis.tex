@@ -14,7 +14,15 @@ In the early stage, most people are called \textbf{standalone miners} who take p
 
 In the survey of [?], miners takes the large proportion of Ethereum addresses. And, more remarkable, the percentage of standalone miners declined and dropped to almost zero in the end of 2017. 
 
-2) \emph{Exchanges}
+2) \emph{ERC-20 \& ICO}
+
+ERC-20 is a technical standard used for smart contracts on the Ethereum blockchain for implementing tokens\cite{erc-20-wiki}.  It defines a common list of rules that an Ethereum token has to implement, giving developers the ability to program how new tokens will function within the Ethereum ecosystem.
+
+The ERC-20 token standard became popular with crowdfunding companies working on initial coin offering (ICO) cases due to the simplicity of deployment, together with its potential for interoperability with other Ethereum token standards\cite{erc-20}. As of July 26 2018, there were more than 103,621 ERC-20 token contracts\footnote{"Etherscan Token Tracker Page", https://etherscan.io/tokens}. Among the most successful ERC20 token sales are EOS, Filecoin, Bancor, Qash, and Nabulas, raising over 60 million each\footnote{"Token Data, data and analytics for all ICO's and tokens", https://www.tokendata.io}.
+
+Participants in the initial ICO round are \textbf{primary market investors} who buy the ERC-20 token from ERC-20 smart contracts of the crowdfunding companies. And these wallets where token sale proceeds are \textbf{ICO wallets}.
+
+3) \emph{Exchanges}
 
 The exchanges play an important role in the ecosystem of Ethereum where provide some form of platform for trading between ETH, fiat money (e.g., USD) and even other digital currency (e.g., BTC and ERC20 tokens). The exchanges are generally divided into two types: \textbf{centralized exchanges} and \textbf{decentralized exchanges}, and an exchange address can be both EOA, as well as SC. 
 
@@ -22,16 +30,25 @@ The general mechanism of centralized exchange is shown in Fig.?. The centralized
 
 There are some differences in decentralized exchange, which is shown in Fig.?. First, users register to the decentralized exchange will get a new address and corresponding private key, so the address belongs to user itself instead of exchange. User calls the smart contract in the decentralized exchange address to start a transaction. Intuitively, the transaction will take a long time for making match and confirming compared with in centralized way.
 
-Since most ERC20 token transactions happen via smart contracts and in a decentralized mechanism, some big exchanges which support both ETH and ERC20 token transaction (e.g., Binance and Huobi) are mixture of centralized and decentralized exchange.
-
-3) \emph{DApps}
+Since most ERC20 token transactions happen via smart contracts and in a decentralized mechanism, some big exchanges which support both ETH and ERC20 token transaction (e.g., Binance and Huobi) are mixture of centralized and decentralized exchange. 
 
 4) \emph{Phishes \& Hacks}
+
+Since virtual property transactions are now becoming increasingly commonplace and that leads to many security issues. At the same time, the frauds associated with ETH and ERC-20 tokens have also increased. In Ethersacan, there are more than $2500$ addresses are labeled as \textbf{Phishes \& Hacks}. Most of them are disguised as casino and 
+
+Phishing is the name given to the latest online scam where millions of unwary Americans are getting their identities stolen.
+
+We've seen increased use of sophisticated forms and letterhead to send what appears to be legitimate World Bank Group correspondence, as well as several schemes that reference the Bank.
+
 
 \subsection{Transactions}
 In the Ethereum, transaction is the basic unit in each block which represents an action between two accounts. Transaction can be categorized as external one and internal one based on the sponsor of the transaction. A transaction is the external one if it is sent from an EOA while the internal one results from executing a smart contract due to an external transaction. And an external transaction may lead to many internal transactions\cite{chen2018infocom}.
 
-Four types of transaction can be found by parsing Ethereum blocks, including \emph{CALL}, \emph{CRATE}, \emph{REWARD} and \emph{SUICIDE}. The \emph{CALL} method  ETH transfer and smart contract invoke 
+Four types of transaction can be found by parsing Ethereum blocks, including \emph{CALL}, \emph{CRATE}, \emph{REWARD} and \emph{SUICIDE}. As shown in Fig.?, ETH transferring and smart contract invoking comes with a \emph{CALL} transaction usually and \emph{CREATE} is used to deploy smart contracts. \emph{REWARD} transactions appears on the head of block, which depicts the reward that block miner obtained from system. The sender of \emph{REWARD} transaction is a special address \emph{0x00...00}. In the \emph{SUICIDE} transaction, the smart contract will execute destroy method to kill itself at the end of it's cycle. \emph{CALL}, \emph{CREATE} and \emph{SUICIDE} transactions can be either external transactions or internal transactions since the initiator can be both EOA and SC.
+
+Various activities are realized on Ethereum based on the above mentioned transactions. Money transfer, contract creation and contract invocation are three major activities happening on Ethereum\cite{chen2018infocom}. \textcolor{gray}{The on-chain assets include ETH coin and ERC20 token.} An typical ETH transfer is shown in Fig. ? in where the initiate address and target address can be both EOA and SC. In the \emph{CALL} transaction information, the amount to be transferred is a non-zero number. However, the process of ERC20 token transfer is more complicated. The sponsor A (also called initiator) make a \emph{CALL} transaction to the ERC20 smart contract to tell that he want to transfer ERC20 token to somebody B. Then the smart contract will check the request and complete the deal if A has enough ERC20 token. Note that the target address of the \emph{CALL} transaction is the ERC20 SC instead of B address and the transfer value is $0$ ETH since the actual transfer happens in the smart contract where the ERC20 token is transferred from A account to B account in the smart contract inner database. 
+
+
 
 
 \subsection{Trading graph of blockchain}
