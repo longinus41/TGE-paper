@@ -11,14 +11,14 @@ We define our problem as follows: Given ETG $G=(V,E)$, we aim to represent each 
 
 \begin{itemize}
 \item Edges in ETG include multiple activities such as assets transfer and smart contract invocation, which are radically different from one another and can not be measured in a uniform weight model.
-\item In ETG, two nodes are more similar if they have similar neighborhood structures instead of they are just connected by an edge with larger weight simply. Using node adjacency as the input, most graph embedding techniques can not preserve such higher order proximity.
+\item In ETG, two nodes are more similar if they have similar connection structures instead of they are just connected by an edge with larger weight simply or have similar neighborhoods. Using node adjacency as the input, most graph embedding techniques can not preserve such higher order proximity.
 \end{itemize}
 
 \subsection{ETG Division}
 
 \begin{figure}[htbp]
 	\centering
-	\label{fig}
+	\label{fig_graph_split}
 	\includegraphics[width=3.5in]{fig/graph_split.eps}
 	\caption{Example of a figure caption.}
 \end{figure}
@@ -27,8 +27,23 @@ Since edges in ETG stand for different activities and can not be measured in a u
 
 \textbf{Definition 1.} $G^{T}=\{V^T,E^T\}$, where $V^T$ is the subset of $V$. $E^T=\{(v_i,v_j,w)|v_i,v_j \in V^T,w \in \mathbb{R^+}\}$ where an edge $(v_i,v_j)$ indicates that there is at least one ETH transfer from node $v_i$ to $v_j$. And $w$ is the summation of all transferred ETH amount from $v_i$ to $v_j$ for a period of time.
 
-Actually, $G^T$ represents the ETH trading activities in Ethereum, and each node in $V^T$ has at least one ETH transaction. Note that ERC-20 transactions are not accounted for in the graph because the transaction value is $0$ in an ERC-20 \emph{CALL} transaction. Another reason is that even converting some ERC-20 tokens into ETH is available, the exchange-rate fluctuations make the unification meaningless.
+Actually, $G^T$ represents the ETH trading activities in Ethereum, and each node in $V^T$ has at least one ETH transaction.
 
-\textbf{Definition 2.} $G^{SC}=\{V^{SC},E^{SC}\}$, where $V^{SC}$ is the subset of $V$. $E^{SC}=\{(v_i,v_j,w)|v_i,v_j \in V^{SC},w \in \mathbb{R^+}\}$ where an edge $(v_i,v_j)$ indicates that there is at least one smart contract creation or invocation from node $v_i$ to $v_j$. It is easy to find out that all SC address 
+\textbf{Definition 2.} $G^{SC}=\{V^{SC},E^{SC}\}$, where $V^{SC}$ is the subset of $V$. $E^{SC}=\{(v_i,v_j,w)|v_i,v_j \in V^{SC},w \in \mathbb{R^+}\}$ where an edge $(v_i,v_j)$ indicates that there is at least one smart contract creation or invocation from node $v_i$ to $v_j$. And $w$ is the summation of \emph{CREATE} transaction and \emph{CALL} with $0$ ETH transactions for a period of time. 
 
+It is easy to find out that $V^{SC}$ contains all SC addresses since each SC account is created by EOA which has one creation edge. Note that ERC-20 transactions are accounted for in the $G^{SC}$ instead of $G^T$, because the transaction value is $0$ in an ERC-20 \emph{CALL} transaction. Another reason is that even converting some ERC-20 tokens into ETH is available, the exchange-rate fluctuations make the unification meaningless.
 %And $w$ is the summation of all transferred ETH amount from $v_i$ to $v_j$ for a period of time.
+
+\subsection{High Order Proximity}
+For general graph analytics, the edge weight $w_{ij}$ is generally treated as a measure of similarity between nodes $v_i$ and $v_j$. And the higher the edge weight, the more similar the two nodes are expected to be. Edges weight $w_{ij}$ is called \emph{first-order proximity} between nodes $v_i$ and $v_j$. Further, \emph{second-order} compares the neighborhood of two nodes and treat them as similar if they have a similar neighborhood \cite{goyal2018graph}.
+
+However, two nodes in ETG are more similar if they have similar connectivity structures instead of they are just connected by an edge with larger weight or share similar neighborhoods. As shown in Figure \ref{fig:high_order}, nodes $v_i$ and $v_k$ are exchanges and node $v_j$ is an ERC-20 token contract. Obviously, $v_i$ is not adjacent to $v_j$ and they have different neighborhoods because buyers and sellers prefer different exchange platforms. Embedding models with \emph{first-order proximity} and \emph{second-order proximity} will keep them far apart although they have similar connection structures. 
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=3.2in]{fig/high_order_proximity.eps}
+	\caption{Example of a figure caption.}
+	\label{fig:high_order}
+\end{figure}
+
+To preserve higher order proximities, we .....

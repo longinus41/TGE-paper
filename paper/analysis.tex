@@ -1,55 +1,72 @@
 % !TEX root = main.tex
 
 \section{Preliminary Analysis}
-\subsection{Accounts}
-On Ethereum, there are two kinds of accounts, namely external owned accounts (EOAs, for short) and smart contracts (SCs). EOAs are controlled by public-private key pair while SCs are controlled by codes inside. The major difference between is that SCs have executable code whereas EOAs do not have it. Other than that, they do not look a whole lot different on Ethereum system. Both of them have unique address, the address of EOA is determined by the public key and the address of SC is defined when the contract is created.  
+In this section, we first discuss the accounts and transactions in ethereum which represent the nodes and edges in ethereum trading graph respectively. 
 
-However the real identities behind these addresses can be multitudinous. These addresses can be classified into various categories according to user roles on the blockchain. Here we take the category of address and the identity behind it as the same, although an individual or a group may has multiple address.
+\subsection{Accounts}
+In Ethereum, there are two kinds of accounts, external owned accounts and smart contracts, namely EOAs and SCs for short. The major difference between is that SCs are ruled by executable codes inside whereas EOAs are controlled by people who hold the public-private key pairs. Other than that, they do not look a whole lot different in Ethereum system. Both of them have unique addresses, the address of EOA is determined by the public key and the address of SC is encoded when SC is created. We use the terms address and account interchangeably in the remainder of this paper.
+
+The real identities behind these addresses can be multitudinous and the anonymity of blockchain makes the identification more difficult. Generally,  these addresses can be classified into different categories according to user roles on the blockchain.
+
+%Here we take the category of address and the identity behind it as the same, although an individual or a group may has multiple address.
 
 1) \emph{Miners \& Mining Pools}
 
-Similar to Bitcoin, Ethereum takes \emph{Proof-of-Work} as its consensus protocol.\footnote{Although Ethereum \emph{Casper} will abandon the PoW protocol, the current Ethereum is on the third stage \emph{Metropolis} which still mainly relies on solving hash problem.} The miners are the nodes who try to solve the cryptographic puzzle and become validators of blocks. Whoever is first to find a valid hash gets to add the block and collect the reward in the form of ETH.
+Similar to Bitcoin, Ethereum takes \emph{Proof-of-Work} as its consensus protocol\footnote{Although Ethereum \emph{Casper} will abandon the PoW protocol, the current Ethereum is on the third stage \emph{Metropolis} which still mainly relies on solving hash problem.}. The \textbf{miners} are the individuals or groups who validate transaction information by solving the cryptographic puzzles. Whoever is the first to find a valid hash of block will get the reward in the form of ETH which is paid by users sending transactions.
 
-In the early stage, most people are called \textbf{standalone miners} who take part in the mining process independently. With the more individuals and groups into this high profit industry, the mining competition gradually becomes fiercer. And an efficient solution is working together to solve the PoW problems. People with mining machines can register on a special institution where aggregates all the registrants' computing power to solve mining problem and distributes the reward to the registrants according to their proportion of contributed computing power. The centralized institution is \textbf{mining pool} and these registrants are so called \textbf{cooperative miners}.
+In the early stage, most people take part in the mining process independently. With the more participants into this high profit industry, the mining competition gradually becomes fiercer. And an efficient solution is working together to solve the PoW problems. Miners with mining machines can register on a special institution named \textbf{mining pool} where aggregates all the registrants' computing power to solve mining problem and distributes the reward to the registrants according to their proportion of contributed computing power.
+%The centralized institution is \textbf{mining pool} and these registrants are so called \textbf{cooperative miners}.
 
-In the survey of [?], miners takes the large proportion of Ethereum addresses. And, more remarkable, the percentage of standalone miners declined and dropped to almost zero in the end of 2017. 
+As of September 2018, top $3$ mining pools takes more than 65\% of hash rate in Ethereum\footnote{Investoon, https://investoon.com/charts/mining/eth.}.
+% And, more remarkable, the percentage of standalone miners declined and dropped to almost zero in the end of 2017. 
 
 2) \emph{ERC-20 \& ICO}
 
-ERC-20 is a technical standard used for smart contracts on the Ethereum blockchain for implementing tokens\cite{erc-20-wiki}.  It defines a common list of rules that an Ethereum token has to implement, giving developers the ability to program how new tokens will function within the Ethereum ecosystem. An ERC-20 token transfer happens in the ERC-20 \textbf{token contract}, which will be mentioned later. 
+ERC-20 is a technical standard used for smart contracts on the Ethereum blockchain for implementing tokens\cite{erc-20-wiki}.  It defines a common list of rules that an Ethereum token has to implement, giving developers the ability to program how new tokens will function within the Ethereum ecosystem. An ERC-20 token transfer happens in specific SCs which are called \textbf{ERC-20 token contracts}, and the transferring process will be illustrated later. 
 
-The ERC-20 token standard became popular with crowdfunding companies working on initial coin offering (ICO) cases due to the simplicity of deployment, together with its potential for interoperability with other Ethereum token standards\cite{erc-20}. As of July 26 2018, there were more than 103,621 ERC-20 token contracts\footnote{"Etherscan Token Tracker Page", https://etherscan.io/tokens}. Among the most successful ERC-20 token sales are EOS, Filecoin, Bancor, Qash, and Nabulas, raising over 60 million each\footnote{"Token Data, data and analytics for all ICO's and tokens", https://www.tokendata.io}.
+The ERC-20 token standard became popular with crowdfunding companies working on initial coin offering (ICO) cases due to the simplicity of deployment, together with its potential for interoperability with other Ethereum token standards\cite{erc-20}. As of July 26 2018, there were more than 103,621 ERC-20 token contracts\footnote{"Etherscan Token Tracker Page", https://etherscan.io/tokens}. Among the most successful ERC-20 token sales are EOS, Filecoin, Bancor, Qash, and Nebulas, raising over 60 million each\footnote{"Token Data, data and analytics for all ICO's and tokens", https://www.tokendata.io}.
 
-Participants in the initial ICO round are \textbf{primary market investors} who buy the ERC-20 token from ERC-20 smart contracts of the crowdfunding companies. And these wallets where token sale proceeds are \textbf{ICO wallets}.
+Participants in the initial ICO round are \textbf{primary market investors} who buy the ERC-20 token from ERC-20 smart contracts of the crowdfunding companies. And these addresses where token sale proceeds are \textbf{token sales}.
 
 3) \emph{Exchanges}
 
-The exchanges play an important role in the ecosystem of Ethereum where provide some form of platform for trading between ETH, fiat money (e.g., USD) and even other digital currency (e.g., BTC and ERC-20 tokens). The exchanges are generally divided into two types: \textbf{centralized exchanges} and \textbf{decentralized exchanges}, and an exchange address can be both EOA, as well as SC. 
+The exchanges are the platforms for trading between ETH, fiat money (e.g., USD) and even other digital currency (e.g., BTC and ERC-20 tokens), which play an important role in Ethereum ecosystem. The exchanges can be categorized into centralized exchanges and decentralized exchanges (also known as DEXs).
 
-The general mechanism of centralized exchange is shown in Fig.?. The centralized exchange supply an open-outcry market where buyers and sellers are brought together on a trading floor and cry out bids. The centralized exchange allocates one deposit address to each user who wants to make transaction in the exchange. Note that users do not have the private key of these deposit addresses, that is to say the deposit addresses still belong to the exchange. In recharge process, user transfers coins to the given deposit address from her own wallet address and these coins will be transferred to the exchange root address automatically. In turn, users send requests to exchange to withdraw their coins. The exchange charges the user a commission for both recharge and withdraw services.
+%The exchanges are generally divided into two types: \textbf{centralized exchanges} and \textbf{decentralized exchanges}, and an exchange address can be both EOA, as well as SC. 
 
-There are some differences in decentralized exchange, which is shown in Fig.?. First, users register to the decentralized exchange will get a new address and corresponding private key, so the address belongs to user itself instead of exchange. User calls the smart contract in the decentralized exchange address to start a transaction. Intuitively, the transaction will take a long time for making match and confirming compared with in centralized way.
+%The general mechanism of centralized exchange is shown in Fig.?. The centralized exchange supply an open-outcry market where buyers and sellers are brought together on a trading floor and cry out bids. 
 
-Since most ERC-20 token transactions happen via smart contracts and in a decentralized mechanism, some big exchanges which support both ETH and ERC-20 token transaction (e.g., Binance and Huobi) are mixture of centralized and decentralized exchange. 
+The centralized exchange allocates a deposit address to each user who wants to make transaction in the exchange. These addresses are called \textbf{exchange deposits} and belong to the exchange since users do not have the private key of these addresses. In recharge process, user transfers coins to the given deposit address from her own wallet and these coins will be transferred to the \textbf{exchange root} address automatically. In turn, users send requests to exchange to withdraw their coins from a address called \textbf{exchange withdrawal}. And in most cases, the exchange root and exchange withdrawal mean the same address.
+
+%The exchange charges the user a commission for both recharge and withdraw services.
+
+The DEXs are a new technology that facilitate cryptocurrency trading on a distributed ledger. Being completely on-chain, all orders interact with each other directly through the blockchain. This makes it fully decentralized, but also expensive and slow. Besides, another difference is that user will get a new address with corresponding private key when registers to the DEX, which means the address belongs to user itself instead of exchange. 
+ 
+ %User calls the smart contract in the decentralized exchange address to start a transaction. Intuitively, the transaction will take a long time for making match and confirming compared with in centralized way.
+
+%Since most ERC-20 token transactions happen via smart contracts and in a decentralized mechanism, some big exchanges which support both ETH and ERC-20 token transaction (e.g., Binance and Huobi) are mixture of centralized and decentralized exchange. 
 
 4) \emph{Phishes \& Hacks}
 
-Since virtual property transactions are now becoming increasingly commonplace and that leads to many security issues. At the same time, the frauds associated with ETH and ERC-20 tokens have also increased. In Ethersacan, there are more than $2500$ addresses are labeled as \textbf{Phishes \& Hacks}, and most of them are disguised as ERC-20 token sales or DApps such as casino. 
+Since virtual property transactions are now becoming increasingly commonplace and that leads to many security issues. At the same time, the frauds associated with ETH and ERC-20 tokens have also increased. We call these addresses related to frauds \textbf{phishes \& hacks}.
+
+ In Ethersacan, there are more than $2500$ addresses are labeled as Phish/Hack, which takes up the highest proportion. Most of them are disguised as ERC-20 token sales or DApps such as casino. 
 
 \begin{table}[htbp]
 \caption{Typical Accounts}
 \begin{center}
-\begin{tabular}{|p{2.1cm}|p{1.7cm}|p{3.5cm}|}
+\begin{tabular}{|p{1.7cm}|l|p{3.7cm}|}
 \hline
-\textbf{Account Identity} & \textbf{Address Type}& \textbf{Description} \\
+\textbf{Identity} & \textbf{Type}& \textbf{Description} \\
 \hline
 Miner & EOA & The node who take part in the block validation process. \\ \hline
 Mining Pool & EOA & The pooling of resources by miners, who share their processing power over a network.\\ \hline
-Token Contract & SC & Smart contract that allow customers to transfer ERC-20 tokens. \\ \hline
+ERC-20 Token Contract & SC & Smart contract that allow customers to transfer ERC-20 tokens. \\ \hline
 Primary Market Investor & EOA & Participants in the initial ICO round. \\ \hline
-Token Sale & EOA \& SC & Address that allow customers to buy ERC-20 tokens. \\ \hline
+ERC-20 Token Sale & EOA \& SC & Address that allow customers to buy ERC-20 tokens. \\ \hline
 Exchange Deposit & EOA \& SC & . \\ \hline
 Exchange Root & EOA \& SC & . \\ \hline
+Exchange Withdrawal & EOA \& SC & . \\ \hline
 Phish \& Hack & EOA \& SC & Fraud address related to phishing and hacks. \\ \hline
 %\multicolumn{4}{l}{$^{\mathrm{a}}$Sample of a Table footnote.}
 \end{tabular}
