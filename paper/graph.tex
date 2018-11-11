@@ -1,20 +1,47 @@
 % !TEX root = main.tex
 
-\section{Trading Graph Construction}
-Using effective graph analytics, we can investigate more information hidden behind transaction data on blockchain. For example, by analyzing the Ethereum trading graph (ETG, for short), we can classify accounts as different identities which are introduced before. In this section, we first introduce the definition of the basic concepts in trading graph embedding, and then construct multi-layer trading graph.
+\section{Ethereum Trading Graph Analysis}
+Based on effective graph analytics, we can investigate more information hidden behind transaction data on blockchain. For example, by analyzing the Ethereum trading graph (ETG, for short), accounts can be classified as different identities. 
 
-\subsection{Notation and Problem Definition}
-Intuitively, we consider the ETG as $G=(V,E)$, where $v \in V$ is a node and $e \in E$ is an edge. Actually node $v$ represent an address in Ethereum and $V$ is the set of addresses in which includes both EOAs and SCs. We use the terms address and node interchangeably in the remainder of this paper. $E$ is a set of ordered pairs, where $E=\{(v_i,v_j)|v_i,v_j \in V\}$. The order of an edge indicates the direction of activity (e.g., assets transfer and smart contract invocation) from $v_i$ to $v_j$. 
+In this section, we illustrate the construction of ETG and analyze some features which makes it different from other networks or graphs.
+
+
+ %we first introduce the definition of the basic concepts in trading graph embedding, and then construct multi-layer trading graph.
+
+\subsection{Problem Definition and Modeling}
+Generally, we consider the ETG as a directed graph $G=(V,E)$, where node $v \in V$ represents an account and $e \in E$ depicts the edge between two nodes. Actually, $V$ is the set of all addresses in Ethereum includes both EOAs and SCs and we use the terms address, account and node interchangeably in the remainder of this paper. $E$ is a set of ordered pairs, where $E=\{(v_i,v_j)|v_i,v_j \in V\}$. The order of an edge indicates the direction of activity (e.g., assets transfer and smart contract invocation) from $v_i$ to $v_j$.
 %In our definition, each edge associates with a weight $w$, which will be discussed later. Hence, $G$ is a weighted directed graph.
 
-We define our problem as follows: Given ETG $G=(V,E)$, we aim to represent each node $v$ in a low-dimensional vector space $\vec{y_v}$. By representing ETG as a set of low dimensional vectors, graph algorithms can then be computed efficiently. Generally network embedding techniques such as random-walk based and deep learning based models use the pure network structure to map into the embedding space\cite{goyal2018capturing}. However, ETG is different from traditional network such as social media networks and citation graph, specific challenges as follows. 
+The problem can be defined as follows: given ETG $G=(V,E)$, we aim to represent each node $v$ in a low-dimensional vector space $\vec{y_v}$. By representing ETG as a set of low dimensional vectors, graph analysis algorithms can then be computed efficiently. 
+
+Typical network embedding techniques such as random-walk based and deep learning based models use the pure network structure to map into the embedding space~\cite{goyal2018capturing}. Our model is primarily motivated as an extension of GCNs (Graph Convolutional Networks) since it shows effectiveness for entity classification in large-scale relational data~\cite{kipf2016semi}. Generally, a multi-layer Graph Convolutional Network with the following layer-wise propagation rule:
+
+\begin{equation}
+H^{(l+1)}=\delta(\tilde{D}^{-\frac{1}{2}}\tilde{A}\tilde{D}^{-\frac{1}{2}}H^{(l)}W^{(l)})
+\label{eq1}
+\end{equation}
+
+where $H^{(l)}$ is the matrix of activations in the $l$-th layer, and $W^{(l)}$ is a trainable weight matrix in the $l$-th layer. $\delta(\cdot)$ denotes an activation function such as the ReLU$(\cdot)$ = max$(0,\cdot)$. $\tilde{A}=A+I_N$ where $A$ is the adjacency matrix of the graph $G$ and $I_N$ is the identity matrix. $\tilde{D}$ is a diagonal matrix which $\tilde{D}_{ii}=\sum_{j}\tilde{A}_{ij}$.
+
+ The method can be understood as special cases of a simple differentiable message-passing framework.
+
+\begin{equation}
+h_i^{(l+1)}=\delta(\sum_{j \in N} \frac{1}{c_{i,j}}W^{(l)}h_j^{(l)})
+\label{eq:gcn}
+\end{equation}
+
+where $h_i^{(l)}$ is the hidden state of node $v_i$ in the $l$-th layer of the neural network. And $c_{ij}$ is a problem-specific normalization constant which can defined in advance such as $c_{i,j}=\sqrt{d_i d_j}$ where $d_i$ is the degree of node $v_i$.
+
+The approach outperforms other methods such as deepwalk~\cite{perozzi2014deepwalk} in experiments on citation networks and knowledge graph dataset. However, we found that using such GCN model directly achieves poor effect on ETG which has many different properties from traditional networks (such as social media networks and citation graph). It brings the following challenges.
 
 \begin{itemize}
-\item Edges in ETG include multiple activities such as assets transfer and smart contract invocation, which are radically different from one another and can not be measured in a uniform weight model.
-\item In ETG, two nodes are more similar if they have similar connection structures instead of they are just connected by an edge with larger weight simply or have similar neighborhoods. Using node adjacency as the input, most graph embedding techniques can not preserve such higher order proximity.
+\item In the original ETG, there are different relations such as assets transfer and smart contract invocation. Those relations are radically different from one another and can not be measured in a uniform weighted graph.
+\item Even taking a single relation graph, there are multiple edges between two nodes. For instance, repeated transactions between the same account pairs often happen. A simple method is to merge them and it will lose some information.
+\item Asymmetric
+%In ETG, two nodes are more similar if they have similar connection structures instead of they are just connected by an edge with larger weight simply or have similar neighborhoods. Using node adjacency as the input, most graph embedding techniques can not preserve such higher order proximity.
 \end{itemize}
 
-\subsection{ETG Division}
+\subsection{Multi-relations}
 
 \begin{figure}[htbp]
 	\centering
@@ -23,21 +50,56 @@ We define our problem as follows: Given ETG $G=(V,E)$, we aim to represent each 
 	\caption{Example of a figure caption.}
 \end{figure}
 
-Since edges in ETG stand for different activities and can not be measured in a uniform weight model. For example, a weight of assets transfer maybe the ETH amount, however an invocation to smart contract does not have such numerical value. This inspired us to divide the raw ETG into different sub graphs.
+In ETG, edges stand for different activities such as money transfer, contract creation and contract invocation, which can not be measured in a uniform weight model. For example, a weight of assets transfer maybe the ETH amount, however an invocation to smart contract does not have such numerical value. This inspired us to divide the raw ETG into different relation graphs.
 
-\textbf{Definition 1.} $G^{T}=\{V^T,E^T\}$, where $V^T$ is the subset of $V$. $E^T=\{(v_i,v_j,w)|v_i,v_j \in V^T,w \in \mathbb{R^+}\}$ where an edge $(v_i,v_j)$ indicates that there is at least one ETH transfer from node $v_i$ to $v_j$. And $w$ is the summation of all transferred ETH amount from $v_i$ to $v_j$ for a period of time.
+%\textbf{Definition 1.} $G^{T}=\{V^T,E^T\}$, where $V^T$ is the subset of $V$. $E^T=\{(v_i,v_j,w)|v_i,v_j \in V^T,w \in \mathbb{R^+}\}$ where an edge $(v_i,v_j)$ indicates that there is at least one ETH transfer from node $v_i$ to $v_j$. And $w$ is the summation of all transferred ETH amount from $v_i$ to $v_j$ for a period of time.
 
-Actually, $G^T$ represents the ETH trading activities in Ethereum, and each node in $V^T$ has at least one ETH transaction.
+%Actually, $G^T$ represents the ETH trading activities in Ethereum, and each node in $V^T$ has at least one ETH transaction.
 
-\textbf{Definition 2.} $G^{SC}=\{V^{SC},E^{SC}\}$, where $V^{SC}$ is the subset of $V$. $E^{SC}=\{(v_i,v_j,w)|v_i,v_j \in V^{SC},w \in \mathbb{R^+}\}$ where an edge $(v_i,v_j)$ indicates that there is at least one smart contract creation or invocation from node $v_i$ to $v_j$. And $w$ is the summation of \emph{CREATE} transaction and \emph{CALL} with $0$ ETH transactions for a period of time. 
+%\textbf{Definition 2.} $G^{SC}=\{V^{SC},E^{SC}\}$, where $V^{SC}$ is the subset of $V$. $E^{SC}=\{(v_i,v_j,w)|v_i,v_j \in V^{SC},w \in \mathbb{R^+}\}$ where an edge $(v_i,v_j)$ indicates that there is at least one smart contract creation or invocation from node $v_i$ to $v_j$. And $w$ is the summation of \emph{CREATE} transaction and \emph{CALL} with $0$ ETH transactions for a period of time. 
 
-It is easy to find out that $V^{SC}$ contains all SC addresses since each SC account is created by EOA which has one creation edge. Note that ERC-20 transactions are accounted for in the $G^{SC}$ instead of $G^T$, because the transaction value is $0$ in an ERC-20 \emph{CALL} transaction. Another reason is that even converting some ERC-20 tokens into ETH is available, the exchange-rate fluctuations make the unification meaningless.
+
 %And $w$ is the summation of all transferred ETH amount from $v_i$ to $v_j$ for a period of time.
 
-\subsection{High Order Proximity}
-For general graph analytics, the edge weight $w_{ij}$ is generally treated as a measure of similarity between nodes $v_i$ and $v_j$. And the higher the edge weight, the more similar the two nodes are expected to be. Edges weight $w_{ij}$ is called \emph{first-order proximity} between nodes $v_i$ and $v_j$. Further, \emph{second-order} compares the neighborhood of two nodes and treat them as similar if they have a similar neighborhood \cite{goyal2018graph}.
+Relational Graph Convolutional Networks (rGCNs) is proposed to develop an encoder model for edges in the relational graph~\cite{schlichtkrull2018modeling}. The propagation model can be expressed as
 
-However, two nodes in ETG are more similar if they have similar connectivity structures instead of they are just connected by an edge with larger weight or share similar neighborhoods. As shown in Figure \ref{fig:high_order}, nodes $v_i$ and $v_k$ are exchanges and node $v_j$ is an ERC-20 token contract. Obviously, $v_i$ is not adjacent to $v_j$ and they have different neighborhoods because buyers and sellers prefer different exchange platforms. Embedding models with \emph{first-order proximity} and \emph{second-order proximity} will keep them far apart although they have similar connection structures. 
+\begin{equation}
+h_i^{(l+1)}=\delta(\sum_{r\in R} \sum_{j \in N_i^r} \frac{1}{c_{i,r}}W_r^{(l)}h_j^{(l)}+W_0^{(l)}h_i^{(l)})
+\label{eq:rgcn}
+\end{equation}
+
+where $r \in R$ represents a kind of relation and $N_i^r$ denotes the set of neighbor indices of node $v_i$ under relation $r$. Besides, single self-connection is introduced as a special relation type to each node. %compared with Eq.\ref{eq:gcn}
+
+In return, we divide the edge set into four relations, CALLs with ETH, CALLs without ETH, CREATIONs and REWARDs, according to the their transaction type. Note that the ERC-20 token transfers are categorized as CALLs without ETH which includes normal smart contract invocations as well. The reason is that ERC-20 token transfer is a kind of contract invocation and the transaction value is $0$ in an ERC-20 \emph{CALL} transaction. Another reason is that even converting some ERC-20 tokens into ETH is available, the exchange-rate fluctuations make the unification meaningless.
+
+
+\subsection{Time-density}
+Even in a specific relation graph, there are repeated edges between the same node pairs. This occurs quite naturally since an account may transfer or invoke to another account repeatedly.
+
+Note that these activities are located at different time intervals along the time axis which are characterized by the block height. Intuitively, a simple solution is to merge those edges by weight summation and it will lose time information. 
+
+Here we introduce an index named time-density which can be represented as strictly increasing function of block height variance.
+
+\begin{equation}
+\tau_{ij}^r=g(var(\texttt{bn}_{ij}^r))
+\label{eq:time}
+\end{equation}
+
+where $\texttt{bn}_{ij}^{r}$ is the block height set of relation $r$ between node $v_i$ and $v_j$. And the new adjacency matrix in relation $r$ can be represented as 
+
+\begin{equation}
+\hat{A}=\tilde{D}^{-\frac{1}{2}}\tilde{A}\tilde{D}^{-\frac{1}{2}}V
+\label{eq:?}
+\end{equation}
+
+where $V_{ij}=\tau_{ij}$.
+
+\textcolor{red}{TBA}
+
+\subsection{High Order and Asymmetric Proximity}
+In weighted graph, the edge weight $a_{ij}$ in adjacency matrix $A$ is generally treated as a measure of similarity between nodes $v_i$ and $v_j$. And the higher the edge weight, the more similar the two nodes are expected to be. Edges weight $w_{ij}$ is called \emph{first-order proximity} between nodes $v_i$ and $v_j$. 
+
+Further, \emph{second-order} compares the neighborhood of two nodes and treat them as similar if they have a similar neighborhood \cite{goyal2018graph}. Two nodes in ETG are more similar if they have similar connectivity structures instead of they are just connected by an edge with larger weight or share similar neighborhoods. As shown in Figure \ref{fig:high_order}, nodes $v_i$ and $v_k$ are exchanges and node $v_j$ is an ERC-20 token contract. Obviously, $v_i$ is not adjacent to $v_j$ and they have different neighborhoods because buyers and sellers prefer different exchange platforms. Embedding models with \emph{first-order proximity} and \emph{second-order proximity} will keep them far apart although they have similar connection structures. 
 
 \begin{figure}[htbp]
 	\centering
@@ -46,4 +108,9 @@ However, two nodes in ETG are more similar if they have similar connectivity str
 	\label{fig:high_order}
 \end{figure}
 
-To preserve higher order proximities, we .....
+%To preserve higher order proximities, we .....
+
+Another closeness in ETG is \emph{asymmetric proximity}. For instance, as shown in fig. \ref{fig:high_order}, node $v_i$ is a Ethereum investor and node $v_k$ is an exchange. In the random walk model, the probability that $v_k$ arrives at $v_i$ is far less than the one that $v_i$ arrives at $v_k$, due to their asymmetric local structures.
+
+
+ Zhou et. proposed a scalable asymmetric proximity preserving graph embedding method based on random walk\cite{zhou2017scalable}. 
