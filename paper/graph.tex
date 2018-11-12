@@ -48,6 +48,10 @@ The approach outperforms other methods such as deepwalk~\cite{perozzi2014deepwal
 	\label{fig_graph_split}
 	\includegraphics[width=3.5in]{fig/graph_split.eps}
 	\caption{Example of a figure caption.}
+
+
+	%\caption{Example of a figure caption.}
+	%\label{fig_graph_split}
 \end{figure}
 
 In ETG, edges stand for different activities such as money transfer, contract creation and contract invocation, which can not be measured in a uniform weight model. For example, a weight of assets transfer maybe the ETH amount, however an invocation to smart contract does not have such numerical value. This inspired us to divide the raw ETG into different relation graphs.
@@ -74,6 +78,7 @@ In return, we divide the edge set into four relations, CALLs with ETH, CALLs wit
 
 
 \subsection{Time-density}
+\label{section:time}
 Even in a specific relation graph, there are repeated edges between the same node pairs. This occurs quite naturally since an account may transfer or invoke to another account repeatedly.
 
 Note that these activities are located at different time intervals along the time axis which are characterized by the block height. Intuitively, a simple solution is to merge those edges by weight summation and it will lose time information. 
@@ -97,20 +102,35 @@ where $V_{ij}=\tau_{ij}$.
 \textcolor{red}{TBA}
 
 \subsection{High Order and Asymmetric Proximity}
-In weighted graph, the edge weight $a_{ij}$ in adjacency matrix $A$ is generally treated as a measure of similarity between nodes $v_i$ and $v_j$. And the higher the edge weight, the more similar the two nodes are expected to be. Edges weight $w_{ij}$ is called \emph{first-order proximity} between nodes $v_i$ and $v_j$. 
+In weighted graph, the edge weight $A_{ij}$ in adjacency matrix $A$ is generally treated as a measure of similarity between nodes $v_i$ and $v_j$. And the higher the edge weight, the more similar the two nodes are expected to be. Edges weight $A_{ij}$ is called \emph{first-order proximity} between nodes $v_i$ and $v_j$. 
 
-Further, \emph{second-order} compares the neighborhood of two nodes and treat them as similar if they have a similar neighborhood \cite{goyal2018graph}. Two nodes in ETG are more similar if they have similar connectivity structures instead of they are just connected by an edge with larger weight or share similar neighborhoods. As shown in Figure \ref{fig:high_order}, nodes $v_i$ and $v_k$ are exchanges and node $v_j$ is an ERC-20 token contract. Obviously, $v_i$ is not adjacent to $v_j$ and they have different neighborhoods because buyers and sellers prefer different exchange platforms. Embedding models with \emph{first-order proximity} and \emph{second-order proximity} will keep them far apart although they have similar connection structures. 
+Further, \emph{second-order} compares the neighborhood of two nodes and treat them as similar if they have a similar neighborhood~\cite{goyal2018graph}. Two nodes in ETG are more similar if they have similar connectivity structures instead of they are just connected by an edge with larger weight or share similar neighborhoods. As shown in Figure \ref{fig:high_order}, nodes $v_a$ and $v_c$ are smart contracts and node $v_b$ is normal user. Obviously, $v_a$ is not adjacent to $v_c$  but they have similar neighbor structure. Embedding models with \emph{first-order proximity} and \emph{second-order proximity} will keep them far apart although they have similar connection structures. 
 
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=3.2in]{fig/high_order_proximity.eps}
-	\caption{Example of a figure caption.}
-	\label{fig:high_order}
+	\subfigure[Example of a high-order proximity caption.]{
+		\label{fig:high_order}
+		\includegraphics[width=2.0in]{fig/high_order_proximity.eps}
+	%\caption{Example of a high-order proximity caption.}
+	}
+	\subfigure[Example of an asymmetric proximity caption.]{
+		\label{fig:asymmetric}
+		\includegraphics[width=1.5in]{fig/asymmetric.eps}
+	}
+	\caption{Examples of an asymmetric proximity.}
+
 \end{figure}
 
-%To preserve higher order proximities, we .....
+To preserve higher order proximities, the hidden layer number in our model is set as 2.
 
-Another closeness in ETG is \emph{asymmetric proximity}. For instance, as shown in fig. \ref{fig:high_order}, node $v_i$ is a Ethereum investor and node $v_k$ is an exchange. In the random walk model, the probability that $v_k$ arrives at $v_i$ is far less than the one that $v_i$ arrives at $v_k$, due to their asymmetric local structures.
+\textcolor{red}{TBA}
+
+Another property of closeness in ETG is \emph{asymmetric proximity}. For instance, as shown in Figure. \ref{fig:asymmetric}, node $v_a$ is a Ethereum investor address and node $v_c$ is an exchange root address. Generally, edge weight can be $A_{ab}=A_{bc}=A_{ca}$ since deposit and withdrawal come in pairs in symmetric model. However, the proximity $(v_a,v_c)$is not equal with proximity $(v_c,v_a)$ due to their asymmetric local structures.
 
 
- Zhou et. proposed a scalable asymmetric proximity preserving graph embedding method based on random walk\cite{zhou2017scalable}. 
+ Zhou et. proposed a scalable asymmetric proximity preserving graph embedding method based on random walk~\cite{zhou2017scalable}. In their model, the probability that $v_a$ arrives at $v_c$ is far less than the one that $v_c$ arrives at $v_a$, due to their asymmetric local structures. However, there is no research on asymmetric proximity in GCN model.
+ 
+ To preserve asymmetric proximity, we..
+ 
+ \textcolor{red}{TBA.}
+
