@@ -8,9 +8,27 @@ We collect all data by running Ethereum client\footnote{Parity Ethereum Client, 
 
 By parsing the transactions, 16,599,825 active accounts are obtained, including \textcolor{red}{xxxx} EOAs and \textcolor{red}{xxxx} SCs. Then we construct the original ETG based on these accounts and transactions.
 
+\begin{figure}[htbp]
+%\begin{minipage}[t]{0.5\linewidth}
+	\centering
+	\subfigure[Histogram of time std for all nodes.]{
+		\label{fig:high_order}
+		\includegraphics[width=2.0in]{fig/all_time_std_pdf.eps}
+	%\caption{Example of a high-order proximity caption.}
+	}
+	\subfigure[Histogram of time std for hack\&phish nodes.]{
+		\label{fig:asymmetric}
+		\includegraphics[width=2.0in]{fig/fake_time_std_pdf.eps}
+	}
+	\caption{Examples.}
+%\end{minipage}
+\end{figure}
+
 Specially, we extend the pre-processing scheme to adapt our model. First we construct four relation graphs, which contains ETH transfer graph, contract creation graph, contract invocation graph and mining reward graph. In each graph, repeated edges between the same node pair are merged via the method introduced in section \ref{section:time}.
 
 Last, a test set of accounts with label introduced before is provided to evaluate classification accuracy. It is hard to reveal the identity of addresses since the anonymity of blockchain. We obtain these labeled examples in two ways, \emph{Etherscan}\footnote{Etherscan LabelCloud, https://etherscan.io/labelcloud} and \emph{Searchain}\footnote{Searchain, http://www.searchain.io/}.
+
+
 
 
 \subsection{Experimental Set-Up and Baselines}
@@ -18,7 +36,7 @@ Unless otherwise noted,
 
 As a baseline for our experiments, we compare against state-of-the-art classification accuracy from \textcolor{red}{XXX, XXX, XXX and XXX}.
 
-All embedding and classification programs were run on the server, which includes Intel Xeon CPU E5 with 55 processors and 128GB of memory, and the GPU used for deep learning is Nvidia 1080Ti.
+All embedding and classification programs were run on the server, which includes Intel Xeon E5 CPU with 55 processors and 128GB of memory, and the GPU used for deep learning is Nvidia 1080Ti.
 
 \subsection{Results}
 
