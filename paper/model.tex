@@ -1,49 +1,38 @@
 % !TEX root = main.tex
 
-\section{Experiments}
-In this section, we conduct experiments to evaluate the performance of our method via node classification on ETG.
+\section{Model}
+Figure. x depicts the overall architecture of our ETG node classification model. The input consists of three parts (Section \ref{sec:input}): a node feature matrix that captures the structural information of nodes, a list of time-density matrices that represent transaction intensiveness between each pair of nodes, and a list of adjacency matrices which describe different relations. We feed the input into two rGCN layers (Section \ref{sec:rGCN layers}), and the output of the last layer indicates the probability that each point being assigned to each class.
 
-\subsection{Data Collection and Graph Construction}
-We collect all data by running Ethereum client\footnote{Parity Ethereum Client, https://www.parity.io/ethereum/} which maintains the same copy of blockchain with all historical transactions. Note that we choose the transaction logs on Ethereum from January 1, 2018 to March 31, 2018 (\textcolor{red}{xxxx} external transactions and internal transactions both) as the input of graph construction since it is the most active period with various activities.
+\subsection{Input}
+\label{sec:input}
+\textbf{Node representations.} We use a feature matrix $X \in \mathbb{R}^{N \times d}$ to encode the overall structural information of each node. The $d$ terms include in-degree, out-degree, weighted degree, eccentricity, clustering coefficient and so on. These features help the following layers to pay attention to structural similarity between nodes.
 
-By parsing the transactions, 16,599,825 active accounts are obtained, including \textcolor{red}{xxxx} EOAs and \textcolor{red}{xxxx} SCs. Then we construct the original ETG based on these accounts and transactions.
+\textbf{Time-density matrices.} We find that the relationship between a pair of nodes grow more closely when their transactions happen intensively, so we propose time-density to merge transactions. The time-density matrix of each relation $r$ is computed as Equation \ref{eq:time}.
 
-\begin{figure}[htbp]
-%\begin{minipage}[t]{0.5\linewidth}
-	\centering
-	\subfigure[Histogram of time std for all nodes.]{
-		\label{fig:high_order}
-		\includegraphics[width=0.4\textwidth]{fig/all_time_std_pdf.eps}
-	%\caption{Example of a high-order proximity caption.}
-	}
-	\subfigure[Histogram of time std for hack\&phish nodes.]{
-		\label{fig:asymmetric}
-		\includegraphics[width=0.4\textwidth]{fig/fake_time_std_pdf.eps}
-	}
-	\caption{Examples.}
-%\end{minipage}
-\end{figure}
+\textbf{Node relations.} We capture the relations of graph neighboring nodes using adjacency matrices. The list of adjacency matrices, $A=\{A_1,A_2,...,A_R|A_i\in \mathbb{R}^{N \times N}\}$ describes the $R$ relations among $N$ nodes in TEG.
 
-Specially, we extend the pre-processing scheme to adapt our model. First we construct four relation graphs, which contains ETH transfer graph, contract creation graph, contract invocation graph and mining reward graph. In each graph, repeated edges between the same node pair are merged via the method introduced in section \ref{section:time}.
+The $R$ relations are constructed from three parts. The first part are the 4 types of forward transactions discussed in Section \ref{sec:multi-relations}: CALLs with ETH, CALLs without ETH, CREATIONs and REWARDs; the second part are 4 reverse relations in order to pass information from the opposite direction; and the last part is a self loop as a special relation type.
 
-Last, a test set of accounts with label introduced before is provided to evaluate classification accuracy. It is hard to reveal the identity of addresses since the anonymity of blockchain. We obtain these labeled examples in two ways, \emph{Etherscan}\footnote{Etherscan LabelCloud, https://etherscan.io/labelcloud} and \emph{Searchain}\footnote{Searchain, http://www.searchain.io/}.
+\subsection{rGCN layers}
+\label{sec:rGCN layers}
+The input to rGCN layer $l$ is $H^{(l)}={h_1^{(l)},h_2^{(l)},...,h_N^{(l)}|h_i^{(l)}\in \mathbb{R}^{N \times d^{(l)}}}$. The node feature $h_i$ is updated as:
+\begin{equation}
+h_i^{(l+1)}=\delta(\sum_{r\in R} \sum_{j \in N_i^r} \frac{\tau_{ij}^r}{c_{i,r}}W_r^{(l)}h_j^{(l)})
+\end{equation}
+where $N_i^r$ denotes the set of neighbor indices of node $v_i$ under relation $r$ and $\tau_{ij}^r$ is the time-density of transactions from node $v_i$ to $v_j$. 
 
+The coefficient $c_{i,r}$ is computed as:
+\begin{equation}
+c_{i,r}=\frac{1}{d_i^r\cdot N_i^r}
+\end{equation}
+where $d_i^r=\sum_{j}A^r_{ij}$, preserving the asymmetric proximity.
 
 
+\subsection{Prediction and Training}
+The output of the last rGCN layer is regarded as a probability matrix $P=\{p_1,p_2,...,p_N|p_i\in \mathbb{R}^{N \times m}\}$, where $p_i=\{p_{i,1},p_{i,2},...,p_{i,m}\}$ describes the probability of classifying node $v_i$ into $m$ categories. 
 
-\subsection{Experimental Set-Up and Baselines}
-Unless otherwise noted,
-
-As a baseline for our experiments, we compare against state-of-the-art classification accuracy from \textcolor{red}{XXX, XXX, XXX and XXX}.
-
-All embedding and classification programs were run on the server, which includes Intel Xeon E5 CPU with 55 processors and 128GB of memory, and the GPU used for deep learning is Nvidia 1080Ti.
-
-\subsection{Results}
-
-
-%These data are collected
-
-%%% Local Variables:
-%%% mode: latex
-%%% TeX-master: "analysis"
-%%% End:
+We utilize the cross-entropy loss function as the training objective:
+\begin{equation}
+L=-\sum_{i=1}^T\sum_{j=1}^m y_{i,j}\log p_{i,j}+\lambda ||\theta||^2
+\end{equation}
+where $T$ is the number of training samples, $y_{i,j}$ is the true probability of node $v_i$ belonging to category $j$. $\theta$ is the set of all parameters and $\lambda$ is the coefficient for $L_2$  regularization.
