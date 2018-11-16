@@ -1,13 +1,19 @@
 % !TEX root = main.tex
 
 \section{Model}
-Figure. x depicts the overall architecture of our ETG node classification model. The input consists of three parts (Section \ref{sec:input}): a node feature matrix that captures the structural information of nodes, a list of time-density matrices that represent transaction intensiveness between each pair of nodes, and a list of adjacency matrices which describe different relations. We feed the input into two rGCN layers (Section \ref{sec:rGCN layers}), and the output of the last layer indicates the probability that each point being assigned to each class.
+Figure. x depicts the overall architecture of our ETG node classification model. The input consists of three parts (Section \ref{sec:input}): a node feature matrix that captures the structural information of nodes, a list of time-density matrices that represent transaction intensiveness between each pair of nodes, and a list of adjacency matrices which describe different relations. We feed the input into two rGCN layers (Section \ref{sec:rGCN layers}), as a trade-off between preserving high-order proximities and introducing noise. The output of the last layer indicates the probability that each point being assigned to each class.
 
 \subsection{Input}
 \label{sec:input}
 \textbf{Node representations.} We use a feature matrix $X \in \mathbb{R}^{N \times d}$ to encode the overall structural information of each node. The $d$ terms include in-degree, out-degree, weighted degree, eccentricity, clustering coefficient and so on. These features help the following layers to pay attention to structural similarity between nodes.
 
-\textbf{Time-density matrices.} We find that the relationship between a pair of nodes grow more closely when their transactions happen intensively, so we propose time-density to merge transactions. The time-density matrix of each relation $r$ is computed as Equation \ref{eq:time}.
+\textbf{Time-density matrices.} We find that the relationship between a pair of nodes grow more closely when their transactions happen intensively, so we propose time-density to merge transactions. The time-density matrix of each relation $r$ is computed as :%Equation \ref{eq:time}
+\begin{equation}
+\tau_{ij}^r=g(var(\texttt{bn}_{ij}^r))
+\label{eq:time}
+\end{equation}
+
+where $\texttt{bn}_{ij}^{r}$ is the block height set of relation $r$ between node $v_i$ and $v_j$. 
 
 \textbf{Node relations.} We capture the relations of graph neighboring nodes using adjacency matrices. The list of adjacency matrices, $A=\{A_1,A_2,...,A_R|A_i\in \mathbb{R}^{N \times N}\}$ describes the $R$ relations among $N$ nodes in TEG.
 
@@ -15,15 +21,26 @@ The $R$ relations are constructed from three parts. The first part are the 4 typ
 
 \subsection{rGCN layers}
 \label{sec:rGCN layers}
-The input to rGCN layer $l$ is $H^{(l)}={h_1^{(l)},h_2^{(l)},...,h_N^{(l)}|h_i^{(l)}\in \mathbb{R}^{N \times d^{(l)}}}$. The node feature $h_i$ is updated as:
-\begin{equation}
-h_i^{(l+1)}=\delta(\sum_{r\in R} \sum_{j \in N_i^r} \frac{\tau_{ij}^r}{c_{i,r}}W_r^{(l)}h_j^{(l)})
-\end{equation}
-where $N_i^r$ denotes the set of neighbor indices of node $v_i$ under relation $r$ and $\tau_{ij}^r$ is the time-density of transactions from node $v_i$ to $v_j$. 
+The input to rGCN layer $l$ is $H^{(l)}={h_1^{(l)},h_2^{(l)},...,h_N^{(l)}|h_i^{(l)}\in \mathbb{R}^{N \times d^{(l)}}}$.
 
-The coefficient $c_{i,r}$ is computed as:
+In raw rGCN model, the propagation model can be expressed as
+
 \begin{equation}
-c_{i,r}=\frac{1}{d_i^r\cdot N_i^r}
+h_i^{(l+1)}=\delta(\sum_{r\in R} \sum_{j \in N_i^r} \frac{1}{c_{i,r}}W_r^{(l)}h_j^{(l)}+W_0^{(l)}h_i^{(l)})
+\label{eq:rgcn}
+\end{equation}
+
+where $r \in R$ represents a kind of relation ,$N_i^r$ denotes the set of neighbor indices of node $v_i$ under relation $r$, and $c_{i,r}=\frac{1}{|N_i^r|}$. Single self-connection is also introduced as a special relation type to each node. %compared with Eq.\ref{eq:gcn}The node feature $h_i$ is updated as:
+
+We modified the forward updating process as 
+\begin{equation}
+h_i^{(l+1)}=\delta(\sum_{r\in R} \sum_{j \in N_i^r} \frac{\tau_{ij}^r}{\hat c_{i,r}}W_r^{(l)}h_j^{(l)})
+\end{equation}
+where $\tau_{ij}^r$ is the time-density of transactions from node $v_i$ to $v_j$. 
+
+The coefficient $\hat c_{i,r}$ is computed as:
+\begin{equation}
+\hat c_{i,r}=\frac{1}{d_i^r\cdot N_i^r}
 \end{equation}
 where $d_i^r=\sum_{j}A^r_{ij}$, preserving the asymmetric proximity.
 
