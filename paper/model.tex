@@ -1,6 +1,6 @@
 % !TEX root = main.tex
 
-\section{Model}
+\section{System Model}
 Figure. x depicts the overall architecture of our ETG node classification model. The input consists of three parts (Section \ref{sec:input}): a node feature matrix that captures the structural information of nodes, a list of time-density matrices that represent transaction intensiveness between each pair of nodes, and a list of adjacency matrices which describe different relations. We feed the input into two rGCN layers (Section \ref{sec:rGCN layers}), as a trade-off between preserving high-order proximities and introducing noise. The output of the last layer indicates the probability that each point being assigned to each class.
 
 \subsection{Input}
