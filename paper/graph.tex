@@ -6,12 +6,13 @@ To exploit information hidden behind the transactions on-chain, we construct an 
 In this section, we illustrate our approach at first and then discuss differences to other graphs analysis methods.
 
 \subsection{Methodology}
+\label{subsec:methodology}
 As shown in Fig. ?, our methodology consists of three phases, which consists of three phases, graph construction, graph embedding and node classification. 
 
 \textbf{Graph construction}
 First, all transaction data are collected for graph construction. Generally, we consider the ETG as a directed graph $G=(V,E)$, where node $v \in V$ represents an account and $e \in E$ depicts the edge between two nodes. 
 
-Actually, $V$ is the set of all addresses in Ethereum including both EOAs and SCs, and number of addresses is depicted as $|V|$. Note that we use the terms address, account and node interchangeably in the remainder of this paper. $E$ is a set of ordered pairs, where $E=\{(v_i,v_j)|v_i,v_j \in V\}$. The order of an edge indicates the direction of activity (e.g., assets transfer and smart contract invocation) from $v_i$ to $v_j$. Analogously, the number of edges in ETG is represented as $|E|$.
+Actually, $V$ is the set of all addresses in Ethereum including both EOAs and SCs, and number of addresses is depicted as $|V|=N$. Note that we use the terms address, account and node interchangeably in the remainder of this paper. $E$ is a set of ordered pairs, where $E=\{(v_i,v_j)|v_i,v_j \in V\}$. The order of an edge indicates the direction of activity (e.g., assets transfer and smart contract invocation) from $v_i$ to $v_j$. %Analogously, the number of edges in ETG is represented as $|E|$.
 
 
 %In our definition, each edge associates with a weight $w$, which will be discussed later. Hence, $G$ is a weighted directed graph.
@@ -21,7 +22,7 @@ The embedding can be defined as follows: given ETG $G=(V,E)$, we aim to represen
 
 Typical network embedding techniques such as random-walk based and deep learning based models use the pure network structure to map into the embedding space~\cite{goyal2018capturing}. Our model is primarily motivated as an extension of GCNs (Graph Convolutional Networks), which puts the features of nodes and edges into the representation, since it shows effectiveness for entity classification in large-scale relational data~\cite{kipf2016semi}.
 
- Generally, a multi-layer Graph Convolutional Network works with the following layer-wise propagation rule:
+ Generally, a multi-layer Graph Convolutional Network with the following layer-wise propagation rule:
 
 \begin{equation}
 H^{(l+1)}=\delta(\tilde{D}^{-\frac{1}{2}}\tilde{A}\tilde{D}^{-\frac{1}{2}}H^{(l)}W^{(l)})
@@ -42,16 +43,12 @@ where $h_i^{(l)}$ is the hidden state of node $v_i$ in the $l$-th layer of the n
 \textbf{Node prediction}
 The final objective of our approach is predicting the node identification in ETG, in essence, classifying given node into categories which are shown in TABLE \ref{tab1}.
 
-The output of the last network layer in our GCN embedding model is regarded as a probability matrix $P=\{\vec{p_1},\vec{p_2},...,\vec{p_{|V|}}|p_i\in \mathbb{R}^{N \times m}\}$, where $\vec{p_i}=\{p_{i,1},p_{i,2},...,p_{i,m}\}$ describes the probability of classifying node $v_i$ into $m$ categories. 
-
-We utilize the cross-entropy loss function as the training objective:
-\begin{equation}
-L=-\sum_{i=1}^T\sum_{j=1}^m y_{i,j}\log p_{i,j}+\lambda ||\theta||^2
-\end{equation}
-where $T$ is the number of training samples, $y_{i,j}$ is the true probability of node $v_i$ belonging to category $j$. $\theta$ is the set of all parameters and $\lambda$ is the coefficient for $L_2$  regularization.
+By given a labeled account set, supervised or semi-supervised methods can be used for entities classification. Here we simply stack GCN layers of the form which is depicted in Eq.\ref{eq:gcn}, with a softmax($\cdot$) activation on the output of the last layer. A cross-function can be the minimizing objective for training. 
 
 \subsection{Challenges}
-The graph embedding plays a key part in Ethereum trading graph analysis. The approach \cite{kipf2016semi} inspired us outperforms other methods such as deepwalk~\cite{perozzi2014deepwalk} in experiments on citation networks and knowledge graph dataset. However, we found that using such GCN model directly achieves poor effect on ETG which has many properties different from traditional networks (such as social media networks and citation graph). It brings the following challenges.
+The graph embedding plays a key part in Ethereum trading graph analysis. The approach \cite{kipf2016semi} inspired us outperforms other methods such as deepwalk~\cite{perozzi2014deepwalk} in experiments on citation networks and knowledge graph dataset. 
+
+However, we found that using such GCN model directly achieves poor effect on ETG which has many properties different from traditional networks (such as social media networks and citation graph). It brings the following challenges.
 
 
 \textbf{Multi-relations} In ETG, edges stand for different activities such as money transfer, contract creation and contract invocation, which can not be measured in a uniform weight model. For example, a weight of assets transfer maybe the ETH amount, however an invocation to smart contract does not have such numerical value. This inspired us to divide the raw ETG into different relation graphs.
@@ -94,27 +91,25 @@ Another property of closeness in ETG is \emph{asymmetric proximity}. For instanc
 
 %In ETG, two nodes are more similar if they have similar connection structures instead of they are just connected by an edge with larger weight simply or have similar neighborhoods. Using node adjacency as the input, most graph embedding techniques can not preserve such higher order proximity.
 
-\begin{figure}[htbp]
-	\centering
-	\label{fig_graph_split}
-	\includegraphics[width=3.5in]{fig/graph_split.eps}
-	\caption{Example of a figure caption.}
-	%\caption{Example of a figure caption.}
-	%\label{fig_graph_split}
-\end{figure}
+%\begin{figure}[htbp]
+%	\centering
+%	\label{fig_graph_split}
+%	\includegraphics[width=3.5in]{fig/graph_split.eps}
+%	\caption{Example of a figure caption.}
+%\end{figure}
 
 
 
 
 
-Here we introduce a variable named time-density which can be represented as strictly increasing function of block height variance, and the new adjacency matrix in relation $r$ can be represented as 
+%Here we introduce a variable named time-density which can be represented as strictly increasing function of block height variance, and the new adjacency matrix in relation $r$ can be represented as 
 
-\begin{equation}
-\hat{A}=\hat{D}^{-\frac{1}{2}}(\tilde{A}+V)\hat{D}^{-\frac{1}{2}}
-\label{eq:?}
-\end{equation}
+%\begin{equation}
+%\hat{A}=\hat{D}^{-\frac{1}{2}}(\tilde{A}+V)\hat{D}^{-\frac{1}{2}}
+%\label{eq:?}
+%\end{equation}
 
-where $V_{ij}$ is the adjacency matrix of time-density from node $v_i$ to $v_j$, and $\hat{D}$ is a diagonal matrix where $\hat{D}_{ii}=\sum_{j}(\tilde{A}_{ij}+V_{ij})$.
+%where $V_{ij}$ is the adjacency matrix of time-density from node $v_i$ to $v_j$, and $\hat{D}$ is a diagonal matrix where $\hat{D}_{ii}=\sum_{j}(\tilde{A}_{ij}+V_{ij})$.
 
 
 
