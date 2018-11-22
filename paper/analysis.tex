@@ -50,9 +50,9 @@ Since virtual property transactions are now becoming increasingly commonplace an
  In Ethersacan, there are more than $2500$ addresses are labeled as Phish/Hack, which takes up the highest proportion. Most of them are disguised as ERC-20 token sales or DApps such as casino. 
 
 \begin{table}[htbp]
-\caption{Typical Accounts}
+\caption{Typical Account Identities}
 \begin{center}
-\begin{tabular}{|p{1.8cm}|l|p{3.7cm}|}
+\begin{tabular}{|p{1.8cm}|c|p{3.9cm}|}
 \hline
 \textbf{Identity} & \textbf{Type}& \textbf{Description} \\
 \hline
@@ -61,8 +61,8 @@ Mining Pool & EOA & The pooling of resources by miners, who share their processi
 ERC-20 Token Contract & SC & Smart contract that allow customers to transfer ERC-20 tokens. \\ \hline
 Primary Market Investor & EOA & Participants in the initial ICO round. \\ \hline
 ERC-20 Token Sale & EOA\&SC & Address that allows customers to buy ERC-20 tokens. \\ \hline
-Exchange Deposit & EOA\&SC & . \\ \hline
-Exchange Root \& Withdrawal & EOA\&SC & . \\ \hline
+Exchange Deposit & EOA\&SC & Address for user to deposit ETH at exchange. \\ \hline
+Exchange Root \& Withdrawal & EOA\&SC & Address collects ETH from deposit addresses and withdraw ETH to users. \\ \hline
 Phish \& Hack & EOA\&SC & Fraud address related to phishing and hacks. \\ \hline
 %\multicolumn{4}{l}{$^{\mathrm{a}}$Sample of a Table footnote.}
 \end{tabular}
@@ -78,7 +78,7 @@ Phish \& Hack & EOA\&SC & Fraud address related to phishing and hacks. \\ \hline
 
 
 \subsection{Transactions}
-In the Ethereum, transaction is the basic unit in each block which represents an action between two accounts. Transaction can be categorized as external one and internal one based on the sponsor of the transaction. A transaction is the external one if it is sent from an EOA while the internal one results from executing a smart contract due to an external transaction. And an external transaction may lead to many internal transactions\cite{chen2018infocom}.
+Transaction is the basic unit in each block which represents an action between two accounts. Transaction can be categorized as external one and internal one based on the sponsor of the transaction. A transaction is the external one if it is sent from an EOA while the internal one results from executing a smart contract due to an external transaction~\cite{chen2018infocom}. Note that an external transaction may lead to many internal transactions.
 
 Four types of transaction can be found by parsing Ethereum blocks, including \emph{CALL}, \emph{CRATE}, \emph{REWARD} and \emph{SUICIDE}. As shown in Fig.?, ETH transferring and smart contract invoking comes with a \emph{CALL} transaction usually and \emph{CREATE} is used to deploy smart contracts. \emph{REWARD} transactions appears on the head of block, which depicts the reward that block miner obtained from system. The sender of \emph{REWARD} transaction is a special address \emph{0x00...00}. In the \emph{SUICIDE} transaction, the smart contract will execute destroy method to kill itself at the end of it's cycle. \emph{CALL}, \emph{CREATE} and \emph{SUICIDE} transactions can be either external transactions or internal transactions since the initiator can be both EOA and SC.
 
