@@ -1,15 +1,14 @@
 % !TEX root = main.tex
 
 \section{XXX Model}
-To address the above-described challenges, we propose XXX. Fig. ? depicts the overall architecture of our XXX model. Correlating to the three phases introduced in section \ref{subsec:methodology}, we explain our model in following three aspects, input, rGCN layers and prediction.
+To address the above-described challenges, we propose XXX. Fig. \ref{fig:architecture} depicts the overall architecture of our XXX model. Correlating to the three phases introduced in section \ref{subsec:methodology}, we explain our model in following three aspects, input, rGCN layers and prediction.
 
 \begin{figure}[htbp]
 	\centering
-	\label{architecture}
+	\label{fig:architecture}
 	\includegraphics[width=3.5in]{fig/architecture.eps}
 	\caption{overall architecture.}
 	%\caption{Example of a figure caption.}
-	%\label{fig_graph_split}
 \end{figure}
 
 
@@ -45,7 +44,7 @@ where $\texttt{bn}_{ij}^{r}$ is the block height set of relation $r$ between nod
 \label{sec:rGCN layers}
  We feed the input into two rGCN layers (Section \ref{sec:rGCN layers}), as a trade-off between preserving high-order proximities and introducing noise.
 
-The input to rGCN layer $l$ is $H^{(l)}={h_1^{(l)},h_2^{(l)},...,h_N^{(l)}|h_i^{(l)}\in \mathbb{R}^{N \times d^{(l)}}}$.
+The input to rGCN $l$-th layer is defined as $H^{(l)}={h_1^{(l)},h_2^{(l)},...,h_N^{(l)}|h_i^{(l)}\in \mathbb{R}^{N \times d^{(l)}}}$.
 
 In raw rGCN model, the propagation model can be expressed as
 
@@ -54,7 +53,7 @@ h_i^{(l+1)}=\delta(\sum_{r\in R} \sum_{j \in N_i^r} \frac{1}{c_{i,r}}W_r^{(l)}h_
 \label{eq:rgcn}
 \end{equation}
 
-where $r \in R$ represents a kind of relation ,$N_i^r$ denotes the set of neighbor indices of node $v_i$ under relation $r$, and $c_{i,r}=\frac{1}{|N_i^r|}$. Single self-connection is also introduced as a special relation type to each node. %compared with Eq.\ref{eq:gcn}The node feature $h_i$ is updated as:
+where $r \in R$ represents a kind of relation, $N_i^r$ denotes the set of neighbor indices of node $v_i$ under relation $r$, and $c_{i,r}=\frac{1}{|N_i^r|}$. Single self-connection is also introduced as a special relation type to each node. %compared with Eq.\ref{eq:gcn}The node feature $h_i$ is updated as:
 
 We modified the forward updating process as 
 \begin{equation}
