@@ -7,7 +7,7 @@ In this section, we illustrate our approach at first and then discuss difference
 
 \subsection{Methodology}
 \label{subsec:methodology}
-Our methodology consists of three phases, which consists of three phases, graph construction, graph embedding and node classification. 
+Our methodology consists of three phases, graph construction, graph embedding and node classification. 
 
 \textbf{Graph construction}
 First, all transaction data are collected for graph construction. Generally, we consider the ETG as a directed graph $G=(V,E)$, where node $v \in V$ represents an account and $e \in E$ depicts the edge between two nodes. 
@@ -46,6 +46,7 @@ The final objective of our approach is predicting the node identification in ETG
 By given a labeled account set, supervised or semi-supervised methods can be used for entities classification. Here we simply stack GCN layers of the form which is depicted in Eq.\ref{eq:gcn}, with a softmax($\cdot$) activation on the output of the last layer. A cross-function can be the minimizing objective for training. 
 
 \subsection{Challenges}
+\label{section:time}
 The graph embedding plays a key part in Ethereum trading graph analysis. The approach \cite{kipf2016semi} inspired us outperforms other methods such as deepwalk~\cite{perozzi2014deepwalk} in experiments on citation networks and knowledge graph dataset. 
 
 However, we found that using such GCN model directly achieves poor effect on ETG which has many properties different from traditional networks (such as social media networks and citation graph). It brings the following challenges.
@@ -83,9 +84,12 @@ Further, \emph{second-order proximity} compares the neighborhood of two nodes an
 
 %To preserve \emph{second-order} proximity, the hidden layer number in our model is set as 2.
 \textbf{Asymmetric proximity}
-Another property of closeness in ETG is \emph{asymmetric proximity}. For instance, as shown in Figure. \ref{fig:asymmetric}, node $v_a$ is a Ethereum investor address and node $v_c$ is an exchange root address. Generally, edge weight can be $A_{ab}=A_{bc}=A_{ca}$ since deposit and withdrawal come in pairs in symmetric model. However, the proximity $(v_a,v_c)$is not equal with proximity $(v_c,v_a)$ due to their asymmetric local structures.
+Another property of closeness in ETG is \emph{asymmetric proximity}. For instance, as shown in Figure. \ref{fig:asymmetric}, node $v_a$ is a Ethereum investor address and node $v_c$ is an exchange root address. Generally, edge weight can be $A_{ab}=A_{bc}=A_{ca}$ since deposit and withdrawal come in pairs in symmetric model. However, the proximity $(v_a,v_c)$ is not equal to proximity $(v_c,v_a)$ due to their asymmetric local structures.
 
- Zhou et. proposed a scalable asymmetric proximity preserving graph embedding method based on random walk~\cite{zhou2017scalable}. In their model, the probability that $v_a$ arrives at $v_c$ is far less than the one that $v_c$ arrives at $v_a$, due to their asymmetric local structures. However, there is no research on asymmetric proximity in GCN model.
+ Zhou et. proposed a scalable asymmetric proximity preserving graph embedding method based on random walk~\cite{zhou2017scalable}. In their model, the probability that $v_a$ arrives at $v_c$ is far less than the one that $v_c$ arrives at $v_a$, as the out degree of $v_c$ is bigger than the out degree of $v_a$. 
+However, there is no research on asymmetric proximity in non-probability graph embedding models.
+
+ %due to their asymmetric local structures. However, there is no research on asymmetric proximity in GCN model.
  
 
 

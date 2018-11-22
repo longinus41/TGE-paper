@@ -22,9 +22,9 @@ These features help the following layers to pay attention to structural similari
 
 \textbf{Node relations.} We divide the raw ETG into different graphs and capture the relations of graph neighboring nodes using adjacency matrices. The list of adjacency matrices, $\{A^1,A^2,...,A^R|A^i\in \mathbb{R}^{N \times N}\}$ describes the $R$ relations among $N$ nodes in ETG.
 
-The $R$ relations are constructed from three aspects. The first one consists the 4 types of forward transactions discussed before: CALLs with ETH, CALLs without ETH, CREATIONs and REWARDs, which represent the relations of ETH transferring, smart contract invocation, smart contract deployment and mining reward. The second part includes 4 reverse relations in order to pass information from the opposite direction. Last a self loop as a special relation type is included to \textcolor{red}{TBA}.
+The $R$ relations are constructed from three aspects. The first one consists the 4 types of forward transactions discussed before: CALLs with ETH, CALLs without ETH, CREATIONs and REWARDs, which represent the relations of ETH transferring, smart contract invocation, smart contract deployment and mining reward. The second part includes 4 reverse relations in order to pass information from the opposite direction. Last a self loop as a special relation type is included to retain information of the previous layer.
 
-\textcolor{red}{Specially, the adjacency matrices are modified to preserve the asymmetric proximity of ETG, which will be addressed in detail later.}
+Specially, the adjacency matrices are modified to preserve the asymmetric proximity of ETG, which will be addressed in detail later. 
 
 
 
@@ -37,7 +37,7 @@ k_{ij}^r=g(var(\texttt{bh}_{ij}^r))
 \label{eq:time}
 \end{equation}
 
-where $\texttt{bn}_{ij}^{r}$ is the block height set of relation $r$ between node $v_i$ and $v_j$. And $g(\cdot)$ is the function of \textcolor{red}{TBA} which can be logarithmic function.
+where $\texttt{bn}_{ij}^{r}$ is the block height set of relation $r$ between node $v_i$ and $v_j$. And $g(\cdot)$ is the function of squash which can be logarithmic function.
 
 
 \subsection{GCN layers}
