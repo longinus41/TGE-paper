@@ -1,12 +1,13 @@
 % !TEX root = main.tex
 
 \section{Preliminary Analysis}
-In this section, we first discuss the accounts and transactions in ethereum which represent the nodes and edges in ethereum trading graph respectively. 
+In the paper we analysis the Ethereum trading graph (ETG, for short) since Ethereum is the largest blockchain platform that supports cryptocurrency transferring and smart contracts. This section investigates the accounts and transactions on Ethereum since they are the basic unit of Ethereum and represent the nodes and edges in ETG respectively.
+
 
 \subsection{Accounts}
 In Ethereum, there are two kinds of accounts, external owned accounts and smart contracts, namely EOAs and SCs for short. The major difference between is that SCs are ruled by executable codes inside whereas EOAs are controlled by people who hold the public-private key pairs. Other than that, they do not look a whole lot different in Ethereum system. Both of them have unique addresses, the address of EOA is determined by the public key and the address of SC is encoded when SC is created. We use the terms address and account interchangeably in the remainder of this paper.
 
-The real identities behind these addresses can be multitudinous and the anonymity of blockchain makes the identification more difficult. Generally,  these addresses can be classified into different categories according to user roles on the blockchain.
+The real identities behind these addresses can be multitudinous and the anonymity of blockchain makes the identification more difficult. Generally, these addresses can be classified into different categories according to user roles on the blockchain.
 
 %Here we take the category of address and the identity behind it as the same, although an individual or a group may has multiple address.
 
@@ -14,29 +15,25 @@ The real identities behind these addresses can be multitudinous and the anonymit
 
 Similar to Bitcoin, Ethereum takes \emph{Proof-of-Work} as its consensus protocol\footnote{Although Ethereum \emph{Casper} will abandon the PoW protocol, the current Ethereum is on the third stage \emph{Metropolis} which still mainly relies on solving hash problem.}. The \textbf{miners} are the individuals or groups who validate transaction information by solving the cryptographic puzzles. Whoever is the first to find a valid hash of block will get the reward in the form of ETH which is paid by users sending transactions.
 
-In the early stage, most people take part in the mining process independently. With the more participants into this high profit industry, the mining competition gradually becomes fiercer. And an efficient solution is working together to solve the PoW problems. Miners with mining machines can register on a special institution named \textbf{mining pool} where aggregates all the registrants' computing power to solve mining problem and distributes the reward to the registrants according to their proportion of contributed computing power.
+In the early stage, most people take part in the mining process independently. With the more participants into this high profit industry, the mining competition gradually becomes fiercer. And an efficient solution is working together to solve the PoW problems. Miners with mining machines can register on a special institution named \textbf{mining pool} where aggregates all the registrants' computing power to solve mining problem and distributes the reward to the registrants according to their proportion of contributed computing power. As of September 2018, top $3$ mining pools takes more than 65\% of hash rate in Ethereum\footnote{Investoon, https://investoon.com/charts/mining/eth.}.
 %The centralized institution is \textbf{mining pool} and these registrants are so called \textbf{cooperative miners}.
 
-As of September 2018, top $3$ mining pools takes more than 65\% of hash rate in Ethereum\footnote{Investoon, https://investoon.com/charts/mining/eth.}.
+
 % And, more remarkable, the percentage of standalone miners declined and dropped to almost zero in the end of 2017. 
 
 2) \emph{ERC-20 \& ICO}
 
-ERC-20 is a technical standard used for smart contracts on the Ethereum blockchain for implementing tokens\cite{erc-20-wiki}.  It defines a common list of rules that an Ethereum token has to implement, giving developers the ability to program how new tokens will function within the Ethereum ecosystem. An ERC-20 token transfer happens in specific SCs which are called \textbf{ERC-20 token contracts}, and the transferring process will be illustrated later. 
+ERC-20 is a technical standard used for smart contracts on the Ethereum blockchain for implementing tokens~\cite{erc-20-wiki}. It defines a common list of rules that an Ethereum token has to implement, giving developers the ability to program how new tokens will function within the Ethereum ecosystem. An ERC-20 token transfer happens in specific SCs which are called \textbf{ERC-20 token contracts}. %and the transferring process will be illustrated later. 
 
-The ERC-20 token standard became popular with crowdfunding companies working on initial coin offering (ICO) cases due to the simplicity of deployment, together with its potential for interoperability with other Ethereum token standards\cite{erc-20}. As of July 26 2018, there were more than 103,621 ERC-20 token contracts\footnote{"Etherscan Token Tracker Page", https://etherscan.io/tokens}. Among the most successful ERC-20 token sales are EOS, Filecoin, Bancor, Qash, and Nebulas, raising over 60 million each\footnote{"Token Data, data and analytics for all ICO's and tokens", https://www.tokendata.io}.
+The ERC-20 token standard became popular with crowdfunding companies working on ICO cases due to the simplicity of deployment, together with its potential for interoperability with other Ethereum token standards~\cite{erc-20}. As of July 26 2018, there were more than 103,621 ERC-20 token contracts\footnote{Etherscan Token Tracker Page, https://etherscan.io/tokens}. Among the most successful ERC-20 token sales are EOS, Filecoin, Bancor, Qash, and Nebulas, raising over 60 million each\footnote{``Token Data, data and analytics for all ICO's and tokens", https://www.tokendata.io}.
 
-Participants in the initial ICO round are \textbf{primary market investors} who buy the ERC-20 token from ERC-20 smart contracts of the crowdfunding companies. And these addresses where token sale proceeds are \textbf{token sales}.
+Participants in the initial ICO round are \textbf{primary market investors} who buy the ERC-20 token from ERC-20 smart contracts of the crowdfunding companies. And these addresses where token sale proceeds are \textbf{ICO wallets}.
 
 3) \emph{Exchanges}
 
-The exchanges are the platforms for trading between ETH, fiat money (e.g., USD) and even other digital currency (e.g., BTC and ERC-20 tokens), which play an important role in Ethereum ecosystem. The exchanges can be categorized into centralized exchanges and decentralized exchanges (also known as DEXs).
+The exchanges are the platforms for trading between ETH, fiat money (e.g., USD) and even other digital currency (e.g., BTC and ERC-20 tokens), which play an important role in Ethereum ecosystem. The exchanges can be categorized into centralized exchanges and decentralized exchanges (also known as DEXs) according to their architectures.
 
-%The exchanges are generally divided into two types: \textbf{centralized exchanges} and \textbf{decentralized exchanges}, and an exchange address can be both EOA, as well as SC. 
-
-%The general mechanism of centralized exchange is shown in Fig.?. The centralized exchange supply an open-outcry market where buyers and sellers are brought together on a trading floor and cry out bids. 
-
-The centralized exchange allocates a deposit address to each user who wants to make transaction in the exchange. These addresses are called \textbf{exchange deposits} and belong to the exchange since users do not have the private key of these addresses. In recharge process, user transfers coins to the given deposit address from her own wallet and these coins will be transferred to the \textbf{exchange root} address automatically. In turn, users send requests to exchange to withdraw their coins from a address called \textbf{exchange withdrawal}. And in most cases, the exchange root and exchange withdrawal mean the same address.
+Most of the world’s cryptocurrency trading is done through centralized exchanges such as Binance, Huobi, OKEX etc\footnote{``Top 100 Cryptocurrency Exchanges by Trade Volume'', https://coinmarketcap.com/rankings/exchanges}. The centralized exchange allocates a deposit address to each user who wants to make transaction in the exchange. These addresses are called \textbf{exchange deposits} and belong to the exchange since users do not have the private key of these addresses. In recharge process, user transfers coins to the given deposit address from her own wallet and these coins will be transferred to the \textbf{exchange root} address automatically. In turn, users send requests to exchange to withdraw their coins from an address called \textbf{exchange withdrawal}. And in most cases, the exchange root and exchange withdrawal mean the same address.
 
 %The exchange charges the user a commission for both recharge and withdraw services.
 
@@ -55,7 +52,7 @@ Since virtual property transactions are now becoming increasingly commonplace an
 \begin{table}[htbp]
 \caption{Typical Accounts}
 \begin{center}
-\begin{tabular}{|p{1.7cm}|l|p{3.7cm}|}
+\begin{tabular}{|p{1.8cm}|l|p{3.7cm}|}
 \hline
 \textbf{Identity} & \textbf{Type}& \textbf{Description} \\
 \hline
@@ -63,11 +60,10 @@ Miner & EOA & The node who take part in the block validation process. \\ \hline
 Mining Pool & EOA & The pooling of resources by miners, who share their processing power over a network.\\ \hline
 ERC-20 Token Contract & SC & Smart contract that allow customers to transfer ERC-20 tokens. \\ \hline
 Primary Market Investor & EOA & Participants in the initial ICO round. \\ \hline
-ERC-20 Token Sale & EOA \& SC & Address that allow customers to buy ERC-20 tokens. \\ \hline
-Exchange Deposit & EOA \& SC & . \\ \hline
-Exchange Root & EOA \& SC & . \\ \hline
-Exchange Withdrawal & EOA \& SC & . \\ \hline
-Phish \& Hack & EOA \& SC & Fraud address related to phishing and hacks. \\ \hline
+ERC-20 Token Sale & EOA\&SC & Address that allows customers to buy ERC-20 tokens. \\ \hline
+Exchange Deposit & EOA\&SC & . \\ \hline
+Exchange Root \& Withdrawal & EOA\&SC & . \\ \hline
+Phish \& Hack & EOA\&SC & Fraud address related to phishing and hacks. \\ \hline
 %\multicolumn{4}{l}{$^{\mathrm{a}}$Sample of a Table footnote.}
 \end{tabular}
 \label{tab1}
