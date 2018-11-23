@@ -9,7 +9,14 @@ With the development of blockchain technology, more successors have merged and t
 However, as one of the most salient features, the anonymity of blockchain leads to that it is hard to find the real identities behind addresses as well as it protects the users' privacy. It makes trading analysis difficult and offers a breeding ground for frauds. According to Cointelegraph, the Ethereum network has experienced considerable phishing, Ponzi schemes and other scams events, accounting for about 10\% of ICOs~\cite{cerchiello2018icos}.
 
 \subsection{Analysis of Blockchain}
-Many studies 
+Many studies focus on characterizing blockchain system such as Bitcoin through graph analysis. %Reid et al. [5] abstracts Bitcoin into a transaction graph, where each node represents a transaction and a directed edge from node A to node B means that the output of A is the input of B. 
+Bitcoin using unique UTXO model instead of traditional account model which makes it hard to figure out the transaction trace. Meiklejohn et al. propose address clustering to associate users with their addresses [6], so that Bitcoin can be modeled as a user graph.
+
+Another applications have been developed, such as deanonymization~[5], and money laundering detection~[7], [8]. Ranshous et al. [25] introduce a special graph whose nodes are either transactions or addresses to detect money laundering. 
+
+Compared with Bitcoin, Ethereum  
+
+Note that these approaches cannot be directly applied to Ethereum due to the obvious differences between Ethereum with Bitcoin.
 
 \subsection{Graph Embedding}
 Graph analysis has been attracting increasing attention in the recent years which enables researchers to understand the various network system in a systematic manner. In the survey of graph embedding~\cite{cai2018comprehensive}, graph analytic tasks can be broadly abstracted into a lot of categories, such as node classification~\cite{bhagat2011node}, link prediction~\cite{liben2007link}, clustering~\cite{ding2001min} and visualization~\cite{maaten2008visualizing}. For example, node classification aims at determining the label of nodes based on other labeled nodes and the topology of the network.
