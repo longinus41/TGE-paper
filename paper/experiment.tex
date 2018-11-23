@@ -35,23 +35,48 @@ Last, a test set of accounts with label introduced before is provided to evaluat
 Unless otherwise noted,
 
 As a baseline for our experiments, we compare against state-of-the-art classification accuracy from \textcolor{red}{XXX, XXX, XXX and XXX}.
-\begin{table}
+\begin{table*}
+\footnotesize
 \centering
 \caption{}
-\begin{tabular}{l|ccc}
+\resizebox{\textwidth}{15mm}{
+\begin{tabular}{l|ccc|ccc|ccc|ccc|ccc|ccc}
 \toprule
-\textbf{Model} & \textbf{Precision}  & \textbf{Recall} & $\mathbf{F_1}$  \\
+& \multicolumn{3}{c|}{Deepwalk} & \multicolumn{3}{c|}{GCN} & \multicolumn{3}{c|}{rGCN} & \multicolumn{3}{c|}{Our} & \multicolumn{3}{c|}{w/o time-density} & \multicolumn{3}{c}{w/o asymmetric proximity}\\
 \midrule
- Deepwalk & & & \\
- GCN & & & \\
- rGCN & & & \\
- Our & & & \\
+& \textbf{Precision} & \textbf{Recall} & $\mathbf{F_1}$ & \textbf{Precision} & \textbf{Recall} & $\mathbf{F_1}$ & \textbf{Precision} & \textbf{Recall} & $\mathbf{F_1}$ & \textbf{Precision} & \textbf{Recall} & $\mathbf{F_1}$ & \textbf{Precision} & \textbf{Recall} & $\mathbf{F_1}$ & \textbf{Precision} & \textbf{Recall} & $\mathbf{F_1}$\\
 \midrule
- w/o time-density& & & \\
- w/o asymmetric proximity & & & \\
+ phish and hack & & & & & & & & & & & & & & &\\
+ token contract & & & & & & & & & & & & & & &\\
+ exchange deposit & & & & & & & & & & & & & & &\\
+ exchange root & & & & & & & & & & & & & & &\\
+ pool & & & & & & & & & & & & & & &\\
+ miner & & & & & & & & & & & & & & &\\
+ primary market & & & & & & & & & & & & & & &\\
+ ICO wallet & & & & & & & & & & & & & & &\\
+ average & & & & & & & & & & & & & & &\\
 \bottomrule
 \end{tabular}
-\end{table}
+}
+\end{table*}
+
+% \begin{table}
+% \centering
+% \caption{}
+% \begin{tabular}{l|ccc}
+% \toprule
+% \textbf{Model} & \textbf{Precision}  & \textbf{Recall} & $\mathbf{F_1}$  \\
+% \midrule
+%  Deepwalk & & & \\
+%  GCN & & & \\
+%  rGCN & & & \\
+%  Our & & & \\
+% \midrule
+%  w/o time-density& & & \\
+%  w/o asymmetric proximity & & & \\
+% \bottomrule
+% \end{tabular}
+% \end{table}
 
 All embedding and classification programs were run on the server, which includes Intel Xeon E5 CPU with 55 processors and 128GB of memory, and the GPU used for deep learning is Nvidia 1080Ti.
 
