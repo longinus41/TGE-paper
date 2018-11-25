@@ -39,22 +39,23 @@ As a baseline for our experiments, we compare against state-of-the-art classific
 \footnotesize
 \centering
 \caption{}
-\resizebox{\textwidth}{15mm}{
-\begin{tabular}{l|ccc|ccc|ccc|ccc|ccc|ccc}
+\resizebox{\textwidth}{17mm}{
+\begin{tabular}{l|ccc|ccc|ccc|ccc|ccc}
 \toprule
-& \multicolumn{3}{c|}{Deepwalk} & \multicolumn{3}{c|}{GCN} & \multicolumn{3}{c|}{rGCN} & \multicolumn{3}{c|}{Our} & \multicolumn{3}{c|}{w/o time-density} & \multicolumn{3}{c}{w/o asymmetric proximity}\\
+& \multicolumn{3}{c|}{Deepwalk} & \multicolumn{3}{c|}{GCN} & \multicolumn{3}{c|}{rGCN} & \multicolumn{3}{c|}{rGCN+asymmetric proximity} & \multicolumn{3}{c|}{Ours} \\
 \midrule
-& \textbf{Precision} & \textbf{Recall} & $\mathbf{F_1}$ & \textbf{Precision} & \textbf{Recall} & $\mathbf{F_1}$ & \textbf{Precision} & \textbf{Recall} & $\mathbf{F_1}$ & \textbf{Precision} & \textbf{Recall} & $\mathbf{F_1}$ & \textbf{Precision} & \textbf{Recall} & $\mathbf{F_1}$ & \textbf{Precision} & \textbf{Recall} & $\mathbf{F_1}$\\
+& \textbf{Precision} & \textbf{Recall} & $\mathbf{F_1}$ & \textbf{Precision} & \textbf{Recall} & $\mathbf{F_1}$ & \textbf{Precision} & \textbf{Recall} & $\mathbf{F_1}$ & \textbf{Precision} & \textbf{Recall} & $\mathbf{F_1}$ & \textbf{Precision} & \textbf{Recall} & $\mathbf{F_1}$ \\
 \midrule
- phish and hack & & & & & & & & & & & & & & &\\
- token contract & & & & & & & & & & & & & & &\\
- exchange deposit & & & & & & & & & & & & & & &\\
- exchange root & & & & & & & & & & & & & & &\\
- pool & & & & & & & & & & & & & & &\\
- miner & & & & & & & & & & & & & & &\\
- primary market & & & & & & & & & & & & & & &\\
- ICO wallet & & & & & & & & & & & & & & &\\
- average & & & & & & & & & & & & & & &\\
+ phish and hack & & & &0.614 & 0.273 & 0.378 & 0.700& 0.778& 0.737& 0.720& 0.727& 0.724& 0.714& 0.758& 0.735\\
+ token contract & & & &0.634& 0.459& 0.533& 0.930& 0.949& 0.939& 0.958& 0.939& 0.949& 0.958& 0.939& 0.949\\
+ exchange deposit & & & &0.526& 0.400& 0.455& 0.500& 0.280& 0.359& 0.615& 0.640& 0.628& 0.556& 0.600& 0.579\\
+ exchange root & & & &0.579& 0.743& 0.650& 0.913& 0.600& 0.724& 0.862& 0.714& 0.781& 0.828& 0.686& 0.750\\
+ pool & & & &0.344& 0.500& 0.407& 1.000& 0.636& 0.778& 0.842& 0.727& 0.781& 1.000& 0.727& 0.842\\
+ miner & & & &0.696& 0.390& 0.500& 0.905& 0.927& 0.916& 0.826& 0.927& 0.874& 0.841& 0.902& 0.871\\
+ primary market & & & & 0.238& 0.161& 0.192& 0.786& 0.355& 0.489& 0.680& 0.548& 0.607& 0.750& 0.484& 0.588\\
+ ICO wallet & & & & 0.539& 0.184& 0.275& 0.677& 0.552& 0.609& 0.769& 0.526& 0.625& 0.742& 0.605& 0.668\\
+ \midrule
+ average & & & & 0.566& 0.378& 0.436& 0.807& 0.725& 0.751& 0.806& 0.761& 0.779& \bf{0.811}& \bf{0.764}& \bf{0.782}\\
 \bottomrule
 \end{tabular}
 }
