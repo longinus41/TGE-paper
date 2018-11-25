@@ -37,7 +37,7 @@ k_{ij}^r=g(var(\texttt{bh}_{ij}^r))
 \label{eq:time}
 \end{equation}
 
-where $\texttt{bn}_{ij}^{r}$ is the block height set of relation $r$ between node $v_i$ and $v_j$. And $g(\cdot)$ is the function of squash which can be logarithmic function.
+\noindent where $\texttt{bh}_{ij}^{r}$ is the block height set of relation $r$ between node $v_i$ and $v_j$. And $g(\cdot)$ is the function of squash which can be logarithmic function.
 
 
 \subsection{GCN layers}
@@ -53,19 +53,21 @@ h_i^{(l+1)}=\delta(\sum_{r\in R} \sum_{j \in N_i^r} \frac{1}{c_{i,r}}W_r^{(l)}h_
 \label{eq:rgcn}
 \end{equation}
 
-where $r \in R$ represents a kind of relation, $N_i^r$ denotes the set of neighbor indices of node $v_i$ under relation $r$, and $c_{i,r}=\frac{1}{|N_i^r|}$. Single self-connection is also introduced as a special relation type to each node. %compared with Eq.\ref{eq:gcn}The node feature $h_i$ is updated as:
+\noindent where $r \in R$ represents a kind of relation, $N_i^r$ denotes the set of neighbor indices of node $v_i$ under relation $r$, and $c_{i,r}=\frac{1}{|N_i^r|}$. Single self-connection is also introduced as a special relation type to each node. %compared with Eq.\ref{eq:gcn}The node feature $h_i$ is updated as:
 
 We modified the forward updating process as 
 \begin{equation}
 h_i^{(l+1)}=\delta(\sum_{r\in R} \sum_{j \in N_i^r} \frac{\tau_{ij}^r}{\hat c_{i,r}}W_r^{(l)}h_j^{(l)})
 \end{equation}
-where $\tau_{ij}^r$ is the time-density of transactions from node $v_i$ to $v_j$. 
+
+\noindent where $\tau_{ij}^r$ is the time-density of transactions from node $v_i$ to $v_j$. 
 
 The coefficient $\hat c_{i,r}$ is computed as:
 \begin{equation}
 \hat c_{i,r}=\frac{1}{d_i^r\cdot N_i^r}
 \end{equation}
-where $d_i^r=\sum_{j}A^r_{ij}$, preserving the asymmetric proximity.
+
+\noindent where $d_i^r=\sum_{j}A^r_{ij}$, preserving the asymmetric proximity.
 
 
 \subsection{Prediction and Training}
@@ -77,4 +79,5 @@ We utilize the cross-entropy loss function as the training objective:
 \begin{equation}
 L=-\sum_{i=1}^T\sum_{j=1}^m y_{i,j}\log p_{i,j}+\lambda ||\theta||^2
 \end{equation}
-where $T$ is the number of training samples, $y_{i,j}$ is the true probability of node $v_i$ belonging to category $j$. $\theta$ is the set of all parameters and $\lambda$ is the coefficient for $L_2$  regularization.
+
+\noindent where $T$ is the number of training samples, $y_{i,j}$ is the true probability of node $v_i$ belonging to category $j$. $\theta$ is the set of all parameters and $\lambda$ is the coefficient for $L_2$  regularization.
