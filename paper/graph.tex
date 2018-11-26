@@ -1,64 +1,73 @@
 % !TEX root = main.tex
 
-\section{Ethereum Trading Graph Analysis}
-To exploit information hidden behind the transactions on-chain, we construct an Ethereum trading graph (ETG, for short) and then  methods such as graph embedding could be implemented for node classification task.
+\section{Ethereum Transactions Graph Analysis}
+To exploit information hidden behind the transactions on-chain, we construct an Ethereum transactions graph (ETG, for short) and then methods such as graph embedding could be implemented for accounts identification task.
 
 In this section, we illustrate our approach at first and then discuss differences to other graphs analysis methods.
 
 \subsection{Methodology}
 \label{subsec:methodology}
-Our methodology consists of three phases, graph construction, graph embedding and node classification. 
+Our approach consists of three phases, graph construction, graph embedding and node classification. 
 
-\textbf{Graph construction}
-First, all transaction data are collected for graph construction. Generally, we consider the ETG as a directed graph $G=(V,E)$, where node $v \in V$ represents an account and $e \in E$ depicts the edge between two nodes. 
+\textbf{Phase 1: Graph construction}
+Since all transactions are stored in the blockchain, we could synchronize them by running an Ethereum client.
 
-Actually, $V$ is the set of all addresses in Ethereum including both EOAs and SCs, and number of addresses is depicted as $|V|=N$. Note that we use the terms address, account and node interchangeably in the remainder of this paper. $E$ is a set of ordered pairs, where $E=\{(v_i,v_j)|v_i,v_j \in V\}$. The order of an edge indicates the direction of activity (e.g., assets transfer and smart contract invocation) from $v_i$ to $v_j$. %Analogously, the number of edges in ETG is represented as $|E|$.
+ Based on the collected data, the transaction graph can be constructed. Generally, we consider the ETG as a directed graph $G=(V,E)$, where node $v \in V$ represents an account and $e \in E$ depicts the edge between two nodes. 
+
+Note that $V$ is the set of all addresses in Ethereum including both EOAs and CAs, and number of addresses is depicted as $|V|=N$. And we use the terms account and node interchangeably in the remainder of this paper. $E$ is a set of ordered pairs, where $E=\{(v_i,v_j)|v_i,v_j \in V\}$. The order of an edge indicates the direction of activity (e.g., assets transfer or smart contract invocation) from $v_i$ to $v_j$. %Analogously, the number of edges in ETG is represented as $|E|$.
 
 
 %In our definition, each edge associates with a weight $w$, which will be discussed later. Hence, $G$ is a weighted directed graph.
 
-\textbf{Graph embedding}
-The embedding can be defined as follows: given ETG $G=(V,E)$, we aim to represent each node $v$ in a low-dimensional vector space $\vec{y_v}$. By representing ETG as a set of low dimensional vectors, graph analysis algorithms can then be computed efficiently. 
+\textbf{Phase 2: Graph embedding}
+The embedding process can be defined as follows: given ETG $G=(V,E)$, we aim to represent each node $v$ in a low-dimensional vector space $\vec{y_v}$. By representing ETG as a set of low dimensional vectors, graph analysis algorithms can then be computed efficiently. 
 
-Typical network embedding techniques such as random-walk based and deep learning based models use the pure network structure to map into the embedding space~\cite{goyal2018capturing}. Our model is primarily motivated as an extension of GCNs (Graph Convolutional Networks), which puts the features of nodes and edges into the representation, since it shows effectiveness for entity classification in large-scale relational data~\cite{kipf2016semi}.
+Typical network embedding techniques such as random-walk based and deep learning based models use the pure network structure to map into the embedding space~\cite{goyal2018capturing}. Our model is primarily motivated as an extension of GCNs (Graph Convolutional Networks)~\cite{kipf2016semi,schlichtkrull2018modeling}, which puts the features of nodes and edges into the representation, since it shows effectiveness for entity classification in large-scale relational data.
 
- Generally, a multi-layer Graph Convolutional Network with the following layer-wise propagation rule:
+%Generally, a multi-layer Graph Convolutional Network with the following layer-wise propagation rule:
 
-\begin{equation}
-H^{(l+1)}=\delta(\tilde{D}^{-\frac{1}{2}}\tilde{A}\tilde{D}^{-\frac{1}{2}}H^{(l)}W^{(l)})
-\label{eq1}
-\end{equation}
+%\begin{equation}
+%H^{(l+1)}=\delta(\tilde{D}^{-\frac{1}{2}}\tilde{A}\tilde{D}^{-\frac{1}{2}}H^{(l)}W^{(l)})
+%\label{eq1}
+%\end{equation}
 
-where $H^{(l)}$ is the matrix of activations in the $l$-th layer, and $W^{(l)}$ is a trainable weight matrix in the $l$-th layer. $\delta(\cdot)$ denotes an activation function such as the ReLU$(\cdot)$ = max$(0,\cdot)$. $\tilde{A}=A+I_N$ where $A$ is the adjacency matrix of the graph $G$ and $I_N$ is the identity matrix. $\tilde{D}$ is a diagonal matrix where $\tilde{D}_{ii}=\sum_{j}\tilde{A}_{ij}$.
+%\noindent where $H^{(l)}$ is the matrix of activations in the $l$-th layer, and $W^{(l)}$ is a trainable weight matrix in the $l$-th layer. $\delta(\cdot)$ denotes an activation function such as the ReLU$(\cdot)$ = max$(0,\cdot)$. $\tilde{A}=A+I_N$ where $A$ is the adjacency matrix of the graph $G$ and $I_N$ is the identity matrix. $\tilde{D}$ is a diagonal matrix where $\tilde{D}_{ii}=\sum_{j}\tilde{A}_{ij}$.
 
-The method can be understood as special cases of a simple differentiable message-passing framework.
+%The method can be understood as special cases of a simple differentiable message-passing framework.
 
-\begin{equation}
-h_i^{(l+1)}=\delta(\sum_{j \in N} \frac{1}{c_{i,j}}W^{(l)}h_j^{(l)})
-\label{eq:gcn}
-\end{equation}
+%\begin{equation}
+%h_i^{(l+1)}=\delta(\sum_{j \in N} \frac{1}{c_{i,j}}W^{(l)}h_j^{(l)})
+%\label{eq:gcn}
+%\end{equation}
 
-where $h_i^{(l)}$ is the hidden state of node $v_i$ in the $l$-th layer of the neural network. And $c_{ij}$ is a problem-specific normalization constant which can defined in advance such as $c_{i,j}=\sqrt{d_i d_j}$ where $d_i$ is the degree of node $v_i$.
+%\noindent where $h_i^{(l)}$ is the hidden state of node $v_i$ in the $l$-th layer of the neural network. And $c_{ij}$ is a problem-specific normalization constant which can defined in advance such as $c_{i,j}=\sqrt{d_i d_j}$ where $d_i$ is the degree of node $v_i$.
 
-\textbf{Node prediction}
-The final objective of our approach is predicting the node identification in ETG, in essence, classifying given node into categories which are shown in TABLE \ref{tab1}.
+\textbf{Phase 3: Node classification}
+The final objective of our approach is predicting the account identity on ETG, in essence, classifying given node into categories which are shown in TABLE \ref{tab1}.
 
-By given a labeled account set, supervised or semi-supervised methods can be used for entities classification. Here we simply stack GCN layers of the form which is depicted in Eq.\ref{eq:gcn}, with a softmax($\cdot$) activation on the output of the last layer. A cross-function can be the minimizing objective for training. 
+By given a labeled account set, supervised or semi-supervised methods can be used for entities classification. Here we simply stack GCN layers of the form with a softmax ($\cdot$) activation on the output of the last layer. A cross-function can be the minimizing objective for training. 
 
 \subsection{Challenges}
 \label{section:time}
-The graph embedding plays a key part in Ethereum trading graph analysis. The approach \cite{kipf2016semi} inspired us outperforms other methods such as deepwalk~\cite{perozzi2014deepwalk} in experiments on citation networks and knowledge graph dataset. 
+The graph embedding plays a key part in graph analysis. The GCN approach \cite{kipf2016semi} outperforms other methods such as deepwalk~\cite{perozzi2014deepwalk} in experiments on citation networks and knowledge graph dataset. 
 
 However, we found that using such GCN model directly achieves poor effect on ETG which has many properties different from traditional networks (such as social media networks and citation graph). It brings the following challenges.
 
 
-\textbf{Multi-relations} In ETG, edges stand for different activities such as money transfer, contract creation and contract invocation, which can not be measured in a uniform weight model. For example, a weight of assets transfer maybe the ETH amount, however an invocation to smart contract does not have such numerical value. This inspired us to divide the raw ETG into different relation graphs.
+\textbf{Multi-relations} In ETG, edges stand for different activities such as money transfer, contract creation and contract invocation, which can not be measured in a uniform weighted model. 
 
-%Our work is motivated as an extension of Relational Graph Convolutional Networks (rGCNs), which is proposed to develop an encoder model for edges in the relational graph~\cite{schlichtkrull2018modeling}. They utilize the transformation of adjacency matrices introduced in GCN to process relational graphs. 
+For example, the weight of assets transfer maybe the ETH amount, however an invocation to smart contract does not have such numerical value. This inspired us to divide the raw ETG into different relation graphs. We find that the strategy of division is very important and has great influence to the final accuracy of classification.
+
+%In \cite{schlichtkrull2018modeling}, relational-GCN (rGCN) is used to multi-graphs with large numbers of relations. We find that the strategy of division is very important 
+
+
+%Our work is motivated as an extension of , which is proposed to develop an encoder model for edges in the relational graph~\cite{schlichtkrull2018modeling}. They utilize the transformation of adjacency matrices introduced in GCN to process relational graphs. 
 
 %We divide the edge set into four relations, CALLs with ETH, CALLs without ETH, CREATIONs and REWARDs, according to the their transaction type. Note that the ERC-20 token transfers are categorized as CALLs without ETH which includes normal smart contract invocations as well. The reason is that even though ERC-20 token transfer is a kind of assets transfer intrinsically, it exists in the form of a smart contract in ETG.\footnote{Another reason is that even converting some ERC-20 tokens into ETH is available, the exchange-rate fluctuations make the unification meaningless.}
 
-\textbf{Time information} Even in a specific relation graph, there are repeated edges between the same node pairs. This occurs quite naturally since an account may transfer or invoke to another account repeatedly.
+\textbf{Time information} Even in a specific relation graph, 
+
+there are repeated edges between the same node pairs. This occurs quite naturally since an account may transfer or invoke to another account repeatedly.
 
 Note that these activities are located at different time intervals along the time axis which are characterized by the block height. Intuitively, a simple solution is to merge those edges by weight summation but this will lose time information. 
 
