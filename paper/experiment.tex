@@ -8,24 +8,6 @@ We collect all data by running Ethereum client\footnote{Parity Ethereum Client, 
 
 By parsing the transactions, 16,599,825 active accounts are obtained, including 14,450,993 EOAs and 2,148,831 SCs (the remaining address is \textcolor{red}{0x000}). Then we construct the original ETG based on these accounts and transactions.
 
-\begin{figure}[htbp]
-\centering
-\begin{tabular}{cc}
-	\subfigure[Histogram of time std for all nodes.]{
-		\label{fig:high_order}
-		%\includegraphics[width=0.22\textwidth]{fig/all_time_std_pdf.eps}
-    \input{fig/all_time_std_pdf.tex}
-	%\caption{Example of a high-order proximity caption.}
-	}&
-	\subfigure[Histogram of time std for hack\&phish nodes.]{
-		\label{fig:asymmetric}
-		%\includegraphics[width=0.22\textwidth]{fig/fake_time_std_pdf.eps}
-    \input{fig/fake_time_std_pdf.tex}
-	}
-\end{tabular}
-\caption{Examples.}
-\end{figure}
-
 Specially, we extend the pre-processing scheme to adapt our model. First we construct four relation graphs, which contains ETH transfer graph, contract creation graph, contract invocation graph and mining reward graph. In each graph, repeated edges between the same node pair are merged via the method introduced in section \ref{section:time}.
 
 Last, a test set of accounts with label introduced before is provided to evaluate classification accuracy. It is hard to reveal the identity of addresses since the anonymity of blockchain. We obtain these labeled examples in two ways, \emph{Etherscan}\footnote{Etherscan LabelCloud, https://etherscan.io/labelcloud} and \emph{Searchain}\footnote{Searchain, http://www.searchain.io/}.

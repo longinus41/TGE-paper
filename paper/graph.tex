@@ -56,7 +56,9 @@ However, we found that using such GCN model directly achieves poor effect on ETG
 
 \textbf{Multi-relations} In ETG, edges stand for different activities such as money transfer, contract creation and contract invocation, which can not be measured in a uniform weighted model. 
 
-For example, the weight of assets transfer maybe the ETH amount, however an invocation to smart contract does not have such numerical value. This inspired us to divide the raw ETG into different relation graphs. We find that the strategy of division is very important and has great influence to the final accuracy of classification.
+For example, the weight of assets transfer maybe the ETH amount, however an invocation to smart contract does not have such numerical value. This inspired us to divide the raw ETG into different relation graphs. 
+
+In \cite{chen2018infocom}, three graphs are constructed for statistics, including money flow graph, smart contract creation graph, and smart contract invocation graph. However, we find that such strategy of division is not detailed enough and has poor performance for node classification.
 
 %In \cite{schlichtkrull2018modeling}, relational-GCN (rGCN) is used to multi-graphs with large numbers of relations. We find that the strategy of division is very important 
 
@@ -65,15 +67,35 @@ For example, the weight of assets transfer maybe the ETH amount, however an invo
 
 %We divide the edge set into four relations, CALLs with ETH, CALLs without ETH, CREATIONs and REWARDs, according to the their transaction type. Note that the ERC-20 token transfers are categorized as CALLs without ETH which includes normal smart contract invocations as well. The reason is that even though ERC-20 token transfer is a kind of assets transfer intrinsically, it exists in the form of a smart contract in ETG.\footnote{Another reason is that even converting some ERC-20 tokens into ETH is available, the exchange-rate fluctuations make the unification meaningless.}
 
-\textbf{Time information} Even in a specific relation graph, 
+\textbf{Time information} Even in a single relation graph, there may be multiple edges between the same node pairs. This occurs quite naturally since an account may transfer or invoke to another account repeatedly for a period of time which is quite different from the knowledge graphs and citation networks.
 
-there are repeated edges between the same node pairs. This occurs quite naturally since an account may transfer or invoke to another account repeatedly.
+Intuitively, a simple solution is to merge those edges by weight summation, however, it leads to loss of information. It is not hard to find that these repeated edges are located at different time intervals along the time axis which are characterized by the block height. 
 
-Note that these activities are located at different time intervals along the time axis which are characterized by the block height. Intuitively, a simple solution is to merge those edges by weight summation but this will lose time information. 
+\begin{figure}[htbp]
+\centering
+\begin{tabular}{c}
+	\subfigure[Histogram of time std for all nodes.]{
+		\label{fig:high_order}
+		%\includegraphics[width=0.22\textwidth]{fig/all_time_std_pdf.eps}
+    \input{fig/all_time_std_pdf.tex}
+	%\caption{Example of a high-order proximity caption.}
+	}\\
+	\subfigure[Histogram of time std for hack\&phish nodes.]{
+		\label{fig:asymmetric}
+		%\includegraphics[width=0.22\textwidth]{fig/fake_time_std_pdf.eps}
+    \input{fig/fake_time_std_pdf.tex}
+	}
+\end{tabular}
+\caption{Examples.}
+\label{fig:time_std}
+\end{figure}
 
-\textbf{Second-order proximity} The edge weight $A_{ij}$ in adjacency matrix $A$ is generally treated as a measure of similarity between nodes $v_i$ and $v_j$. And the higher the edge weight, the more similar the two nodes are expected to be. Edges weight $A_{ij}$ is called \emph{first-order proximity} between nodes $v_i$ and $v_j$. 
+Fig.~\ref{fig:time_std} illustrates the distribution of variance of time when transaction happens of all accounts and hack \& phish accounts. It is not difficult to find that the time variance distribution of hack \& phish accounts is more concentrated compared with other accounts, which seems perfectly reasonable since the hacks and phishes are more active in a short time. This insight inspired us to use time information such as the variance of time transaction happens in the embedding.
 
-Further, \emph{second-order proximity} compares the neighborhood of two nodes and treat them as similar if they have a similar neighborhood~\cite{goyal2018graph}. In ETG, two nodes are more similar if they have similar connectivity structures instead of they are just connected by an edge with larger weight. \emph{Second-order} describes the local structure better than \emph{first-order}. As shown in Figure \ref{fig:high_order}, nodes $v_a$ and $v_c$ are smart contracts and node $v_b$ is normal user. Obviously, $v_a$ is not adjacent to $v_c$  but they have similar neighbor structure. Embedding models with \emph{first-order proximity} will keep them far apart although they have similar connection structures, while embedding with \emph{second-order proximity} captures this similarity.
+\textbf{Second-order proximity} The graph $G=(V,E)$ can be represented by a binary or weighted adjacency matrix $A=[A_{ij}]\in \mathbb{R}^{N\times N}$. The \emph{first-order proximity} is the observed pairwise proximity between two nodes, i.e., if $A_{ij}>0$, there exists positive first-order proximity between nodes $v_i$ and $v_j$, otherwise, the first-order proximity is $0$~\cite{tang2015line}.
+%The edge weight $A_{ij}$ in adjacency matrix $A$ is generally treated as a measure of similarity between nodes $v_i$ and $v_j$. And the higher the edge weight, the more similar the two nodes are expected to be. Edges weight $A_{ij}$ is called \emph{first-order proximity} between nodes $v_i$ and $v_j$. 
+
+Further, \emph{second-order proximity} compares the neighborhood of two nodes and treat them as similar if they have a similar neighborhood~\cite{goyal2018graph}. In ETG, two accounts are more similar if they have similar connectivity structures instead of they are just connected by an edge with larger weight. Second-order describes the local structure better than first-order. As shown in Figure \ref{fig:high_order}, nodes $v_a$ and $v_c$ are smart contracts and node $v_b$ is normal user. Obviously, $v_a$ is not adjacent to $v_c$  but they have similar neighbor structure. Embedding models with first-order proximity will keep them far apart although they have similar connection structures, while embedding with second-order proximity captures this similarity.
 
 
 \begin{figure}[htbp]
