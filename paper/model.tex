@@ -72,22 +72,26 @@ The input to rGCN $l$-th layer is defined as $H^{(l)}={h_1^{(l)},h_2^{(l)},...,h
 %\end{equation}
 %\noindent where $r \in R$ represents a kind of relation, $N_i^r$ denotes the set of neighbor indices of node $v_i$ under relation $r$, and $c_{i,r}=\frac{1}{|N_i^r|}$. Single self-connection is also introduced as a special relation type to each node. %compared with Eq.\ref{eq:gcn}The node feature $h_i$ is updated as:
 
-To 
+We improve the forward updating process of raw rGCN as 
 
-We modified the forward updating process as 
 \begin{equation}
 h_i^{(l+1)}=\delta(\sum_{r\in R} \sum_{j \in N_i^r} \frac{\tau_{ij}^r}{\hat c_{i,r}}W_r^{(l)}h_j^{(l)})
 \end{equation}
 
-\noindent where $\tau_{ij}^r$ is the time-density of transactions from node $v_i$ to $v_j$. 
+\noindent where $r \in R$ represents a kind of relation, $N_i^r$ denotes the set of neighbor indices of node $v_i$ under relation $r$, and $\tau_{ij}^r$ is the time-density of transactions from node $v_i$ to $v_j$. 
 
 The coefficient $\hat c_{i,r}$ is computed as:
 \begin{equation}
-\hat c_{i,r}=\frac{1}{d_i^r\cdot N_i^r}
+\hat c_{i,r}=\frac{1}{d_i^r\cdot |N_i^r|}
 \end{equation}
 
-\noindent where $d_i^r=\sum_{j}A^r_{ij}$, preserving the asymmetric proximity.
+\noindent where $d_i^r=\sum_{j}A^r_{ij}$, preserving the asymmetric proximity, and $|N_i^r|$ plays the role of normalization.
 
+The method can be understood as a more abstract propagation rule:
+\begin{equation}
+H^{(l+1)}=\delta(\sum_{r\in R} (K^r\odot (D^r)^{-1}A^r)H^{(l)}W_r^{(l)})
+\end{equation}
+\noindent where $H^{(l)}$ is the matrix of activations in the $l$-th layer, and $H^{(0)}=X$. $\delta(\cdot)$ denotes an activation function such as the ReLU$(\cdot)$ = max$(0,\cdot)$. $D^r$ is a diagonal matrix where $D^r_{ii}=\sum_{j}A^r_{ij}$. $\odot$ indicates point-wise multiplication.
 
 \subsection{Prediction and Training}
 The output of the last layer indicates the probability that each point being assigned to each class.
