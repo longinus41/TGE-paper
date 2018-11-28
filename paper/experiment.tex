@@ -16,7 +16,7 @@ Last, a test set of accounts with label introduced before is provided to evaluat
 
 
 \subsection{Experimental Set-Up and Baselines}
-Unless otherwise noted,
+Unless otherwise noted, all the GCN-based hidden layer has 16 units. Models are trained with Adam optimizer for 100 epochs, and dropout with $dropout_rate=0.5$ is utilized to avoid overfitting.
 
 As a baseline for our experiments, we compare against state-of-the-art classification accuracy from \textcolor{red}{XXX, XXX, XXX and XXX}.
 \begin{table*}
@@ -30,21 +30,30 @@ As a baseline for our experiments, we compare against state-of-the-art classific
 \midrule
 & \textbf{Precision} & \textbf{Recall} & $\mathbf{F_1}$ & \textbf{Precision} & \textbf{Recall} & $\mathbf{F_1}$ & \textbf{Precision} & \textbf{Recall} & $\mathbf{F_1}$ & \textbf{Precision} & \textbf{Recall} & $\mathbf{F_1}$ & \textbf{Precision} & \textbf{Recall} & $\mathbf{F_1}$ \\
 \midrule
- phish and hack & & & &0.614 & 0.273 & 0.378 & 0.700& 0.778& 0.737& 0.720& 0.727& 0.724& 0.714& 0.758& 0.735\\
- token contract & & & &0.634& 0.459& 0.533& 0.930& 0.949& 0.939& 0.958& 0.939& 0.949& 0.958& 0.939& 0.949\\
- exchange deposit & & & &0.526& 0.400& 0.455& 0.500& 0.280& 0.359& 0.615& 0.640& 0.628& 0.556& 0.600& 0.579\\
- exchange root & & & &0.579& 0.743& 0.650& 0.913& 0.600& 0.724& 0.862& 0.714& 0.781& 0.828& 0.686& 0.750\\
- pool & & & &0.344& 0.500& 0.407& 1.000& 0.636& 0.778& 0.842& 0.727& 0.781& 1.000& 0.727& 0.842\\
- miner & & & &0.696& 0.390& 0.500& 0.905& 0.927& 0.916& 0.826& 0.927& 0.874& 0.841& 0.902& 0.871\\
- primary market & & & & 0.238& 0.161& 0.192& 0.786& 0.355& 0.489& 0.680& 0.548& 0.607& 0.750& 0.484& 0.588\\
- ICO wallet & & & & 0.539& 0.184& 0.275& 0.677& 0.552& 0.609& 0.769& 0.526& 0.625& 0.742& 0.605& 0.668\\
+ phish and hack & & & &0.614 & 0.273 & 0.378 & 0.913& 0.212& 0.344& 0.720& 0.727& 0.724& 0.714& 0.758& 0.735\\
+ token contract & & & &0.634& 0.459& 0.533& 0.908& 0.602& 0.724& 0.958& 0.939& 0.949& 0.958& 0.939& 0.949\\
+ exchange deposit & & & &0.526& 0.400& 0.455& 0.688& 0.440& 0.537& 0.615& 0.640& 0.628& 0.556& 0.600& 0.579\\
+ exchange root & & & &0.579& 0.743& 0.650& 0.923& 0.686& 0.787& 0.862& 0.714& 0.781& 0.828& 0.686& 0.750\\
+ pool & & & &0.344& 0.500& 0.407& 1.000& 0.727& 0.842& 0.842& 0.727& 0.781& 1.000& 0.727& 0.842\\
+ miner & & & &0.696& 0.390& 0.500& 0.867& 0.951& 0.907& 0.826& 0.927& 0.874& 0.841& 0.902& 0.871\\
+ primary market & & & & 0.238& 0.161& 0.192& 0.739& 0.548& 0.630& 0.680& 0.548& 0.607& 0.750& 0.484& 0.588\\
+ ICO wallet & & & & 0.539& 0.184& 0.275& 0.546& 0.158& 0.245& 0.769& 0.526& 0.625& 0.742& 0.605& 0.668\\
  \midrule
- average & & & & 0.566& 0.378& 0.436& 0.807& 0.725& 0.751& 0.806& 0.761& 0.779& \bf{0.811}& \bf{0.764}& \bf{0.782}\\
+ average & & & & 0.566& 0.378& 0.436& 0.848& 0.496& 0.593& 0.806& 0.761& 0.779& \bf{0.811}& \bf{0.764}& \bf{0.782}\\
 \bottomrule
 \end{tabular}
 }
 \end{table*}
-
+% phish and hack & & & &0.614 & 0.273 & 0.378 & 0.700& 0.778& 0.737& 0.720& 0.727& 0.724& 0.714& 0.758& 0.735\\
+%  token contract & & & &0.634& 0.459& 0.533& 0.930& 0.949& 0.939& 0.958& 0.939& 0.949& 0.958& 0.939& 0.949\\
+%  exchange deposit & & & &0.526& 0.400& 0.455& 0.500& 0.280& 0.359& 0.615& 0.640& 0.628& 0.556& 0.600& 0.579\\
+%  exchange root & & & &0.579& 0.743& 0.650& 0.913& 0.600& 0.724& 0.862& 0.714& 0.781& 0.828& 0.686& 0.750\\
+%  pool & & & &0.344& 0.500& 0.407& 1.000& 0.636& 0.778& 0.842& 0.727& 0.781& 1.000& 0.727& 0.842\\
+%  miner & & & &0.696& 0.390& 0.500& 0.905& 0.927& 0.916& 0.826& 0.927& 0.874& 0.841& 0.902& 0.871\\
+%  primary market & & & & 0.238& 0.161& 0.192& 0.786& 0.355& 0.489& 0.680& 0.548& 0.607& 0.750& 0.484& 0.588\\
+%  ICO wallet & & & & 0.539& 0.184& 0.275& 0.677& 0.552& 0.609& 0.769& 0.526& 0.625& 0.742& 0.605& 0.668\\
+%  \midrule
+%  average & & & & 0.566& 0.378& 0.436& 0.807& 0.725& 0.751& 0.806& 0.761& 0.779& \bf{0.811}& \bf{0.764}& \bf{0.782}\\
 % \begin{table}
 % \centering
 % \caption{}
@@ -66,7 +75,7 @@ As a baseline for our experiments, we compare against state-of-the-art classific
 All embedding and classification programs were run on the server, which includes Intel Xeon E5 CPU with 55 processors and 128GB of memory, and the GPU used for deep learning is Nvidia 1080Ti.
 
 \subsection{Results}
-
+We use three indicators to evaluate each model, precision, recall and $F_1$ score. The $F_1$ score of label $i$ is computed as $F_1^i=2\frac{Precison^i \times Recall^i}{Precison^i + Recall^i}$, and the average $F_1$ score is computed as $F_1^{avg}=2\frac{Precison^{all} \times Recall^{all}}{Precison^{all} + Recall^{all}}$, where $Precison^{all}$ and $Recall^{all}$ are the precision and recall value of all labels.
 
 %These data are collected
 
