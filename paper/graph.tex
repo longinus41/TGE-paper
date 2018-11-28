@@ -7,12 +7,12 @@ In this section, we illustrate our approach at first and then discuss difference
 
 \subsection{Methodology}
 \label{subsec:methodology}
-Our approach consists of three phases, graph construction, graph embedding and node classification. 
+Our approach consists of three phases, graph construction, graph embedding and node classification.
 
 \textbf{Phase 1: Graph construction}
 Since all transactions are stored in the blockchain, we could synchronize them by running an Ethereum client.
 
- Based on the collected data, the transaction graph can be constructed. Generally, we consider the ETG as a directed graph $G=(V,E)$, where node $v \in V$ represents an account and $e \in E$ depicts the edge between two nodes. 
+ Based on the collected data, the transaction graph can be constructed. Generally, we consider the ETG as a directed graph $G=(V,E)$, where node $v \in V$ represents an account and $e \in E$ depicts the edge between two nodes.
 
 Note that $V$ is the set of all addresses in Ethereum including both EOAs and CAs, and number of addresses is depicted as $|V|=N$. And we use the terms account and node interchangeably in the remainder of this paper. $E$ is a set of ordered pairs, where $E=\{(v_i,v_j)|v_i,v_j \in V\}$. The order of an edge indicates the direction of activity (e.g., assets transfer or smart contract invocation) from $v_i$ to $v_j$. %Analogously, the number of edges in ETG is represented as $|E|$.
 
@@ -20,7 +20,7 @@ Note that $V$ is the set of all addresses in Ethereum including both EOAs and CA
 %In our definition, each edge associates with a weight $w$, which will be discussed later. Hence, $G$ is a weighted directed graph.
 
 \textbf{Phase 2: Graph embedding}
-The embedding process can be defined as follows: given ETG $G=(V,E)$, we aim to represent each node $v$ in a low-dimensional vector space $\vec{y_v}$. By representing ETG as a set of low dimensional vectors, graph analysis algorithms can then be computed efficiently. 
+The embedding process can be defined as follows: given ETG $G=(V,E)$, we aim to represent each node $v$ in a low-dimensional vector space $\vec{y_v}$. By representing ETG as a set of low dimensional vectors, graph analysis algorithms can then be computed efficiently.
 
 Typical network embedding techniques such as random-walk based and deep learning based models use the pure network structure to map into the embedding space~\cite{goyal2018capturing}. Our model is primarily motivated as an extension of GCNs (Graph Convolutional Networks)~\cite{kipf2016semi,schlichtkrull2018modeling}, which puts the features of nodes and edges into the representation, since it shows effectiveness for entity classification in large-scale relational data.
 
@@ -45,31 +45,31 @@ Typical network embedding techniques such as random-walk based and deep learning
 \textbf{Phase 3: Node classification}
 The final objective of our approach is predicting the account identity on ETG, in essence, classifying given node into categories which are shown in TABLE \ref{tab1}.
 
-By given a labeled account set, supervised or semi-supervised methods can be used for entities classification. Here we simply stack GCN layers of the form with a softmax ($\cdot$) activation on the output of the last layer. A cross-function can be the minimizing objective for training. 
+By given a labeled account set, supervised or semi-supervised methods can be used for entities classification. Here we simply stack GCN layers of the form with a softmax ($\cdot$) activation on the output of the last layer. A cross-function can be the minimizing objective for training.
 
 \subsection{Challenges}
 \label{section:time}
-The graph embedding plays a key part in graph analysis. The GCN approach \cite{kipf2016semi} outperforms other methods such as deepwalk~\cite{perozzi2014deepwalk} in experiments on citation networks and knowledge graph dataset. 
+The graph embedding plays a key part in graph analysis. The GCN approach \cite{kipf2016semi} outperforms other methods such as deepwalk~\cite{perozzi2014deepwalk} in experiments on citation networks and knowledge graph dataset.
 
 However, we found that using such GCN model directly achieves poor effect on ETG which has many properties different from traditional networks (such as social media networks and citation graph). It brings the following challenges.
 
 
-\textbf{Multi-relations} In ETG, edges stand for different activities such as money transfer, contract creation and contract invocation, which can not be measured in a uniform weighted model. 
+\textbf{Multi-relations} In ETG, edges stand for different activities such as money transfer, contract creation and contract invocation, which can not be measured in a uniform weighted model.
 
-For example, the weight of assets transfer maybe the ETH amount, however an invocation to smart contract does not have such numerical value. This inspired us to divide the raw ETG into different relation graphs. 
+For example, the weight of assets transfer maybe the ETH amount, however an invocation to smart contract does not have such numerical value. This inspired us to divide the raw ETG into different relation graphs.
 
 In \cite{chen2018infocom}, three graphs are constructed for statistics, including money flow graph, smart contract creation graph, and smart contract invocation graph. However, we find that such strategy of division is not detailed enough and has poor performance for node classification.
 
-%In \cite{schlichtkrull2018modeling}, relational-GCN (rGCN) is used to multi-graphs with large numbers of relations. We find that the strategy of division is very important 
+%In \cite{schlichtkrull2018modeling}, relational-GCN (rGCN) is used to multi-graphs with large numbers of relations. We find that the strategy of division is very important
 
 
-%Our work is motivated as an extension of , which is proposed to develop an encoder model for edges in the relational graph~\cite{schlichtkrull2018modeling}. They utilize the transformation of adjacency matrices introduced in GCN to process relational graphs. 
+%Our work is motivated as an extension of , which is proposed to develop an encoder model for edges in the relational graph~\cite{schlichtkrull2018modeling}. They utilize the transformation of adjacency matrices introduced in GCN to process relational graphs.
 
 %We divide the edge set into four relations, CALLs with ETH, CALLs without ETH, CREATIONs and REWARDs, according to the their transaction type. Note that the ERC-20 token transfers are categorized as CALLs without ETH which includes normal smart contract invocations as well. The reason is that even though ERC-20 token transfer is a kind of assets transfer intrinsically, it exists in the form of a smart contract in ETG.\footnote{Another reason is that even converting some ERC-20 tokens into ETH is available, the exchange-rate fluctuations make the unification meaningless.}
 
 \textbf{Time information} Even in a single relation graph, there may be multiple edges between the same node pairs. This occurs quite naturally since an account may transfer or invoke to another account repeatedly for a period of time which is quite different from the knowledge graphs and citation networks.
 
-Intuitively, a simple solution is to merge those edges by weight summation, however, it leads to loss of information. It is not hard to find that these repeated edges are located at different time intervals along the time axis which are characterized by the block height. 
+Intuitively, a simple solution is to merge those edges by weight summation, however, it leads to loss of information. It is not hard to find that these repeated edges are located at different time intervals along the time axis which are characterized by the block height.
 
 \begin{figure}[htbp]
 \centering
@@ -93,7 +93,7 @@ Intuitively, a simple solution is to merge those edges by weight summation, howe
 Fig.~\ref{fig:time_std} illustrates the distribution of variance of time when transaction happens of all accounts and hack \& phish accounts. It is not difficult to find that the time variance distribution of hack \& phish accounts is more concentrated compared with other accounts, which seems perfectly reasonable since the hacks and phishes are more active in a short time. This insight inspired us to use time information such as the variance of time transaction happens in the embedding.
 
 \textbf{Second-order proximity} The graph $G=(V,E)$ can be represented by a binary or weighted adjacency matrix $A=[A_{ij}]\in \mathbb{R}^{N\times N}$. The \emph{first-order proximity} is the observed pairwise proximity between two nodes, i.e., if $A_{ij}>0$, there exists positive first-order proximity between nodes $v_i$ and $v_j$, otherwise, the first-order proximity is $0$~\cite{tang2015line}.
-%The edge weight $A_{ij}$ in adjacency matrix $A$ is generally treated as a measure of similarity between nodes $v_i$ and $v_j$. And the higher the edge weight, the more similar the two nodes are expected to be. Edges weight $A_{ij}$ is called \emph{first-order proximity} between nodes $v_i$ and $v_j$. 
+%The edge weight $A_{ij}$ in adjacency matrix $A$ is generally treated as a measure of similarity between nodes $v_i$ and $v_j$. And the higher the edge weight, the more similar the two nodes are expected to be. Edges weight $A_{ij}$ is called \emph{first-order proximity} between nodes $v_i$ and $v_j$.
 
 Further, \emph{second-order proximity} compares the neighborhood of two nodes and treat them as similar if they have a similar neighborhood~\cite{goyal2018graph}. In ETG, two accounts are more similar if they have similar connectivity structures instead of they are just connected by an edge with larger weight. Second-order describes the local structure better than first-order. As shown in Figure \ref{fig:high_order}, nodes $v_a$ and $v_c$ are smart contracts and node $v_b$ is normal user. Obviously, $v_a$ is not adjacent to $v_c$  but they have similar neighbor structure. Embedding models with first-order proximity will keep them far apart although they have similar connection structures, while embedding with second-order proximity captures this similarity.
 
@@ -102,7 +102,8 @@ Further, \emph{second-order proximity} compares the neighborhood of two nodes an
 	\centering
 	\subfigure[Example of a high-order proximity caption.]{
 		\label{fig:high_order}
-		\includegraphics[width=2.0in]{fig/high_order_proximity.eps}
+    \input{fig/high_order_proximity.tex}
+		%\includegraphics[width=2.0in]{fig/high_order_proximity.eps}
 	%\caption{Example of a high-order proximity caption.}
 	}
 	\subfigure[Example of an asymmetric proximity caption.]{
@@ -117,11 +118,11 @@ Further, \emph{second-order proximity} compares the neighborhood of two nodes an
 \textbf{Asymmetric proximity}
 Another property of closeness in ETG is \emph{asymmetric proximity}. For instance, as shown in Figure. \ref{fig:asymmetric}, node $v_a$ is a Ethereum investor address and node $v_c$ is an exchange root address. Generally, edge weight can be $A_{ab}=A_{bc}=A_{ca}$ since deposit and withdrawal come in pairs in symmetric model. However, the proximity $(v_a,v_c)$ is not equal to proximity $(v_c,v_a)$ due to their asymmetric local structures.
 
- Zhou et. proposed a scalable asymmetric proximity preserving graph embedding method based on random walk~\cite{zhou2017scalable}. In their model, the probability that $v_a$ arrives at $v_c$ is far less than the one that $v_c$ arrives at $v_a$, as the out degree of $v_c$ is bigger than the out degree of $v_a$. 
+ Zhou et. proposed a scalable asymmetric proximity preserving graph embedding method based on random walk~\cite{zhou2017scalable}. In their model, the probability that $v_a$ arrives at $v_c$ is far less than the one that $v_c$ arrives at $v_a$, as the out degree of $v_c$ is bigger than the out degree of $v_a$.
 However, there is no research on asymmetric proximity in non-probability graph embedding models.
 
  %due to their asymmetric local structures. However, there is no research on asymmetric proximity in GCN model.
- 
+
 
 
 %In ETG, two nodes are more similar if they have similar connection structures instead of they are just connected by an edge with larger weight simply or have similar neighborhoods. Using node adjacency as the input, most graph embedding techniques can not preserve such higher order proximity.
@@ -137,7 +138,7 @@ However, there is no research on asymmetric proximity in non-probability graph e
 
 
 
-%Here we introduce a variable named time-density which can be represented as strictly increasing function of block height variance, and the new adjacency matrix in relation $r$ can be represented as 
+%Here we introduce a variable named time-density which can be represented as strictly increasing function of block height variance, and the new adjacency matrix in relation $r$ can be represented as
 
 %\begin{equation}
 %\hat{A}=\hat{D}^{-\frac{1}{2}}(\tilde{A}+V)\hat{D}^{-\frac{1}{2}}
