@@ -1,0 +1,47 @@
+\begin{tikzpicture}
+\tikzset{
+  base/.style={draw, on grid, align=center, minimum height=2.5ex},
+  pn/.style={base, circle},
+}
+
+
+\tikzmath{\r=1.5;}
+
+\node [pn] (a) at (0, 0) {};
+\node at (a) {\footnotesize a};
+\node [pn] (b) at (\r, 0) {};
+\node at (b) {\footnotesize b};
+\node [pn] (c) at (2*\r, 0) {};
+\node at (c) {\footnotesize c};
+
+%\node[pn] (a1) at ({\r*cos(60)}, {\r*sin(60)}) {};
+%\node[pn] (a2) at ({\r*cos(120)}, {\r*sin(120)}) {};
+%\node[pn] (a3) at ({\r*cos(180)}, {\r*sin(180)}) {};
+%\node[pn] (a4) at ({\r*cos(240)}, {\r*sin(240)}) {};
+%\node[pn] (a5) at ({\r*cos(300)}, {\r*sin(300)}) {};
+
+\node[pn] (b1) at ({2*\r + \r*cos(360.0/14)}, {\r*sin(360.0/14)}) {};
+\node[pn] (b2) at ({2*\r + \r*cos(360.0*3/14)}, {\r*sin(360.0*3/14)}) {};
+\node[pn] (b3) at ({2*\r + \r*cos(360.0*5/14)}, {\r*sin(360.0*5/14)}) {};
+\node[pn] (b4) at ({2*\r + \r*cos(360.0*9/14)}, {\r*sin(360.0*9/14)}) {};
+\node[pn] (b5) at ({2*\r + \r*cos(360.0*11/14)}, {\r*sin(360.0*11/14)}) {};
+\node[pn] (b6) at ({2*\r + \r*cos(360.0*13/14)}, {\r*sin(360.0*13/14)}) {};
+
+%\draw[->, >=stealth] (a1)-- (a);
+%\draw[->, >=stealth] (a2) -- (a);
+%\draw[->, >=stealth] (a3) -- (a);
+%\draw[->, >=stealth] (a4) -- (a);
+%\draw[->, >=stealth] (a5) -- (a);
+
+\draw[->, >=stealth] (b1) -- (c);
+\draw[->, >=stealth] (c) -- (b2);
+\draw[->, >=stealth] (b3) -- (c);
+\draw[->, >=stealth] (c) -- (b4);
+\draw[->, >=stealth] (b5) -- (c);
+\draw[->, >=stealth] (c) -- (b6);
+
+\draw[->, >=stealth] (a) -- (b) node [midway, above] {\tiny deposit};
+\draw[->, >=stealth] (b) -- (c) node  {};
+\draw[->, >=stealth] (c) to [out=200, in=340]  node [midway, below] {\tiny
+withdrawal}  (a);
+\end{tikzpicture}
