@@ -1,5 +1,35 @@
 % !TEX root = main.tex
 
 \section{Introduction}
-\textcolor{red}{TBA.}
+%\textcolor{red}{TBA.}
+
+As the second major currency on the market with more than 10 billion dollars of capitalization\footnote{At the time of this writing, the capitalization of Ethereum is about 11.8 billion dollars, once as high as more than 40 billion dolloars.}, Ethereum is developed as a public, open-sourced blockchain-based platform~\cite{buterin2013ethereum}. Compared with Bitcoin, the origin implementation of blockchain, Ethereum has the ability for users to build Turing-complete smart contracts. A contract is a collection of code (functions) and data (state) that resides at a specific address on the Ethereum blockchain. Such contracts provide the implementations for various fields other than cryptocurrency exchange, such as voting, crowdfunding, lending, property rights and so on.
+
+Accounts and transactions play a central role in Ethereum. There are two types of accounts, namely \emph{Externally Owned Accounts} (EOAs) and \emph{Contract Accounts} (CAs). EOAs are controlled by people who hold the public-private key pairs whereas CAs are ruled by executable codes inside. On the other hand, the relationship between accounts are depicted by transactions which are recorded into each block of the blockchain.
+
+
+ Quite often, people intentionally make their activities harder to track on blockchain. This encouraged many studies focus on characterizing blockchain system through graph analysis, such as deanonymization, and money laundering detection on Bitcoin~\cite{reid2013analysis,zhao2015graph,maesa2016analysis}. However, the transactions happen on Ethereum are even more complex with various forms, such as money transfer and contract invocation. So far as we know, few studies have investigated the transactions on Ethereum. 
+ %Chen et al.~\cite{chen2018infocom} conduct a systematic study on Ethereum by leveraging graph analysis sfd
+ %however, they proposed insights on the basis of statistics without any specfic task
+ 
+ Even so, we can still glean insight by reviewing the accounts' on-chain transaction activity and these accounts can be classified into different identities according to user roles on the blockchain. In this paper, we construct a Ethereum transaction graph (ETG for short) and analyze graph based on graph embedding techniques. 
+ 
+ Graph embedding provides an effective way to solve the graph analytics problem which convert the graph into a low dimensional space in which the graph information is preserve~\cite{cai2018comprehensive}. Based on the low dimensional vectors, some analytic tasks can be done effectively. Here we aim at determining the identity of accounts on other labeled accounts and the topology of the transaction graph. According to what we have learnt, this paper is the first work to analyze the transaction graph of cryptocurrency based on graph embedding techniques.
+
+At the same time, we find that using such embedding techniques directly achieves poor effect on transaction graph. This is due to Ethereum transaction graph has many properties different from traditional networks, such as social media networks and citation graph. In Ethereum transaction graph, edges stand for different activities such as money transfer, contract creation and invocation, which can not be measured in a uniform weighted model. Besides, compared with other graphs, closeness features such as second-order proximity and asymmetric proximity in ETG are characteristic, which should be preserved. We also find that the relationship between a pair of nodes differs from another, even they have the same transaction frequency which could be expressed by time-density information.
+
+Generally, our approach consists of three phases, \emph{graph construction}, \emph{graph embedding} and \emph{node classification}. In the construction phase, we construct the Ethereum transaction graph and divide it into multi-relation graphs to capture the different graph neighboring of transactions. In the embedding phase, we propose a XXX graph convolutional network and put the features of nodes and edges into representation. Last, a semi-supervised method is used for accounts classification.
+
+In summary, this paper make the following major contributions.
+
+(1) We propose a taxonomy of Ethereum accounts. Even the perfect categorization does not exit due to the blockchain anonymity and diversity in Ethereum. However, it is necessary to concern about the identities behind their on-chain transaction activities.
+%we can still glean insight from examining the addresses with the most substantial balances by reviewing their on-chain transaction activity.
+
+(2) To the best of our knowledge, we are the first to analyze the transaction graph of cryptocurrency based on graph embedding techniques. We propose a three-pronged approach to handle account prediction task and reveal the differences in analysis between Ethereum transaction graph and other traditional graphs.
+
+(3) To address these challenges, we introduce several techniques in data preprocessing and embedding. The evaluation through real data set shows the effectiveness of new approach. 
+
+The rest of the paper is organized as follows. Section~\ref{sec:background} introduces the background knowledge of Ethereum related studies in graph analysis. Section~\ref{sec:preliminary} investigates accounts and transactions, then a taxonomy of Ethereum accounts is proposed. Section~\ref{sec:graph_analysis} gives an overview of our analysis procedure and illustrates the challenges. \textcolor{red}{TBA: In Section~\ref{sec:model}}
+
+%In Section~\ref{sec:model}, the detailed architecture 
 
