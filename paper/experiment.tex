@@ -6,7 +6,7 @@ In this section, we conduct experiments to evaluate the performance of our metho
 \subsection{Data Collection and Graph Construction}
 We collect all data by running Ethereum client\footnote{Parity Ethereum Client, https://www.parity.io/ethereum/} which maintains the same copy of blockchain with all historical transactions. Note that we choose the transaction logs on Ethereum from January 1, 2018 to March 31, 2018 (\textcolor{red}{xxxx} external transactions and internal transactions both) as the input of graph construction since it is the most active period with various activities.
 
-By parsing the transactions, 16,599,825 active accounts are obtained, including 14,450,993 EOAs and 2,148,831 SCs (the remaining address is \textcolor{red}{0x000}). Then we construct the original ETG based on these accounts and transactions.
+By parsing the transactions, 16,599,825 active accounts are obtained, including 14,450,993 EOAs and 2,148,831 SCs. Then we construct the original ETG based on these accounts and transactions.
 
 Specially, we extend the pre-processing scheme to adapt our model. First we construct four relation graphs, which contains ETH transfer graph, contract creation graph, contract invocation graph and mining reward graph. In each graph, repeated edges between the same node pair are merged via the method introduced in section \ref{section:time}.
 
@@ -16,9 +16,11 @@ Last, a test set of accounts with label introduced before is provided to evaluat
 
 
 \subsection{Experimental Set-Up and Baselines}
-Unless otherwise noted, all the GCN-based hidden layer has 16 units. Models are trained with Adam optimizer for 100 epochs, and dropout with $dropout_rate=0.5$ is utilized to avoid overfitting.
+As a baseline for our experiments, we compare against state-of-the-art classification results from \textcolor{red}{DeepWalk~\cite{perozzi2014deepwalk}, GCN~\cite{kipf2016semi}, rGCN~\cite{schlichtkrull2018modeling} and ...}.
 
-As a baseline for our experiments, we compare against state-of-the-art classification accuracy from \textcolor{red}{XXX, XXX, XXX and XXX}.
+Unless otherwise noted, all the GCN-based hidden layer has 16 units. Models are trained with Adam optimizer for 100 epochs, and dropout with $dropout\_rate=0.5$ is utilized to avoid overfitting.
+
+
 \begin{table*}
 \footnotesize
 \centering
