@@ -5,7 +5,7 @@
 }
 
 
-\tikzmath{\r=1.5;}
+\tikzmath{\r=1.0;}
 
 \node [pn] (a) at (0, 0) {};
 \node at (a) {\footnotesize a};
@@ -42,6 +42,6 @@
 
 \draw[->, >=stealth] (a) -- (b) node [midway, above] {\tiny deposit};
 \draw[->, >=stealth] (b) -- (c) node  {};
-\draw[->, >=stealth] (c) to [out=200, in=340]  node [midway, below] {\tiny
+\draw[->, >=stealth] (c) to [out=205, in=335]  node [midway, below] {\tiny
 withdrawal}  (a);
 \end{tikzpicture}

@@ -5,7 +5,7 @@
 }
 
 
-\tikzmath{\r=1.5;}
+\tikzmath{\r=1.0;}
 
 \node [pn] (a) at (0, 0) {};
 \node at (a) {\footnotesize a};
@@ -38,6 +38,6 @@
 \draw[->, >=stealth] (b4) -- (c);
 \draw[->, >=stealth] (b5) -- (c);
 
-\draw[->, >=stealth] (b) -- (a) node [midway, above] {\tiny invocation};
-\draw[->, >=stealth] (b) -- (c) node [midway, above] {\tiny invocation};
+\draw[->, >=stealth] (b) -- (a) node [midway, above] {\tiny invoke};
+\draw[->, >=stealth] (b) -- (c) node [midway, above] {\tiny invoke};
 \end{tikzpicture}

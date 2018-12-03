@@ -20,7 +20,7 @@ Unless otherwise noted, all the GCN-based hidden layer has 16 units. Models are 
 \begin{table*}
 \footnotesize
 \centering
-\caption{}
+\caption{Identity Classification Results}
 \resizebox{\textwidth}{17mm}{
 \begin{tabular}{l|ccc|ccc|ccc|ccc|ccc}
 \toprule
@@ -41,6 +41,7 @@ Unless otherwise noted, all the GCN-based hidden layer has 16 units. Models are 
 \bottomrule
 \end{tabular}
 }
+\label{table:overall_results}
 \end{table*}
 
 All embedding and classification programs were run on the server, which includes Intel Xeon E5 CPU with 55 processors and 128GB of memory, and the GPU used for deep learning is Nvidia 1080.
@@ -54,6 +55,11 @@ F_1=(\frac{{precision}^{-1}+{recall}^{-1}}{2})^{-1}=2\cdot\frac{precision \cdot 
 \end{equation}
 
 In statistical analysis of multi-label classification, the $F_1$ score is an important indicator since it is the harmonic average of the precision and recall.
+
+Results are summarized in TABLE~\ref{table:overall_results}. Our methods (with asymmetric proximity only and with asymmetric proximity and time-density both) outperform than others in average $F_1$ score. Note that rGCN achieves the highest average precision but a low average recall. Especially, rGCN has the lowest recall of category of phish and hack which means that many normal accounts are inferred as threatening in rGCN model.
+
+
+
 
 \subsection{Asymmetric Proximity and Time-Density}
 
