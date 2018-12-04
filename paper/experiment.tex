@@ -47,14 +47,14 @@ Unless otherwise noted, all the GCN-based hidden layer has 16 units. Models are 
 All embedding and classification programs were run on the server, which includes Intel Xeon E5 CPU with 55 processors and 128GB of memory, and the GPU used for deep learning is Nvidia 1080.
 
 \subsection{Classification Results}
-In the first experiment, we test XXX on classification with the label set. 
+In the first experiment, we test XXX on classification with the label set. Note that one account is supposed to have single identity instead of multiple identities. Reason for this is that, people who take on many identities, tend to hold multiple accounts usually and each account is related to one identity. 
 
 We use three indicators to evaluate each model, including precision, recall and $F_1$ score. Precision is the fraction of relevant instances among the retrieved instances, while recall is the fraction of relevant instances that have been retrieved over the total amount of relevant instances. And $F_1$ score is a measure that combines precision and recall, which is computed as
 \begin{equation}
 F_1=(\frac{{precision}^{-1}+{recall}^{-1}}{2})^{-1}=2\cdot\frac{precision \cdot recall}{precision + recall}
 \end{equation}
 
-In statistical analysis of multi-label classification, the $F_1$ score is an important indicator since it is the harmonic average of the precision and recall.
+In statistical analysis of label classification, the $F_1$ score is an important indicator since it is the harmonic average of the precision and recall.
 
 Results are summarized in TABLE~\ref{table:overall_results}. Our methods (with asymmetric proximity only and with asymmetric proximity and time-density both) outperform than others in average $F_1$ score. Note that rGCN achieves the highest average precision but a low average recall. Especially, rGCN has the lowest recall of category of phish and hack which means that many normal accounts are inferred as threatening in rGCN model.
 
