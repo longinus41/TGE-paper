@@ -6,16 +6,20 @@ As the second major currency on the market with more than 10 billion dollars\foo
 
 %From a logical perspective, the core elements in Ethereum include accounts and transactions. There are two types of accounts, namely \emph{Externally Owned Accounts} (EOAs) and \emph{Contract Accounts} (CAs). Both have an ETH balance and the major difference between is that EOAs are controlled by people who hold the public-private key pairs whereas CAs are ruled by executable codes inside. The transactions refer to the signed data package, recording messages to be sent from an account to another account on the blockchain. In Ethereum, various activities, such as money transfer, smart contract creation and invocation can be leveraged via transactions~\cite{chen2018infocom}.
 
-Ethereum is pseudoanonymous, i.e., each account is associated with a public address, but its actual identity is unknown. 
-%Fortunately, a unique feature of blockchain system is that the list of all the transactions is publicly available, which makes it possible to excavate out a large amount of information and obtain insights in the behaviours of users.  
-By tracking and inferring these accounts, we can have better understanding what is occurring on the blockchain. For instance, cryptocurrency team can make airdrop to the top valuable accounts and the fraud or cheating actions can be detected efficiently. 
- 
-
-Although there exists some research efforts~\cite{reid2013analysis,zhao2015graph} on deanonymization in Bitcoin, they are far from achieving identity inference in Ethereum because of two reasons. First, existing deanonymization methods target on Bitcoin using the UTXO (Unspent Transaction Output) model. They cannot be directly applied for Ethereum with the Account/Balance model. 
+Ethereum is pseudonymous, i.e., each account is associated with a public address, but its actual identity is unknown. \textcolor{red}{On one hand, anonymity is in the reasons why people use cryptocurrency. Transacting value across the Ethereum network can be done pseudonymously, and personal details can be veiled. On the other hand, deanonymization attracts more and more people to think and concern as well. By tracking and inferring these accounts, we can have better understanding what is occurring on the blockchain. For instance, cryptocurrency team can make airdrop to the top valuable accounts~\cite{harrigan2018airdrops} and the fraud or cheating actions can be detected efficiently~\cite{monamo2016unsupervised}.}
 
 
+Although there exists some research efforts on deanonymization in Bitcoin, they are far from achieving identity inference in Ethereum. First, most deanonymization methods target on \textcolor{red}{rebuilding transaction flow on Bitcoin because the \emph{UTXO} (Unspent Transaction Output) model makes it hard to figure out the transaction trace~\cite{reid2013analysis,zhao2015graph,meiklejohn2013fistful}. However, there's really no such problems in Ethereum since Ethereum takes the \emph{Account/Balance} model and it is easy to reveal the transaction trace~\cite{buterin2013ethereum}.} 
 
-Second, deanonymization gives only coarse-grained information, but identify inference aims to reveal accounts' real identity, which is more challenging than traditional deanonymization. The most relevant work to ours is~\cite{chen2018infocom}, which has inferred the account identity by analyzing source codes (e.g., comments or keywords) of smart contracts. This method is tedious, time-consuming and with low accuracy.
+\textcolor{red}{However, further deanonymization does not happen as expected in Ethereum. A proximate work is~\cite{chen2018infocom}, which has inferred the account identity by analyzing source codes (e.g., comments or keywords) of smart contracts. Such method relies on experts to exhaustive enumerate all related features, which is tedious, time-consuming and with low accuracy.}
+%Fortunately, a unique feature of blockchain system is that the list of all the transactions is publicly available, which makes it possible to excavate out a large amount of information and obtain insights in the behaviours of users. 
+
+
+%existing methods relies on experts to exhaustive enumerate all related features. The most relevant work to ours is~\cite{chen2018infocom}, which has inferred the account identity by analyzing source codes (e.g., comments or keywords) of smart contracts.}
+
+%, but identify inference aims to reveal accounts' real identity, which is more challenging than traditional deanonymization.  This method is tedious, time-consuming and with low accuracy.}
+
+%Second, existing methods gives only coarse-grained information, but identify inference aims to reveal accounts' real identity, which is more challenging than traditional deanonymization. The most relevant work to ours is~\cite{chen2018infocom}, which has inferred the account identity by analyzing source codes (e.g., comments or keywords) of smart contracts. This method is tedious, time-consuming and with low accuracy.
 
 %On the one hand, most existing methods, however, are in the feature engineering manner, which relies on experts to exhaustive enumerate all related features~\cite{zhao2015graph,maesa2016analysis,chen2018infocom}. This way depends highly on the expertise. One can hardly expect the specialist familiar with all types of graphs, let alone ordinary users. Consequently, it's mechanical, rigid and time-consuming. On the other hand, previous methods exploit merely the node-level features and overlook the more important part, the relationship between nodes, namely the graph structural information. Due to the anonymity feature of Ethereum, little information is revealed in the node data, which results in the poor performance of these methods in blockchain data. Moreover, the inherent characteristic of blockchain data, that is the dynamic evolving, or more specifically, continuous growth in size, pose more challenges to the task. The work~\cite{chen2018infocom} analyze the Etherum from July, 2015 to June, 2017, which have only 48,261,952 transactions. Sadly, as the date of today, the transactions of the time period from Jan, 2018 to March, 2018 have exploded into 116,293,867, which can be hardly handled using traditional methods.~\footnote{The growth rate of Etherum transactions greatly slows down in 2018, so the period we selected could approximately represent the current maximum size of transactions in one quarter.} 
 
@@ -31,13 +35,16 @@ Generally, our approach consists of three phases, \emph{graph construction}, \em
 
 In summary, this paper make the following major contributions.
 
-(1) We propose a taxonomy of Ethereum accounts. Even the perfect categorization does not exist due to the blockchain anonymity and diversity in Ethereum. However, it is necessary to concern about the identities behind their on-chain transaction activities.
-%we can still glean insight from examining the addresses with the most substantial balances by reviewing their on-chain transaction activity.
+(1) To the best of our knowledge, we are the first to analyze the transaction graph of cryptocurrency based on graph embedding techniques. We propose a three-pronged approach to handle account inferring task and reveal the differences in analysis between Ethereum transaction graph and other traditional graphs.
 
-(2) To the best of our knowledge, we are the first to analyze the transaction graph of cryptocurrency based on graph embedding techniques. We propose a three-pronged approach to handle account prediction task and reveal the differences in analysis between Ethereum transaction graph and other traditional graphs.
+\textcolor{red}{(2) To implement account inferring task, we propose a taxonomy of Ethereum accounts. The prominent identities are illustrated and provided for model training.}
+
+%. Even the perfect categorization does not exist due to the blockchain anonymity and diversity in Ethereum. However, it is necessary to concern about the identities behind their on-chain transaction activities.
+%we can still glean insight from examining the addresses with the most substantial balances by reviewing their on-chain transaction activity.
 
 (3) To address these challenges, we introduce several techniques in data preprocessing and embedding. The evaluation through real data set shows the effectiveness of new approach.
 
-The rest of the paper is organized as follows. Section~\ref{sec:background} introduces the background knowledge of Ethereum related studies in graph analysis. Section~\ref{sec:preliminary} investigates accounts and transactions, then a taxonomy of Ethereum accounts is proposed. Section~\ref{sec:graph_analysis} gives an overview of our analysis procedure and illustrates the challenges. \textcolor{red}{TBA: In Section~\ref{sec:model}}
+\textcolor{red}{The rest of the paper is organized as follows. Section~\ref{sec:preliminary} introduces background knowledge of Ethereum and raises identity inferring problem. Section~\ref{sec:graph_analysis} gives an overview of our analysis procedure and illustrates the challenges. In Section~\ref{sec:model}, the detailed architecture is described. Section~\ref{sec:experiments} is experimental evaluation. Section~\ref{sec:relatedworks} presents the related works, and Section~\ref{sec:conclusion} concludes this paper.}
 
-%In Section~\ref{sec:model}, the detailed architecture
+
+
