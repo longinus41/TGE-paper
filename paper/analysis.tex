@@ -4,9 +4,7 @@
 \label{sec:preliminary}
 \textcolor{red}{As the largest blockchain platform that supports various transactions including cryptocurrency transferring and smart contracts~\cite{chen2018infocom}, Ethereum is designed based on the \emph{Account/Balance} model which is more intuitive compared to the \emph{UTXO} model.}
 
- From a logical perspective, the core elements in Ethereum include accounts and transactions.
-
-%This section investigates accounts and transactions, which are the basic units of Ethereum. 
+\textcolor{red}{This section investigates Ethereum from a logical perspective, including accounts and transactions. Then the identity inferring problem is raised.} 
 
 \subsection{Accounts}
 Accounts play a central role in Ethereum. There are two types of accounts in Ethereum: \emph{Externally Owned Accounts (EOAs)} and \emph{Contract Accounts (CAs)}. Both EOAs and CAs have unique addresses and \emph{Ether} (the cryptocurrency of Ethereum, or ETH for short) balance. Their major difference is that EOAs are controlled by people who hold the public-private key pairs, whereas CAs are ruled by executable codes of smart contracts. For a CA, code execution is triggered by transactions or messages (calls) received from other contracts. 
@@ -30,15 +28,14 @@ Based on the above mentioned transactions, various activities can be enabled on 
 %\textcolor{gray}{The on-chain assets include ETH coin and ERC-20 token.} 
 
 
- 
 \subsection{Identity Inferring}
 \textcolor{red}{The Ethereum hosts many different types of users which hold the accounts as their avatars. Most are ordinary people, but the bulk of holdings are distributed among specific categories. Generally, these accounts can be classified into different categories according to user roles on the blockchain. TokenAnalyst listed several prominent ones, including  mining pools, exchanges, token wallets, investors and so on\footnote{TokenAnalyst, https://www.tokenanalyst.io/}.}
 
 \textcolor{red}{To be frank, the perfect categorization does not exist because Ethereum is still in a development stage. The implementation of DApps (decentralized applications) is being extended and deepened and various identities behind such DApps emerge inevitably.}
 
-\textcolor{red}{Nonetheless, we advocate that identity inferring may also be required for transaction analysis on Ethereum. By tracking and inferring these accounts, we can have better understanding what is occurring on the blockchain. For instance, cryptocurrency team can make airdrop to the top valuable accounts and the fraud or cheating actions can be detected efficiently.}
+\textcolor{red}{Nonetheless, we advocate that identity inferring may also be required for transaction analysis on Ethereum. It is important to reveal the identities behind accounts without violating user privacy rights. By tracking and inferring these accounts, we can have better understanding what is occurring on the blockchain. For instance, cryptocurrency team can make airdrop to the top valuable accounts and the fraud or cheating actions can be detected efficiently.}
 
-\textcolor{red}{In the paper, we classify these accounts into the different identities which play significant roles on Ethereum.}
+\textcolor{red}{However, deanonymization, particularly identity inferring remains a challenge that . In the paper, we classify these accounts into the different identities which play significant roles on Ethereum.}
 
 %However, anonymity of blockchain makes the identification more difficult. Generally, these accounts can be classified into different categories according to user roles on the blockchain.
 
