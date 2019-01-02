@@ -1,7 +1,7 @@
 % !TEX root = main.tex
 
 \section{Experiments}
-In this section, we conduct experiments to evaluate the performance of our method via node classification on ETG.
+In this section, we conduct experiments to evaluate the performance of our method via identity inferring on ETG.
 
 \subsection{Data Collection and Graph Construction}
 We collect all data by running Ethereum client\footnote{Parity Ethereum Client, https://www.parity.io/ethereum/} which maintains the same copy of blockchain with all historical transactions. Note that we choose the transaction logs on Ethereum from January 1, 2018 to March 31, 2018 (116,293,867 external transactions and internal transactions in total) as the input of graph construction since it is the most active period with various activities.
@@ -10,7 +10,71 @@ By parsing the transactions, 16,599,825 active accounts are obtained, including 
 
 Specially, we extend the pre-processing scheme to adapt our model. First we construct four relation graphs, which contains ETH transfer graph, contract creation graph, contract invocation graph and mining reward graph. In each graph, repeated edges between the same node pair are merged via the method introduced in section \ref{section:time}.
 
-Last, a set of accounts with label introduced before is provided to train the model and evaluate classification accuracy. It is hard to reveal the identity of addresses since the anonymity of blockchain. We obtain these labeled examples in two ways, \emph{Etherscan}\footnote{Etherscan LabelCloud, https://etherscan.io/labelcloud} and \emph{Searchain}\footnote{Searchain, http://www.searchain.io/}. In the label set, the number of samples of each category is 100.
+%Last, a set of accounts with label introduced before is provided to train the model and evaluate classification accuracy. It is hard to reveal the identity of addresses since the anonymity of blockchain. We obtain these labeled examples in two ways, \emph{Etherscan}\footnote{Etherscan LabelCloud, https://etherscan.io/labelcloud} and \emph{Searchain}\footnote{Searchain, http://www.searchain.io/}. In the label set, the number of samples of each category is 100.
+
+\subsection{Identity Categorization}
+\textcolor{red}{As mentioned before, we classify these accounts into the different identities. Here we introduce the prominent identity tag which is provided to train the model and evaluate classification accuracy.}
+
+ It is hard to reveal the identity of addresses since the anonymity of blockchain. We obtain these labeled examples in two ways, \emph{Etherscan}\footnote{Etherscan LabelCloud, https://etherscan.io/labelcloud} and \emph{Searchain}\footnote{Searchain, http://www.searchain.io/}. %In the label set, the number of samples of each category is 100.
+
+\noindent 1) \emph{Miners \& Mining Pools}
+The existing implementation of Ethereum blockchain use the \emph{Proof-of-Work (PoW)} protocol, similar with Bitcoin. 
+%in which a block is only valid if it contains \emph{Proof-of-Work} (PoW) of a given difficulty\footnote{Note that in the Ethereum Serenity milestone, this is likely going to be replaced by a Proof-of-Stake mechanism.}. 
+The \emph{miners} are the individuals or groups who validate transaction information by solving the cryptographic puzzles. Whoever is the first to find a valid hash of block will get the reward in the form of ETH which is paid by users sending transactions. And an efficient solution is working together to solve the PoW problems. Miners with mining machines can register on a special institution named \emph{mining pool}, which aggregates all the registrants' computing power to solve mining problem and distributes the reward to the registrants according to their proportion of contributed computing power. Up to September 2018, top $3$ mining pools occupy more than 65\% of hash rate in Ethereum\footnote{Investoon, https://investoon.com/charts/mining/eth.}.
+
+%In the early stage, most people participate the mining process independently. As more participants into this high profit industry, the mining competition gradually becomes fiercer. 
+
+
+\noindent 2) \emph{Exchanges}
+The exchanges are the platforms for trading ETH and even other digital currencies, which play important roles in Ethereum ecosystem. Most of cryptocurrency trading is done through centralized exchanges such as Binance, Huobi, OKEX, etc\footnote{``Top 100 Cryptocurrency Exchanges by Trade Volume'', https://coinmarketcap.com/rankings/exchanges}. The centralized exchange allocates a deposit address to each user who wants to make transaction in the exchange. These addresses are called \emph{exchange deposits} and belong to the exchange since users do not have the private key of these addresses. In recharge process, user transfers coins to the given deposit address from her own wallet and these coins will be transferred to the \emph{exchange root} address automatically. In turn, users send requests to exchange to withdraw their coins from an address called \emph{exchange withdrawal}. And in most cases, the exchange root and exchange withdrawal mean the same address.
+
+%The exchanges can be categorized into centralized exchanges and decentralized exchanges (also known as DEXs) according to their architectures.
+
+%The exchange charges the user a commission for both recharge and withdraw services.
+
+%The DEXs are a new technology that facilitate cryptocurrency trading on a distributed ledger. Being completely on-chain, all orders interact with each other directly through the blockchain. This makes it fully decentralized, but also expensive and slow. Besides, another difference is that user will get a new address with corresponding private key when registers to the DEX, which means the address belongs to user itself instead of exchange. 
+ 
+ %User calls the smart contract in the decentralized exchange address to start a transaction. Intuitively, the transaction will take a long time for making match and confirming compared with in centralized way.
+
+%Since most ERC-20 token transactions happen via smart contracts and in a decentralized mechanism, some big exchanges which support both ETH and ERC-20 token transaction (e.g., Binance and Huobi) are mixture of centralized and decentralized exchange. 
+
+
+\noindent 3) \emph{ERC-20 \& ICO}
+ERC-20 is a technical standard used for smart contracts on the Ethereum blockchain for implementing tokens~\cite{erc-20-wiki}. It defines a common list of rules that an Ethereum token has to implement, giving developers the ability to program how new tokens will function within the Ethereum ecosystem. Such ERC-20 token transfer happens in specific CA which is called \emph{ERC-20 token contract}. The ERC-20 token standard became popular with crowdfunding companies working on ICO cases due to the simplicity of deployment, together with its potential for interoperability with other Ethereum token standards~\cite{erc-20}. As of July 26 2018, there were more than 103,621 ERC-20 token contracts\footnote{Etherscan Token Tracker Page, https://etherscan.io/tokens}. Among the most successful ERC-20 token sales are EOS, Filecoin, Bancor, Qash, and Nebulas, raising over 60 million each\footnote{``Token Data, data and analytics for all ICO's and tokens", https://www.tokendata.io}.
+
+Participants in the initial ICO round are \emph{investors} who buy the ERC-20 token from ERC-20 smart contracts of the crowdfunding companies. And these addresses where ETH holding of token teams are \emph{ICO wallets}.
+
+\noindent 4) \emph{Phishes \& Hacks}
+Since virtual property transactions are now becoming increasingly commonplace and that leads to many security issues. At the same time, the frauds associated with ETH and ERC-20 tokens have also increased. We call these addresses related to frauds \emph{phishes \& hacks}. According to Ethersacan, there are more than $2500$ addresses are labeled as Phish/Hack, which takes up the highest proportion. Most of them are disguised as ERC-20 token sales or DApps such as casino. 
+
+\begin{table}[t]
+\caption{Typical Account Identities}
+\begin{center}
+\begin{tabular}{|p{2.1cm}|c|p{3.9cm}|}
+\hline
+\textbf{Identity} & \textbf{Account Type}& \textbf{Description} \\
+\hline
+Miners & EOA & Nodes who take part in the block validation process. \\ \hline
+Mining Pools & EOA & The pooling of resources by miners, who share their processing power over a network.\\ \hline
+Token Contracts & CA & Contracts that allow customers to transfer ERC-20 tokens. \\ \hline
+Investors & EOA & Large holders of ETH, who usually got in early on ICOs. \\ \hline
+ICO Wallets & EOA\&CA & ETH holdings of token teams, typically raised from ICOs. \\ \hline
+Exchange Deposits & EOA\&CA & Addresses for user to deposit ETH at exchange. \\ \hline
+Exchange Roots\&Withdrawals & EOA\&CA & Addresses collect ETH from deposit addresses and withdraw ETH to users. \\ \hline
+Phishes\&Hacks & EOA\&CA & Fraud address related to phishing and hacks. \\ \hline
+%\multicolumn{4}{l}{$^{\mathrm{a}}$Sample of a Table footnote.}
+\end{tabular}
+\label{identity}
+\end{center}
+\end{table}
+
+
+The identity labels are indicated in TABLE~\ref{identity}.
+%Phishing is the name given to the latest online scam where millions of unwary Americans are getting their identities stolen.
+
+%We've seen increased use of sophisticated forms and letterhead to send what appears to be legitimate World Bank Group correspondence, as well as several schemes that reference the Bank.
+
+
 
 \subsection{Experimental Set-Up and Baselines}
 As a baseline for our experiments, we compare against state-of-the-art classification results from \textcolor{red}{DeepWalk~\cite{perozzi2014deepwalk}, PARW~\cite{wu2012learning} and rGCN~\cite{schlichtkrull2018modeling}}. DeepWalk uses random walks on graphs to obtain node representations. Due to DeepWalk is an unsupervised method, a logistic regression model is added for classification. As a label propagation method, PARW is guaranteed to meet the cluster assumption under proper absorption rates. rGCN is a kind of deep neural network based method and can be applied to modeling relational data. 

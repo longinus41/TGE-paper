@@ -1,29 +1,29 @@
 % !TEX root = main.tex
 
-\section{Ethereum Transactions Graph Analysis}
+\section{Methdology}
 \label{sec:graph_analysis}
-To exploit information hidden behind the transactions on-chain, we construct an Ethereum transactions graph (ETG, for short) and then methods such as graph embedding could be implemented for accounts identification task.
+\textcolor{red}{To analyze the Ethereum graph, identity inferring specifically ...We construct a Ethereum transaction graph (ETG for short) and analyze graph based on graph embedding techniques}
 
-In this section, we illustrate our approach at first and then discuss differences to other graphs analysis methods.
+\textcolor{red}{In this section, we illustrate our inferring approach as a 3-phases workflow. Then the differences from other graphs analysis methods is discussed.} 
 
-\subsection{Methodology}
+%Our identity inferring method is based on graph embedding techniques. } 
+%To exploit information hidden behind the transactions on-chain, we construct an Ethereum Transactions Graph (ETG), so that methods such as graph embedding could be implemented for accounts identification task. 
+
+\subsection{Overview}
 \label{subsec:methodology}
-Our approach consists of three phases, graph construction, graph embedding and node classification.
+Our approach consists of three phases: graph construction, graph embedding and node classification.
 
-\textbf{Phase 1: Graph construction}
-Since all transactions are stored in the blockchain, we could synchronize them by running an Ethereum client.
+\textbf{Phase 1: Graph construction}. We setup an Ethereum client to synchronize all transactions stored in the blockchain. Based on the collected transaction data, we construct the ETG as a directed graph $G=(V,E)$, where node $v \in V$ represents an account and $e \in E$ depicts the edge between two nodes.
 
- Based on the collected data, the transaction graph can be constructed. Generally, we consider the ETG as a directed graph $G=(V,E)$, where node $v \in V$ represents an account and $e \in E$ depicts the edge between two nodes.
-
-Note that $V$ is the set of all addresses in Ethereum including both EOAs and CAs, and number of addresses is depicted as $|V|=N$. And we use the terms account and node interchangeably in the remainder of this paper. $E$ is a set of ordered pairs, where $E=\{(v_i,v_j)|v_i,v_j \in V\}$. The order of an edge indicates the direction of activity (e.g., assets transfer or smart contract invocation) from $v_i$ to $v_j$. %Analogously, the number of edges in ETG is represented as $|E|$.
+Note that $V$ is the set of Ethereum addresses including both EOAs and CAs, and number of addresses is depicted as $|V|=N$. We use the terms account and node interchangeably in the remainder of this paper. $E$ is a set of ordered pairs, where $E=\{(v_i,v_j)|v_i,v_j \in V\}$. The order of an edge indicates the direction of activity (e.g., assets transfer or smart contract invocation) from $v_i$ to $v_j$. %Analogously, the number of edges in ETG is represented as $|E|$.
 
 
 %In our definition, each edge associates with a weight $w$, which will be discussed later. Hence, $G$ is a weighted directed graph.
 
-\textbf{Phase 2: Graph embedding}
-The embedding process can be defined as follows: given ETG $G=(V,E)$, we aim to represent each node $v$ in a low-dimensional vector space $\vec{y_v}$. By representing ETG as a set of low dimensional vectors, graph analysis algorithms can then be computed efficiently.
+\textbf{Phase 2: Graph embedding}.
+The embedding process can be defined as follows: given ETG $G=(V,E)$, we represent each node $v$ in a low-dimensional vector space $\vec{y_v}$, so that graph analysis algorithms can then be computed efficiently.
 
-Typical network embedding techniques such as random-walk based and deep learning based models use the pure network structure to map into the embedding space~\cite{goyal2018capturing}. Our model is primarily motivated as an extension of GCNs (Graph Convolutional Networks)~\cite{kipf2016semi,schlichtkrull2018modeling}, which puts the features of nodes and edges into the representation, since it shows effectiveness for entity classification in large-scale relational data.
+Typical network embedding techniques, such as random-walk based and deep learning based models, use the pure network structure to map into the embedding space~\cite{goyal2018capturing}. Our model is primarily motivated as an extension of GCNs (Graph Convolutional Networks)~\cite{kipf2016semi,schlichtkrull2018modeling}, which puts the features of nodes and edges into the representation, since it shows effectiveness for entity classification in large-scale relational data.
 
 %Generally, a multi-layer Graph Convolutional Network with the following layer-wise propagation rule:
 
@@ -43,10 +43,10 @@ Typical network embedding techniques such as random-walk based and deep learning
 
 %\noindent where $h_i^{(l)}$ is the hidden state of node $v_i$ in the $l$-th layer of the neural network. And $c_{ij}$ is a problem-specific normalization constant which can defined in advance such as $c_{i,j}=\sqrt{d_i d_j}$ where $d_i$ is the degree of node $v_i$.
 
-\textbf{Phase 3: Node classification}
-The final objective of our approach is predicting the account identity on ETG, in essence, classifying given node into categories which are shown in TABLE \ref{tab1}.
+\textbf{Phase 3: Node classification}.
+The final objective of our approach is to predict account identities on ETG, in essence, to classify given nodes into categories as shown in TABLE \ref{tab1}.
 
-By given a labeled account set, supervised or semi-supervised methods can be used for entities classification. Here we simply stack GCN layers of the form with a softmax ($\cdot$) activation on the output of the last layer. A cross-function can be the minimizing objective for training.
+\{By given a labeled account set, supervised or semi-supervised methods can be used for entities classification. Here we simply stack GCN layers of the form with a softmax ($\cdot$) activation on the output of the last layer. A cross-function can be the minimizing objective for training.\}
 
 \subsection{Challenges}
 \label{section:time}
