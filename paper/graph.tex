@@ -55,14 +55,14 @@ The final objective of our approach is to predict account identities on transact
 \label{section:time}
 The graph embedding plays a key part in graph analysis. The GCN approach \cite{kipf2016semi} outperforms other methods such as deepwalk~\cite{perozzi2014deepwalk} in experiments on citation networks and knowledge graph dataset.
 
-However, we found that using such GCN model directly achieves poor effect on ETG which has many properties different from traditional networks (such as social media networks and citation graph). It brings the following challenges.
+However, we found that using such GCN model directly achieves poor effect on Ethereum graph which has many properties different from traditional networks (such as social media networks and citation graph). It brings the following challenges.
 
 
-\textbf{Multi-relations} In ETG, edges stand for different activities such as money transfer, contract creation and contract invocation, which can not be measured in a uniform weighted model.
+\textbf{Multi-relations} On Ethereum graph, edges stand for different transactions such as money transfer, contract creation and contract invocation, which can not be measured in a uniform weighted model.
 
-For example, the weight of assets transfer maybe the ETH amount, however an invocation to smart contract does not have such numerical value. This inspired us to divide the raw ETG into different relation graphs.
+For example, the weight of assets transfer maybe the ETH amount, however an invocation to smart contract does not have such numerical value. This inspired us to divide the raw Ethereum graph into different relation graphs.
 
-In \cite{chen2018infocom}, three graphs are constructed for statistics, including money flow graph, smart contract creation graph, and smart contract invocation graph. However, we find that such strategy of division is not detailed enough and has poor performance for node classification.
+In \cite{chen2018infocom}, three graphs are constructed for analysis, including money flow graph, smart contract creation graph, and smart contract invocation graph. However, we find that such strategy of division is not detailed enough and has poor performance for graph embedding.
 
 %In \cite{schlichtkrull2018modeling}, relational-GCN (rGCN) is used to multi-graphs with large numbers of relations. We find that the strategy of division is very important
 
@@ -73,18 +73,18 @@ In \cite{chen2018infocom}, three graphs are constructed for statistics, includin
 
 \textbf{Time information} Even in a single relation graph, there may be multiple edges between the same node pairs. This occurs quite naturally since an account may transfer or invoke to another account repeatedly for a period of time which is quite different from the knowledge graphs and citation networks.
 
-Intuitively, a simple solution is to merge those edges by weight summation, however, it leads to loss of information. It is not hard to find that these repeated edges are located at different time intervals along the time axis which are characterized by the block height.
+Intuitively, a simple solution is to merge those edges by \textcolor{red}{frequency or weight} summation. Nevertheless, it leads to loss of information. It is not hard to find that these repeated edges are located at different time intervals along the time axis which are characterized by the block height.
 
 \begin{figure}[htbp]
 \centering
 \begin{tabular}{c}
-	\subfigure[Histogram of time std for all nodes.]{
+	\subfigure[Time variance histogram of whole nodes.]{
 		\label{fig:high_order}
 		%\includegraphics[width=0.22\textwidth]{fig/all_time_std_pdf.eps}
     \input{fig/all_time_std_pdf.tex}
 	%\caption{Example of a high-order proximity caption.}
 	}\\
-	\subfigure[Histogram of time std for hack\&phish nodes.]{
+	\subfigure[Time variance histogram of hack\&phish nodes.]{
 		\label{fig:asymmetric}
 		%\includegraphics[width=0.22\textwidth]{fig/fake_time_std_pdf.eps}
     \input{fig/fake_time_std_pdf.tex}
@@ -94,17 +94,17 @@ Intuitively, a simple solution is to merge those edges by weight summation, howe
 \label{fig:time_std}
 \end{figure}
 
-Fig.~\ref{fig:time_std} illustrates the distribution of variance of time when transaction happens of all accounts and hack \& phish accounts. It is not difficult to find that the time variance distribution of hack \& phish accounts is more concentrated compared with other accounts, which seems perfectly reasonable since the hacks and phishes are more active in a short time. This insight inspired us to use time information such as the variance of time transaction happens in the embedding.
+\textcolor{red}{Fig.~\ref{fig:time_std} illustrates the distribution of time variance when transaction happens of whole accounts and hack \& phish accounts on Ethereum.} It is not difficult to find that the time variance distribution of hack \& phish accounts is more concentrated compared with other accounts, which seems perfectly reasonable since the hacks and phishes are more active in a short time. This insight inspired us to use time information such as the variance of time transaction happens in the embedding.
 
-\textbf{Second-order proximity} The graph $G=(V,E)$ can be represented by a binary or weighted adjacency matrix $A=[A_{ij}]\in \mathbb{R}^{N\times N}$. The \emph{first-order proximity} is the observed pairwise proximity between two nodes, i.e., if $A_{ij}>0$, there exists positive first-order proximity between nodes $v_i$ and $v_j$, otherwise, the first-order proximity is $0$~\cite{tang2015line}.
+\textbf{Second-order proximity} \textcolor{red}{In graph analysis, a graph} can be represented by a binary or weighted adjacency matrix $A=[A_{ij}]\in \mathbb{R}^{N\times N}$. The \emph{first-order proximity} is the observed pairwise proximity between two nodes, i.e., if $A_{ij}>0$, there exists positive first-order proximity between nodes $v_i$ and $v_j$, otherwise, the first-order proximity is $0$~\cite{tang2015line}. Further, \emph{second-order proximity} compares the neighborhood of two nodes and treat them as similar if they have a similar neighborhood~\cite{goyal2018graph}.
 %The edge weight $A_{ij}$ in adjacency matrix $A$ is generally treated as a measure of similarity between nodes $v_i$ and $v_j$. And the higher the edge weight, the more similar the two nodes are expected to be. Edges weight $A_{ij}$ is called \emph{first-order proximity} between nodes $v_i$ and $v_j$.
 
-Further, \emph{second-order proximity} compares the neighborhood of two nodes and treat them as similar if they have a similar neighborhood~\cite{goyal2018graph}. In ETG, two accounts are more similar if they have similar connectivity structures instead of they are just connected by an edge with larger weight. Second-order describes the local structure better than first-order. As shown in Figure \ref{fig:high_order}, nodes $v_a$ and $v_c$ are smart contracts and node $v_b$ is normal user. Obviously, $v_a$ is not adjacent to $v_c$  but they have similar neighbor structure. Embedding models with first-order proximity will keep them far apart although they have similar connection structures, while embedding with second-order proximity captures this similarity.
+ In Ethereum transaction graph, two accounts are more similar if they have similar connectivity structures instead of they are just connected by an edge with larger weight. Second-order describes the local structure better than first-order. As shown in Figure \ref{fig:high_order}, nodes $a$ and $c$ are smart contracts and node $b$ is normal user. Obviously, $a$ is not adjacent to $c$  but they have similar neighbor structure. Embedding models with first-order proximity will keep them far apart although they have similar connection structures, while embedding with second-order proximity captures this similarity.
 
 
 \begin{figure}[htbp]
 	\centering
-	\subfigure[High-order proximity]{
+	\subfigure[Second-order proximity]{
 		\label{fig:high_order}
     \input{fig/high_order_proximity.tex}
 		%\includegraphics[width=2.0in]{fig/high_order_proximity.eps}
@@ -115,13 +115,13 @@ Further, \emph{second-order proximity} compares the neighborhood of two nodes an
     \input{fig/asymmetric.tex}
 		%\includegraphics[width=1.5in]{fig/asymmetric.eps}
 	}
-	\caption{Examples of high-order and asymmetric proximity.}
+	\caption{Examples of second-order and asymmetric proximity.}
 
 \end{figure}
 
 %To preserve \emph{second-order} proximity, the hidden layer number in our model is set as 2.
 \textbf{Asymmetric proximity}
-Another property of closeness in ETG is \emph{asymmetric proximity}. For instance, as shown in Figure. \ref{fig:asymmetric}, node $v_a$ is a Ethereum investor address and node $v_c$ is an exchange root address. Generally, edge weight can be $A_{ab}=A_{bc}=A_{ca}$ since deposit and withdrawal come in pairs in symmetric model. However, the proximity $(v_a,v_c)$ is not equal to proximity $(v_c,v_a)$ due to their asymmetric local structures.
+We find that another property of closeness in Ethereum transaction graph is \emph{asymmetric proximity}. For instance, as shown in Figure. \ref{fig:asymmetric}, node $v_a$ is a Ethereum investor address and node $v_c$ is an exchange root address. Generally, edge weight can be $A_{ab}=A_{bc}=A_{ca}$ since deposit and withdrawal come in pairs in symmetric model. However, the proximity $(v_a,v_c)$ is not equal to proximity $(v_c,v_a)$ due to their asymmetric local structures.
 
  Zhou et. proposed a scalable asymmetric proximity preserving graph embedding method based on random walk~\cite{zhou2017scalable}. In their model, the probability that $v_a$ arrives at $v_c$ is far less than the one that $v_c$ arrives at $v_a$, as the out degree of $v_c$ is bigger than the out degree of $v_a$.
 However, there is no research on asymmetric proximity in non-probability graph embedding models.

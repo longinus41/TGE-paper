@@ -15,7 +15,7 @@ To address the above-described challenges, we illustrate XXX, which is first app
 
 \subsection{Graph construction}
 \label{sec:input}
-The Ethereum transaction graph is constructed based on original transaction records synchronized from the Ethereum blockchain. Different from other studies [][], the graph is translated into several matrices: (1) a node representation matrix that captures the structural and additional information of accounts, (2) a list of adjacency matrices which describe different relations, and (3) a list of time-density matrices that represent transaction intensiveness between each pair of nodes.
+The Ethereum transaction graph is constructed based on original transaction records synchronized from the Ethereum blockchain. Different from other studies~\cite{kipf2016semi,schlichtkrull2018modeling}, the graph is translated into several matrices: (1) a node representation matrix that captures the structural and additional information of accounts, (2) a list of adjacency matrices which describe different relations, and (3) a list of time-density matrices that represent transaction intensiveness between each pair of nodes.
 
 \textbf{Account representations.} We use a feature matrix $X \in \mathbb{R}^{N \times d}$ to encode the overall structural and additional information of accounts. There are $d$ features including:
 %The $d$ terms include some pre-defined vectors and here we use the following features
@@ -33,17 +33,17 @@ The Ethereum transaction graph is constructed based on original transaction reco
 
 %These features help the following layers to pay attention to structural similarity between nodes.
 
-\textbf{Relations.} To investigate the multi-relations between accounts in ETG, we divide the raw ETG into several sub-graphs and capture the relations of graph neighboring nodes using adjacent matrices. 
+\textbf{Relations.} To investigate the multi-relations between accounts in Ethereum transaction graph, we divide the raw transaction graph into several sub-graphs and capture the relations of graph neighboring nodes using adjacent matrices. 
 
 The set of adjacency matrices, $\{A^1,A^2,\dots,A^R|A^i\in \mathbb{R}^{N \times N}\}$, describes the $R$ relations among $N$ nodes in ETG. As we mentioned before, the strategy of division has a large influence on classification performance. 
 
 In our model, we consider four kinds of relations, including \texttt{CALL} with ETH, \texttt{CALL} without ETH, \texttt{CREATION} and \texttt{REWARD}, which represent the relations of ETH transferring, smart contract invocation, smart contract deployment and mining rewarding, respectively. We consider the 4 types of forward transactions introduced above and 4 reverse relations in order to pass information from the opposite direction. Besides, a self loop as a special relation type is included to retain information of the previous layer in the GCN network. 
 
-For relations of \texttt{CALL} without ETH, \texttt{CREATION} and \texttt{REWARD}, we calculate the frequency of repeated edges between a pair of nodes as the adjacent weight in the corresponding relation adjacent matrix. For ETH transferring, on the other hand, it is not sensible to use the amount of ETH flow directly as the adjacent weight. That is because the accounts have varied enormously in terms of ETH transferring which \textcolor{red}{will lead to underflow and overflow in the process of training.} Here the amount of ETH transferring is discretized into three ranges: (1) small transfers which the transaction value is less than 1 ETH; (2) medium transfers which the transaction value is between 1 ETH and 10 ETH and (3) major transfers which the transaction value is above 10 ETH. Then the ETH transferring matrix can be calculated in a similar way with other relations.
+For relations of \texttt{CALL} without ETH, \texttt{CREATION} and \texttt{REWARD}, we calculate the frequency of repeated edges between a pair of nodes as the adjacent weight in the corresponding relation adjacent matrix. For ETH transferring, on the other hand, it is not sensible to use the amount of ETH flow directly as the adjacent weight. That is because the accounts have varied enormously in terms of ETH transferring which will lead to underflow and overflow in the process of training. Here the amount of ETH transferring is discretized into three ranges: (1) small transfers which the transaction value is less than 1 ETH; (2) medium transfers which the transaction value is between 1 ETH and 10 ETH and (3) major transfers which the transaction value is above 10 ETH. Then the ETH transferring matrix can be calculated in a similar way with other relations.
 
-Specially, the adjacent matrices are modified to preserve the asymmetric proximity of ETG, which will be addressed in detail later. 
+Specially, the adjacent matrices are modified to preserve the asymmetric proximity of transaction graph, which will be addressed in detail later. 
 
-\textbf{Time-density matrices.} We also find that the relationship between a pair of nodes differs from another, even they have the same transaction frequency or adjacency weight. \textcolor{red}{\{Examples are needed!\}}
+\textbf{Time-density matrices.} We also find that the relationship between a pair of nodes differs from another, even they have the same transaction frequency or adjacency weight. \textcolor{red}{In Etherscan explorer, we can find that a phishing contract could be invoked as many as a normal one, while their densities of transactions happened are different.}\footnote{An example of transactions of phish contract can be viewed at https://etherscan.io/address/0xa3e785ee490e1102fe32512973c96Dc7DC876348.}
 This insight inspire us to describle time-density information using a set of matrices $\{K^1,K^2,\dots,K^R|K^i\in \mathbb{R}^{N \times N}\}$. 
 
 Given a sequence $\{h_{ij1}^r,h_{ij2}^r,\dots,h_{ijm}^r | h_{ijk}^r>0\}$ as the block height of transactions in relation $r$ between node $v_i$ and $v_j$, the time-density of each relation $r$ is computed as%Equation \ref{eq:time}
