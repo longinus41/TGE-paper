@@ -2,26 +2,29 @@
 
 \section{Methdology}
 \label{sec:graph_analysis}
-\textcolor{red}{To analyze the Ethereum graph, identity inferring specifically ...We construct a Ethereum transaction graph (ETG for short) and analyze graph based on graph embedding techniques}
+\textcolor{red}{Unlike existing methods relies on experts to exhaustive enumerate all related features, we are the first to analyze Ethereum transactions and solve the identity inferring problem based on graph deep learning (graph DL). Identity inferring task is turned into node classification problem, simply, predicting the identity of accounts on a small sample of labeled accounts and the topology of the transaction graph.}
 
-\textcolor{red}{In this section, we illustrate our inferring approach as a 3-pronged workflow. Then the differences from other graphs analysis methods is discussed.} 
+%To analyze the Ethereum graph, identity inferring specifically ...We construct a Ethereum transaction graph (ETG for short) and analyze graph based on graph embedding techniques
 
-%Our identity inferring method is based on graph embedding techniques. } 
+\textcolor{red}{In this section, we illustrate our graph DL based approach as a 3-pronged workflow. However, such graph DL method directly achieves poor effect on data of Ethereum transaction, therefore challenges of graph DL on Ethereum transaction analysis are discussed.} 
+
+%which has many properties different from traditional networks (such as social media networks and citation graph).Then the 
+
 %To exploit information hidden behind the transactions on-chain, we construct an Ethereum Transactions Graph (ETG), so that methods such as graph embedding could be implemented for accounts identification task. 
 
 \subsection{Overview}
 \label{subsec:methodology}
 Our approach consists of three phases: graph construction, graph embedding and node classification.
 
-\textbf{Phase 1: Graph construction}. We setup an Ethereum client to synchronize all transactions stored in the blockchain. Based on the collected transaction data, we construct the ETG as a directed graph $G=(V,E)$, where node $v \in V$ represents an account and $e \in E$ depicts the edge between two nodes.
+\textbf{Phase 1: Graph construction}. We setup an Ethereum client to synchronize all transactions stored in the blockchain. Based on the collected transaction data, we construct the Ethereum transaction graph as a directed graph $G_{t}=(V,E)$, \textcolor{red}{where node $v \in V$ represents an account which can be EOA and CA both. We use the terms account and node interchangeably in the remainder of this paper. And number of accounts is depicted as $|V|=N$.}
 
-Note that $V$ is the set of Ethereum addresses including both EOAs and CAs, and number of addresses is depicted as $|V|=N$. We use the terms account and node interchangeably in the remainder of this paper. $E$ is a set of ordered pairs, where $E=\{(v_i,v_j)|v_i,v_j \in V\}$. The order of an edge indicates the direction of activity (e.g., assets transfer or smart contract invocation) from $v_i$ to $v_j$. %Analogously, the number of edges in ETG is represented as $|E|$.
+\textcolor{red}{$E$ is a set of ordered pairs, where $E=\{(v_i,v_j)|v_i,v_j \in V\}$. The order of an edge indicates the direction of transaction (e.g., assets transfer or smart contract invocation) from $v_i$ to $v_j$.} %Analogously, the number of edges in ETG is represented as $|E|$.
 
 
 %In our definition, each edge associates with a weight $w$, which will be discussed later. Hence, $G$ is a weighted directed graph.
 
 \textbf{Phase 2: Graph embedding}.
-The embedding process can be defined as follows: given ETG $G=(V,E)$, we represent each node $v$ in a low-dimensional vector space $\vec{y_v}$, so that graph analysis algorithms can then be computed efficiently.
+The embedding process can be defined as follows: given $G_{t}=(V,E)$, we represent each node $v$ in a low-dimensional vector space $\vec{y_v}$, so that graph analysis algorithms can then be computed efficiently.
 
 Typical network embedding techniques, such as random-walk based and deep learning based models, use the pure network structure to map into the embedding space~\cite{goyal2018capturing}. Our model is primarily motivated as an extension of GCNs (Graph Convolutional Networks)~\cite{kipf2016semi,schlichtkrull2018modeling}, which puts the features of nodes and edges into the representation, since it shows effectiveness for entity classification in large-scale relational data.
 
@@ -44,7 +47,7 @@ Typical network embedding techniques, such as random-walk based and deep learnin
 %\noindent where $h_i^{(l)}$ is the hidden state of node $v_i$ in the $l$-th layer of the neural network. And $c_{ij}$ is a problem-specific normalization constant which can defined in advance such as $c_{i,j}=\sqrt{d_i d_j}$ where $d_i$ is the degree of node $v_i$.
 
 \textbf{Phase 3: Node classification}.
-The final objective of our approach is to predict account identities on ETG, in essence, to classify given nodes into categories as shown in TABLE \ref{tab1}.
+The final objective of our approach is to predict account identities on transaction graph, in essence, to classify given nodes into categories as shown in TABLE \ref{table:identity}.
 
 \{By given a labeled account set, supervised or semi-supervised methods can be used for entities classification. Here we simply stack GCN layers of the form with a softmax ($\cdot$) activation on the output of the last layer. A cross-function can be the minimizing objective for training.\}
 

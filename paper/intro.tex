@@ -25,9 +25,9 @@ Although there exists some research efforts on deanonymization in Bitcoin, they 
 
 %Chen et al.~\cite{chen2018infocom} conduct an investigation on Ethereum by leveraging graph analysis.
 
- In this paper, we construct a Ethereum transaction graph (ETG for short) and analyze graph based on graph embedding techniques.
+\textcolor{red}{In this paper, we analyze Ethereum transactions and solve the identity inferring problem based on graph deep learning (graph DL)~\cite{battaglia2018relational}.}
 
- Graph embedding provides an effective way to solve the graph analytics problem which convert the graph into a low dimensional space in which the graph information is preserve~\cite{cai2018comprehensive}. Based on the low dimensional vectors, some analytic tasks can be done effectively. Here we aim at determining the identity of accounts on other labeled accounts and the topology of the transaction graph. According to what we have learnt, this paper is the first work to analyze the transaction graph of cryptocurrency based on graph embedding techniques.
+\textcolor{red}{As a representative technique of Graph DL, }graph embedding provides an effective way to solve the graph analytics problem which convert the graph into a low dimensional space in which the graph information is preserve~\cite{cai2018comprehensive}. Based on the low dimensional vectors, some analytic tasks can be done effectively. Here we aim at determining the identity of accounts on other labeled accounts and the topology of the transaction graph. According to what we have learnt, this paper is the first work to analyze the transaction graph of cryptocurrency based on graph embedding techniques.
 
 At the same time, we find that using such embedding techniques directly achieves poor effect on transaction graph. This is due to Ethereum transaction graph has many properties different from traditional networks, such as social media networks and citation graph. In Ethereum transaction graph, edges stand for different activities such as money transfer, contract creation and invocation, which can not be measured in a uniform weighted model. Besides, compared with other graphs, closeness features such as second-order proximity and asymmetric proximity in ETG are characteristic, which should be preserved. We also find that the relationship between a pair of nodes differs from another, even they have the same transaction frequency which could be expressed by time-density information.
 
@@ -35,7 +35,7 @@ Generally, our approach consists of three phases, \emph{graph construction}, \em
 
 In summary, this paper make the following major contributions.
 
-(1) To the best of our knowledge, we are the first to analyze the transaction graph of cryptocurrency based on graph embedding techniques. We propose a three-pronged approach to handle account inferring task and reveal the differences in analysis between Ethereum transaction graph and other traditional graphs.
+(1) To the best of our knowledge, we are the first to analyze the transaction graph of cryptocurrency based on \textcolor{red}{graph DL} techniques. We propose a three-pronged approach to handle account inferring task and reveal the differences in analysis between Ethereum transaction graph and other traditional graphs.
 
 \textcolor{red}{(2) To implement account inferring task, we propose a taxonomy of Ethereum accounts. The prominent identities are illustrated and provided for model training.}
 
