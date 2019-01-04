@@ -2,38 +2,27 @@
 \section{Introduction}
 %\textcolor{red}{TBA.}
 \textcolor{red}{
-Today cryptocurrencies have become a global phenomenon with the market capitalization of more than xxx billion dollars. Bitcoin and other altcoins emerged as a product of blockchain, which is an immutable ledger for recording transactions, maintained within a distributed network. Anonymity is in the reasons why people use cryptocurrency. Transacting value across the blockchain can be done pseudonymously, and personal details can be veiled.
+Today cryptocurrencies have become a global phenomenon with the market capitalization of more than xxx billion dollars. Bitcoin and other altcoins emerged as a product of blockchain, which is an immutable ledger for recording transactions, maintained within a distributed network. Pseudonymous is the born feature of blockchain, i.e., each account is associated with a public address, yet its actual identity is unknown. Transacting value across the blockchain can be done pseudonymously, and personal details can be veiled.
 }
 
-\textcolor{blue}{
+\textcolor{red}{
 %Identity inferring, or deanonymization, plays an important role in blockchains. 
-On the other hand, 
-Pseudonymous is the born feature of
-blockchain, i.e., each account is associated with a public address, yet its
-actual identity is unknown. However, there are many people, including traders,
-law-makers, financial security officers, etc, needs understand the behaviours on
-blockchains. Thus, significant methods are proposed [XXX bitcoin deanonymization
-papers]. 
+On the other hand, deanonymization attracts more and more people to think and concern as well. By tracking and inferring these accounts, people like traders, law-makers, financial security officers, etc, can have better understanding what is occurring on the blockchain. Thus, significant methods are proposed [XXX bitcoin deanonymizationpapers]. 
+%There are many people, including traders, law-makers, financial security officers, etc, needs understand the behaviours on blockchains. 
 }.
 
-\textcolor{blue}{
-Challenges are accompanied by the rising of Ethereum, which denotes the
-practice of enabling users to build Turing-complete smart contract on
-blockchain. With such smart contracts, users could perform arbitrary
-behaviours, instead of simple token transfer. This brings two challenges for
-identify inferring.
-First, there are various identities and such identities are unforeseeable.
-Second, the behaviours performed by each identify are unpredictable.
+\textcolor{red}{
+Challenges are accompanied by the rising of Ethereum, which has opened a whole era of Blockchain 2.0. Ethereum denotes the practice of enabling users to build Turing-complete smart contract on blockchain. With such smart contracts, users could perform arbitrary behaviours, instead of simple token transfer. This brings two challenges for identify inferring. First, there are various identities and such identities are unforeseeable without expert knowledge and external information. Second, the behaviours performed by each identify are unpredictable.
 }
 
-\textcolor{blue}{
-For example, ERC20 is one type of smart contracts. [introduce ERC 20 here].
-With the behaviours defined in ERC20 smart contracts, there are two new
-identities, investors and ICO wallets. More complicated, phishes and hackers
-disguise themselves as ERC20 accounts, which makes it even more difficult to
-identify phishes and hackers.
+\textcolor{red}{
+%For example, ERC20 is one type of smart contracts. [introduce ERC 20 here].
+%With the behaviours defined in ERC20 smart contracts, there are two new
+%identities, investors and ICO wallets. More complicated, phishes and hackers
+%disguise themselves as ERC20 accounts, which makes it even more difficult to
+%identify phishes and hackers.
+For example, there are more than $2500$ accounts are labeled as `Phish \& Hack' in Ethereum, which are fraud addresses related to phishing and hacks. Many of them are disguised as ICO (Initial Coin Offering) wallet or DApps (decentralized applications) such as casino, and it is hard to detect them without source code analysis. 
 }
-
 
 \textcolor{blue}{
 It is not trivial to address these challenges. Existing methods [ref] highly
@@ -41,27 +30,26 @@ relies on experts to exhaustive enumerate all related features, which is easy
 in well-defined currency blockchain systems, like Bitcoin. However, due to the arbitrary behaviours
 defined in smart contracts, it is
 almost impossible to enumerate corresponding related features in blockchains
-like Etherum. Some graph based methods [ref] are also facing the challenges from
-the unforeseeable identities and arbitrary behaviours.
+like Etherum. %Some graph based methods [ref] are also facing the challenges from
+%the unforeseeable identities and arbitrary behaviours.
 }
 
 
 \textcolor{blue}{
-  We propose graph deep learning approach to address the challenges,
+  We propose graph deep learning approach to address the challenges of deanonymization,
   unforeseeable identities and arbitrary behaviours.
 }
 
-As the second major currency on the market with more than 10 billion dollars\footnote{At the time of this writing, the capitalization of Ethereum is about 11.8 billion dollars, once as high as more than 40 billion dolloars.} of capitalization, Ethereum is developed as a public, open-sourced blockchain-based platform~\cite{buterin2013ethereum}. Unlike Bitcoin, which was designed to be a currency, Ethereum aims to facilitate software processing using a token system called \emph{Ether} (ETH). Ethereum has the ability for users to build Turing-complete smart contract, which is a collection of code and data state that resides at a specific address on the Ethereum blockchain. Based on that, Ethereum can be applied to various scenarios beyond monetary exchange, such as voting, crowdfunding, lending, property rights protection and so on.
+%As the second major currency on the market with more than 10 billion dollars\footnote{At the time of this writing, the capitalization of Ethereum is about 11.8 billion dollars, once as high as more than 40 billion dolloars.} of capitalization, Ethereum is developed as a public, open-sourced blockchain-based platform~\cite{buterin2013ethereum}. Unlike Bitcoin, which was designed to be a currency, Ethereum aims to facilitate software processing using a token system called \emph{Ether} (ETH). Ethereum has the ability for users to build Turing-complete smart contract, which is a collection of code and data state that resides at a specific address on the Ethereum blockchain. Based on that, Ethereum can be applied to various scenarios beyond monetary exchange, such as voting, crowdfunding, lending, property rights protection and so on.
 
 %From a logical perspective, the core elements in Ethereum include accounts and transactions. There are two types of accounts, namely \emph{Externally Owned Accounts} (EOAs) and \emph{Contract Accounts} (CAs). Both have an ETH balance and the major difference between is that EOAs are controlled by people who hold the public-private key pairs whereas CAs are ruled by executable codes inside. The transactions refer to the signed data package, recording messages to be sent from an account to another account on the blockchain. In Ethereum, various activities, such as money transfer, smart contract creation and invocation can be leveraged via transactions~\cite{chen2018infocom}.
 
-Ethereum is pseudonymous, i.e., each account is associated with a public address, but its actual identity is unknown. \textcolor{red}{On one hand, anonymity is in the reasons why people use cryptocurrency. Transacting value across the Ethereum network can be done pseudonymously, and personal details can be veiled. On the other hand, deanonymization attracts more and more people to think and concern as well. By tracking and inferring these accounts, we can have better understanding what is occurring on the blockchain. For instance, cryptocurrency team can make airdrop to the top valuable accounts~\cite{harrigan2018airdrops} and the fraud or cheating actions can be detected efficiently~\cite{monamo2016unsupervised}.}
+%Ethereum is pseudonymous, i.e., each account is associated with a public address, but its actual identity is unknown. \textcolor{red}{On one hand, anonymity is in the reasons why people use cryptocurrency. Transacting value across the Ethereum network can be done pseudonymously, and personal details can be veiled. On the other hand, deanonymization attracts more and more people to think and concern as well. By tracking and inferring these accounts, we can have better understanding what is occurring on the blockchain. For instance, cryptocurrency team can make airdrop to the top valuable accounts~\cite{harrigan2018airdrops} and the fraud or cheating actions can be detected efficiently~\cite{monamo2016unsupervised}.}
 
 
-Although there exists some research efforts on deanonymization in Bitcoin, they are far from achieving identity inference in Ethereum. First, most deanonymization methods target on \textcolor{red}{rebuilding transaction flow on Bitcoin because the \emph{UTXO} (Unspent Transaction Output) model makes it hard to figure out the transaction trace~\cite{reid2013analysis,zhao2015graph,meiklejohn2013fistful}. However, there's really no such problems in Ethereum since Ethereum takes the \emph{Account/Balance} model and it is easy to reveal the transaction trace~\cite{buterin2013ethereum}.}
+%Although there exists some research efforts on deanonymization in Bitcoin, they are far from achieving identity inference in Ethereum. First, most deanonymization methods target on \textcolor{red}{rebuilding transaction flow on Bitcoin because the \emph{UTXO} (Unspent Transaction Output) model makes it hard to figure out the transaction trace~\cite{reid2013analysis,zhao2015graph,meiklejohn2013fistful}. However, there's really no such problems in Ethereum since Ethereum takes the \emph{Account/Balance} model and it is easy to reveal the transaction trace~\cite{buterin2013ethereum}.}
 
-\textcolor{red}{However, further deanonymization does not happen as expected in Ethereum. A proximate work is~\cite{chen2018infocom}, which has inferred the account identity by analyzing source codes (e.g., comments or keywords) of smart contracts. Such method relies on experts to exhaustive enumerate all related features, which is tedious, time-consuming and with low accuracy.}
-%Fortunately, a unique feature of blockchain system is that the list of all the transactions is publicly available, which makes it possible to excavate out a large amount of information and obtain insights in the behaviours of users.
+%\textcolor{red}{However, further deanonymization does not happen as expected in Ethereum. A proximate work is~\cite{chen2018infocom}, which has inferred the account identity by analyzing source codes (e.g., comments or keywords) of smart contracts. Such method relies on experts to exhaustive enumerate all related features, which is tedious, time-consuming and with low accuracy.}
 
 
 %existing methods relies on experts to exhaustive enumerate all related features. The most relevant work to ours is~\cite{chen2018infocom}, which has inferred the account identity by analyzing source codes (e.g., comments or keywords) of smart contracts.}
@@ -74,9 +62,9 @@ Although there exists some research efforts on deanonymization in Bitcoin, they 
 
 %Chen et al.~\cite{chen2018infocom} conduct an investigation on Ethereum by leveraging graph analysis.
 
-\textcolor{red}{In this paper, we analyze Ethereum transactions and solve the identity inferring problem based on graph deep learning (graph DL)~\cite{battaglia2018relational}.}
+%\textcolor{red}{In this paper, we analyze Ethereum transactions and solve the identity inferring problem based on graph deep learning (graph DL)~\cite{battaglia2018relational}.}
 
-\textcolor{red}{As a representative technique of Graph DL, }graph embedding provides an effective way to solve the graph analytics problem which convert the graph into a low dimensional space in which the graph information is preserve~\cite{cai2018comprehensive}. Based on the low dimensional vectors, some analytic tasks can be done effectively. Here we aim at determining the identity of accounts on other labeled accounts and the topology of the transaction graph. According to what we have learnt, this paper is the first work to analyze the transaction graph of cryptocurrency based on graph embedding techniques.
+\textcolor{red}{As a representative technique of Graph DL~\cite{battaglia2018relational}, }graph embedding provides an effective way to solve the graph analytics problem which convert the graph into a low dimensional space in which the graph information is preserve~\cite{cai2018comprehensive}. Based on the low dimensional vectors, some analytic tasks can be done effectively. Here we aim at determining the identity of accounts on other labeled accounts and the topology of the transaction graph. According to what we have learnt, this paper is the first work to analyze the transaction graph of cryptocurrency based on graph embedding techniques.
 
 At the same time, we find that using such embedding techniques directly achieves poor effect on transaction graph. This is due to Ethereum transaction graph has many properties different from traditional networks, such as social media networks and citation graph. In Ethereum transaction graph, edges stand for different activities such as money transfer, contract creation and invocation, which can not be measured in a uniform weighted model. Besides, compared with other graphs, closeness features such as second-order proximity and asymmetric proximity in ETG are characteristic, which should be preserved. We also find that the relationship between a pair of nodes differs from another, even they have the same transaction frequency which could be expressed by time-density information.
 
