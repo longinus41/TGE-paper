@@ -16,8 +16,8 @@ Specially, we extend the pre-processing scheme to adapt our model. First we cons
 \subsection{Identity Categorization}
 \textcolor{red}{By given a set of labeled accounts, semi-supervised learning methods can be used for classification. We obtain these labeled examples in two ways, \emph{Etherscan}\footnote{Etherscan LabelCloud, https://etherscan.io/labelcloud} and \emph{Searchain}\footnote{Searchain, http://www.searchain.io/}. Here we introduce the prominent identity tag which is provided to train the model and evaluate classification accuracy.}
 
-
- It is hard to reveal the identity of addresses since the anonymity of blockchain.  %In the label set, the number of samples of each category is 100.
+\textcolor{red}{TABLE~\ref{table:identity} shows the taxonomy of Ethereum accounts and here we depict them in detail.}
+ %It is hard to reveal the identity of addresses since the anonymity of blockchain.  %In the label set, the number of samples of each category is 100.
 
 \noindent 1) \emph{Miners \& Mining Pools}
 The existing implementation of Ethereum blockchain use the \emph{Proof-of-Work (PoW)} protocol, similar with Bitcoin. 
@@ -70,16 +70,14 @@ Phishes\&Hacks & EOA\&CA & Fraud address related to phishing and hacks. \\ \hlin
 \end{center}
 \end{table}
 
-
-The identity labels are indicated in TABLE~\ref{identity}.
 %Phishing is the name given to the latest online scam where millions of unwary Americans are getting their identities stolen.
 
 %We've seen increased use of sophisticated forms and letterhead to send what appears to be legitimate World Bank Group correspondence, as well as several schemes that reference the Bank.
 
 
 
-\subsection{Experimental Set-Up and Baselines}
-As a baseline for our experiments, we compare against state-of-the-art classification results from \textcolor{red}{DeepWalk~\cite{perozzi2014deepwalk}, PARW~\cite{wu2012learning} and rGCN~\cite{schlichtkrull2018modeling}}. DeepWalk uses random walks on graphs to obtain node representations. Due to DeepWalk is an unsupervised method, a logistic regression model is added for classification. As a label propagation method, PARW is guaranteed to meet the cluster assumption under proper absorption rates. rGCN is a kind of deep neural network based method and can be applied to modeling relational data. 
+\subsection{Experimental Set-Up}
+As a baseline for our experiments, we compare against state-of-the-art classification results from DeepWalk~\cite{perozzi2014deepwalk}, PARW~\cite{wu2012learning} and rGCN~\cite{schlichtkrull2018modeling}. DeepWalk uses random walks on graphs to obtain node representations. Due to DeepWalk is an unsupervised method, a logistic regression model is added for classification. As a label propagation method, PARW is guaranteed to meet the cluster assumption under proper absorption rates. rGCN is a kind of deep neural network based method and can be applied to modeling relational data. 
 
 Unless otherwise noted, all the GCN-based hidden layers have 16 units. Models are trained with Adam optimizer for 100 epochs, and dropout with $dropout\_rate=0.5$ is utilized to avoid overfitting.
 
@@ -113,7 +111,7 @@ Unless otherwise noted, all the GCN-based hidden layers have 16 units. Models ar
 All embedding and classification programs were run on the server, which includes Intel Xeon E5 CPU with 55 processors and 128GB of memory, and the GPU used for deep learning is Nvidia 1080.
 
 \subsection{Classification Results}
-In the first experiment, we test XXX on classification with the label set. Note that one account is supposed to have a single identity instead of multiple identities. Reason for this is that, people who take on many identities, tend to hold multiple accounts usually and each account is related to one identity. Besides, as as the time span of data we collected is merely three months, cases of identity conversion is negligible.
+In the first experiment, we test XXX on classification with the label set. \textcolor{red}{To make the classification more intuitive, there are two assumptions. (1) Account is supposed to have a single identity instead of multiple identities, and (2) identity of a certain account is not easy to change. Reasons for these are that, people who take on many identities, e.g., miner and investor both, tend to hold multiple accounts usually and each account is related to one identity. Besides, as as the time span of data we collected is merely three months, cases of identity conversion is negligible.}
 
 We use three indicators to evaluate each model, including precision, recall and $F_1$ score. Precision is the fraction of relevant instances among the retrieved instances, while recall is the fraction of relevant instances that have been retrieved over the total amount of relevant instances. And $F_1$ score is a measure that combines precision and recall, which is computed as
 \begin{equation}
@@ -124,7 +122,7 @@ In statistical analysis of label classification, the $F_1$ score is an important
 
 Results are summarized in TABLE~\ref{table:overall_results}. Our methods (with asymmetric proximity only and with asymmetric proximity and time-density both) outperform others in average $F_1$ score. Comparing with DeepWalk and PARW, our methods achieve higher $F_1$ scores in all labels, for these methods only utilize the local structure of nodes, while our methods involve global structural information and statistic information. 
 
-Note that rGCN achieves the highest average precision but a low average recall. Especially, rGCN has the lowest recall of category of phish and hack, which means that many normal accounts are inferred as threatening in rGCN model. Our methods improve the overall performance by adding richer information, the time of transactions, into the model.
+Note that rGCN achieves the highest average precision but a low average recall. Especially, rGCN has the lowest recall of category of phish and hack, which means that many normal accounts are inferred as threatening in rGCN model. \textcolor{red}{It will lead to ...} Our methods improve the overall performance by adding richer information, the time of transactions, into the model.
 
 \subsection{Asymmetric Proximity and Time-Density}
 Preserving asymmetric proximity by adjusting the adjacency matrix, our method greatly improves the robustness between different labels. We observe that in vanilla rGCN, performances of different labels vary a lot, but adding asymmetric property solves the problem. % This is because in vanilla rGCN, 
