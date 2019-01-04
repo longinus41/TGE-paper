@@ -4,19 +4,20 @@
 \label{sec:experiments}
 In this section, we conduct experiments to evaluate the performance of our method via identity inferring on ETG.
 
-\subsection{Data Collection and Graph Construction}
+\subsection{Data Collection}
 We collect all data by running Ethereum client\footnote{Parity Ethereum Client, https://www.parity.io/ethereum/} which maintains the same copy of blockchain with all historical transactions. Note that we choose the transaction logs on Ethereum from January 1, 2018 to March 31, 2018 (116,293,867 external transactions and internal transactions in total) as the input of graph construction since it is the most active period with various activities.
 
 By parsing the transactions, 16,599,825 active accounts are obtained, including 14,450,993 EOAs and 2,148,831 SCs. Then we construct the original ETG based on these accounts and transactions.
 
-Specially, we extend the pre-processing scheme to adapt our model. First we construct four relation graphs, which contains ETH transfer graph, contract creation graph, contract invocation graph and mining reward graph. In each graph, repeated edges between the same node pair are merged via the method introduced in section \ref{section:time}.
+Specially, we extend the pre-processing scheme to adapt our model. First we construct four relation graphs, which contains ETH transfer graph, contract creation graph, contract invocation graph and mining reward graph. In each graph, repeated edges between the same node pair are merged via the method introduced in Section \ref{sec:model}.
 
 %Last, a set of accounts with label introduced before is provided to train the model and evaluate classification accuracy. It is hard to reveal the identity of addresses since the anonymity of blockchain. We obtain these labeled examples in two ways, \emph{Etherscan}\footnote{Etherscan LabelCloud, https://etherscan.io/labelcloud} and \emph{Searchain}\footnote{Searchain, http://www.searchain.io/}. In the label set, the number of samples of each category is 100.
 
 \subsection{Identity Categorization}
-\textcolor{red}{As mentioned before, we classify these accounts into the different identities. Here we introduce the prominent identity tag which is provided to train the model and evaluate classification accuracy.}
+\textcolor{red}{By given a set of labeled accounts, semi-supervised learning methods can be used for classification. We obtain these labeled examples in two ways, \emph{Etherscan}\footnote{Etherscan LabelCloud, https://etherscan.io/labelcloud} and \emph{Searchain}\footnote{Searchain, http://www.searchain.io/}. Here we introduce the prominent identity tag which is provided to train the model and evaluate classification accuracy.}
 
- It is hard to reveal the identity of addresses since the anonymity of blockchain. We obtain these labeled examples in two ways, \emph{Etherscan}\footnote{Etherscan LabelCloud, https://etherscan.io/labelcloud} and \emph{Searchain}\footnote{Searchain, http://www.searchain.io/}. %In the label set, the number of samples of each category is 100.
+
+ It is hard to reveal the identity of addresses since the anonymity of blockchain.  %In the label set, the number of samples of each category is 100.
 
 \noindent 1) \emph{Miners \& Mining Pools}
 The existing implementation of Ethereum blockchain use the \emph{Proof-of-Work (PoW)} protocol, similar with Bitcoin. 
