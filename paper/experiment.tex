@@ -2,7 +2,7 @@
 
 \section{Experiments}
 \label{sec:experiments}
-In this section, we conduct experiments to evaluate the performance of our method via identity inferring on ETG.
+In this section, we conduct experiments to evaluate the performance of our method on Ethereum transaction graph. Note that AIGL does not only apply to Ethereum, but also other cryptocurrencies based on account/balance model.
 
 \subsection{Data Collection}
 We collect all data by running Ethereum client\footnote{Parity Ethereum Client, https://www.parity.io/ethereum/} which maintains the same copy of blockchain with all historical transactions. Note that we choose the transaction logs on Ethereum from January 1, 2018 to March 31, 2018 (116,293,867 external transactions and internal transactions in total) as the input of graph construction since it is the most active period with various activities.
@@ -14,9 +14,9 @@ Specially, we extend the pre-processing scheme to adapt our model. First we cons
 %Last, a set of accounts with label introduced before is provided to train the model and evaluate classification accuracy. It is hard to reveal the identity of addresses since the anonymity of blockchain. We obtain these labeled examples in two ways, \emph{Etherscan}\footnote{Etherscan LabelCloud, https://etherscan.io/labelcloud} and \emph{Searchain}\footnote{Searchain, http://www.searchain.io/}. In the label set, the number of samples of each category is 100.
 
 \subsection{Identity Categorization}
-\textcolor{red}{By given a set of labeled accounts, semi-supervised learning methods can be used for classification. We obtain these labeled examples in two ways, \emph{Etherscan}\footnote{Etherscan LabelCloud, https://etherscan.io/labelcloud} and \emph{Searchain}\footnote{Searchain, http://www.searchain.io/}. Here we introduce the prominent identity tag which is provided to train the model and evaluate classification accuracy.}
+Since AIGL is semi-supervised learning method, and a small set of labeled accounts should be provided for training. We obtain these labeled examples via \emph{Etherscan}\footnote{Etherscan LabelCloud, https://etherscan.io/labelcloud} and \emph{Searchain}\footnote{Searchain, http://www.searchain.io/}. 
 
-\textcolor{red}{TABLE~\ref{table:identity} shows the taxonomy of Ethereum accounts and here we depict them in detail.}
+TABLE~\ref{table:identity} shows the taxonomy of Ethereum accounts and here we depict them in detail. Here we introduce the prominent identity tag which is provided to train the model and evaluate classification accuracy.
  %It is hard to reveal the identity of addresses since the anonymity of blockchain.  %In the label set, the number of samples of each category is 100.
 
 \noindent 1) \emph{Miners \& Mining Pools}
@@ -111,7 +111,7 @@ Unless otherwise noted, all the GCN-based hidden layers have 16 units. Models ar
 All embedding and classification programs were run on the server, which includes Intel Xeon E5 CPU with 55 processors and 128GB of memory, and the GPU used for deep learning is Nvidia 1080.
 
 \subsection{Classification Results}
-In the first experiment, we test XXX on classification with the label set. \textcolor{red}{To make the classification more intuitive, there are two assumptions. (1) Account is supposed to have a single identity instead of multiple identities, and (2) identity of a certain account is not easy to change. Reasons for these are that, people who take on many identities, e.g., miner and investor both, tend to hold multiple accounts usually and each account is related to one identity. Besides, as as the time span of data we collected is merely three months, cases of identity conversion is negligible.}
+In the first experiment, we test AIGL on classification with the label set. To make the classification more intuitive, there are two assumptions. (1) Account is supposed to have a single identity instead of multiple identities, and (2) identity of a certain account is not easy to change. Reasons for these are that, people who take on many identities, e.g., miner and investor both, tend to hold multiple accounts usually and each account is related to one identity. Besides, as as the time span of data we collected is merely three months, cases of identity conversion is negligible.
 
 We use three indicators to evaluate each model, including precision, recall and $F_1$ score. Precision is the fraction of relevant instances among the retrieved instances, while recall is the fraction of relevant instances that have been retrieved over the total amount of relevant instances. And $F_1$ score is a measure that combines precision and recall, which is computed as
 \begin{equation}
