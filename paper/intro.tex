@@ -1,32 +1,32 @@
 % !TEX root = main.tex
 \section{Introduction}
 %\textcolor{red}{TBA.}
-\textcolor{red}{
+%\textcolor{red}{
 %Today cryptocurrencies have become a global phenomenon with the market capitalization of more than xxx billion dollars. 
 %Blockchain technologies are gaining massive momentum in the last few years, largely due to the success of cryptocurrencies like Bitcoin and other altcoins. Blockchain is immutable ledger for recording transactions in append-only way, maintained within a distributed network. Pseudonymous is the born feature of blockchain, i.e., each account is associated with a public address, yet its actual identity is unknown. 
-Blockchain technologies are gaining massive momentum in the last few years, largely due to the success of cryptocurrencies like Bitcoin and other altcoins. Anonymity in these cryptocurrencies is a key feature. Within the system, users are identified by public-keys only. Transacting value across the blockchain can be done pseudonymously, and personal details can be veiled.
-}
+Blockchain technologies are gaining massive momentum in the last few years, largely due to the success of cryptocurrencies like Bitcoin and other altcoins. Anonymity in these cryptocurrencies is a key feature. Within the system, users are identified by public-keys only. Transacting value across the blockchain can be done pseudonymously, thus personal details can be veiled~\cite{reid2013analysis}.
+%}
 
-\textcolor{red}{
+%\textcolor{red}{
 %Identity inferring, or deanonymization, plays an important role in blockchains. 
-On the other hand, deanonymization attracts more and more people to think and concern as well. By tracking and inferring these accounts, people like traders, law-makers, financial security officers, etc, can have better understanding what is occurring on the blockchain. Thus, significant methods are proposed [XXX bitcoin deanonymizationpapers]. 
+On the other hand, deanonymization attracts more and more people to think and concern as well. By tracking and inferring these anonymous accounts, people like traders, law-makers, financial security officers, etc, can have better understanding what is occurring on the blockchain. Thus, significant methods are proposed, such as usual trading detection~\cite{maesa2016analysis} and exchange pattern mining~\cite{ranshous2017exchange}. 
 %There are many people, including traders, law-makers, financial security officers, etc, needs understand the behaviours on blockchains. 
-}.
+%}.
 
-\textcolor{red}{
-Challenges are accompanied by the rising of Ethereum, which is an open software platform based on blockchain technology that enables developers to build and deploy smart contracts.
+%\textcolor{red}{
+Challenges are accompanied by the rising of Ethereum, which is an open software platform based on blockchain technology that enables developers to build and deploy smart contracts~\cite{buterin2013ethereum}.
 %Ethereum denotes the practice of enabling users to build Turing-complete smart contract on blockchain. 
 With such smart contracts, users could perform arbitrary behaviours, instead of simple token transfer. This brings two challenges for identify inferring. First, there are various identities and such identities are unforeseeable without expert knowledge and external information. Second, the behaviours performed by each identify are unpredictable.
-}
+%}
 
-\textcolor{red}{
+%\textcolor{red}{
 %For example, ERC20 is one type of smart contracts. [introduce ERC 20 here].
 %With the behaviours defined in ERC20 smart contracts, there are two new
 %identities, investors and ICO wallets. More complicated, phishes and hackers
 %disguise themselves as ERC20 accounts, which makes it even more difficult to
 %identify phishes and hackers.
-For example, there are more than $2500$ accounts are labeled as `Phish \& Hack' in Ethereum, which are fraud addresses related to phishing and hacks. Many of them are disguised as ICO (Initial Coin Offering) wallet or DApps (decentralized applications) such as casino, and it is hard to detect them without source code analysis. 
-}
+For example, there are more than $2500$ accounts are labeled as `Phish/Hack' in Etherscan~\footnote{https://etherscan.io/accounts?l=Phish/Hack.}, which are fraud addresses related to phishing and hacks. Many of them are disguised as ICO (Initial Coin Offering) wallet or DApps (decentralized applications) such as casino, and it is hard to detect them without source code analysis~\cite{cerchiello2018icos}. 
+%}
 
 \textcolor{blue}{
 It is not trivial to address these challenges. Existing methods [ref] highly
@@ -40,7 +40,7 @@ like Etherum. %Some graph based methods [ref] are also facing the challenges fro
 
 
 \textcolor{blue}{
-  We propose graph deep learning approach to address the challenges of deanonymization,
+  We propose graph deep learning approach~\cite{battaglia2018relational} to address the challenges of deanonymization,
   unforeseeable identities and arbitrary behaviours.
 }
 
@@ -68,9 +68,13 @@ like Etherum. %Some graph based methods [ref] are also facing the challenges fro
 
 %\textcolor{red}{In this paper, we analyze Ethereum transactions and solve the identity inferring problem based on graph deep learning (graph DL)~\cite{battaglia2018relational}.}
 
-\textcolor{red}{As a representative technique of Graph DL~\cite{battaglia2018relational}, }graph embedding provides an effective way to solve the graph analytics problem which convert the graph into a low dimensional space in which the graph information is preserve~\cite{cai2018comprehensive}. Based on the low dimensional vectors, some analytic tasks can be done effectively. Here we aim at determining the identity of accounts on other labeled accounts and the topology of the transaction graph. According to what we have learnt, this paper is the first work to analyze the transaction graph of cryptocurrency based on graph embedding techniques.
+Unlike existing methods, we turn the identity inferring task into node classification, which is a typical graph analytics problem~\cite{cai2018comprehensive}. Graph deep learning techniques provide an effective way to solve the problem via converting the graph into a low dimensional space~\cite{hamilton2017representation}. %Based on the topology of cryptocurrency transaction graph, we can predict the identity.
+%Here we aim at determining the identity of accounts on other labeled accounts and the topology of the transaction graph. 
+According to what we have learnt, this paper is the first work to analyze the cryptocurrency transaction graph of cryptocurrency based on graph deep learning techniques.
 
-At the same time, we find that using such embedding techniques directly achieves poor effect on transaction graph. This is due to Ethereum transaction graph has many properties different from traditional networks, such as social media networks and citation graph. In Ethereum transaction graph, edges stand for different activities such as money transfer, contract creation and invocation, which can not be measured in a uniform weighted model. Besides, compared with other graphs, closeness features such as second-order proximity and asymmetric proximity in ETG are characteristic, which should be preserved. We also find that the relationship between a pair of nodes differs from another, even they have the same transaction frequency which could be expressed by time-density information.
+At the same time, we find that using such learning techniques directly achieves poor effect in identity inferring. This is due to cryptocurrency transaction graph has many properties different from traditional networks like as social media networks and citation graph.
+
+ In Ethereum transaction graph, edges stand for different activities such as money transfer, contract creation and invocation, which can not be measured in a uniform weighted model. Besides, compared with other graphs, closeness features such as second-order proximity and asymmetric proximity in ETG are characteristic, which should be preserved. We also find that the relationship between a pair of nodes differs from another, even they have the same transaction frequency which could be expressed by time-density information.
 
 Generally, our approach consists of three phases, \emph{graph construction}, \emph{graph embedding} and \emph{node classification}. In the construction phase, we construct the Ethereum transaction graph and divide it into multi-relation graphs to capture the different graph neighboring of transactions. In the embedding phase, we propose a XXX graph convolutional network and put the features of nodes and edges into representation. Last, a semi-supervised method is used for accounts classification.
 
