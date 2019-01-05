@@ -72,24 +72,28 @@ Unlike existing methods, we turn the identity inferring task into node classific
 %Here we aim at determining the identity of accounts on other labeled accounts and the topology of the transaction graph. 
 According to what we have learnt, this paper is the first work to analyze the cryptocurrency transaction graph of cryptocurrency based on graph deep learning techniques.
 
-At the same time, we find that using such learning techniques directly achieves poor effect in identity inferring. This is due to cryptocurrency transaction graph has many properties different from traditional networks like as social media networks and citation graph.
+At the same time, we find that using such learning techniques directly achieves poor effect in identity inferring. This is due to cryptocurrency transaction graph has many properties different from traditional networks like as social media networks~\cite{geng2015learning} and knowledge graphs~\cite{bollacker2008freebase}.
 
- In Ethereum transaction graph, edges stand for different activities such as money transfer, contract creation and invocation, which can not be measured in a uniform weighted model. Besides, compared with other graphs, closeness features such as second-order proximity and asymmetric proximity in ETG are characteristic, which should be preserved. We also find that the relationship between a pair of nodes differs from another, even they have the same transaction frequency which could be expressed by time-density information.
+ In cryptocurrency transaction graph, edges stand for different activities such as money transfer, contract creation and invocation, which can not be measured in a uniform weighted model. Besides, closeness features such as second-order proximity and asymmetric proximity in cryptocurrency transaction graph are characteristic, which should be preserved. We also find that the relationship between a pair of nodes differs from another, even they have the same transaction frequency which could be expressed by time-density information.
 
-Generally, our approach consists of three phases, \emph{graph construction}, \emph{graph embedding} and \emph{node classification}. In the construction phase, we construct the Ethereum transaction graph and divide it into multi-relation graphs to capture the different graph neighboring of transactions. In the embedding phase, we propose a XXX graph convolutional network and put the features of nodes and edges into representation. Last, a semi-supervised method is used for accounts classification.
+Generally, our approach consists of three phases, \emph{graph construction}, \emph{graph embedding} and \emph{node classification}. In the construction phase, we construct a transaction graph and divide it into multi-relation graphs to capture the different graph neighboring of transactions. In the embedding phase, we propose a graph convolutional network and put the features of nodes and edges into representation. Last, a semi-supervised method is used for nodes classification.
 
 In summary, this paper make the following major contributions.
 
-(1) To the best of our knowledge, we are the first to analyze the transaction graph of cryptocurrency based on \textcolor{red}{graph DL} techniques. We propose a three-pronged approach to handle account inferring task and reveal the differences in analysis between Ethereum transaction graph and other traditional graphs.
+(1) To the best of our knowledge, we are the first to analyze cryptocurrency transaction graph based on graph deep learning techniques. And we propose a three-pronged approach to handle account inferring task.
 
-\textcolor{red}{(2) To implement account inferring task, we propose a taxonomy of Ethereum accounts. The prominent identities are illustrated and provided for model training.}
+(2) We reveal the particularity of graph analysis in cryptocurrency transaction graph. To address these challenges, we introduce several techniques in data preprocessing and embedding.
+
+(3) To implement such identity inferring task, we take Ethereum as an experimental example and propose a taxonomy of accounts. The evaluation through real data set shows the effectiveness of new approach.
+
+
+%\textcolor{red}{(2)  The prominent identities are illustrated and provided for model training.}
 
 %. Even the perfect categorization does not exist due to the blockchain anonymity and diversity in Ethereum. However, it is necessary to concern about the identities behind their on-chain transaction activities.
 %we can still glean insight from examining the addresses with the most substantial balances by reviewing their on-chain transaction activity.
 
-(3) To address these challenges, we introduce several techniques in data preprocessing and embedding. The evaluation through real data set shows the effectiveness of new approach.
-
-\textcolor{red}{The rest of the paper is organized as follows. Section~\ref{sec:preliminary} introduces background knowledge of Ethereum and raises identity inferring problem. Section~\ref{sec:graph_analysis} gives an overview of our analysis procedure and illustrates the challenges. In Section~\ref{sec:model}, the detailed architecture is described. Section~\ref{sec:experiments} is experimental evaluation. Section~\ref{sec:relatedworks} presents the related works, and Section~\ref{sec:conclusion} concludes this paper.}
+%(3) To address these challenges, we introduce several techniques in data preprocessing and embedding. 
+The rest of the paper is organized as follows. Section~\ref{sec:preliminary} introduces background knowledge of cryptocurrency and raises identity inferring problem. Section~\ref{sec:graph_analysis} gives an overview of our analysis procedure and illustrates the challenges. In Section~\ref{sec:model}, the detailed architecture is described. Section~\ref{sec:experiments} is experimental evaluation. Section~\ref{sec:relatedworks} presents the related works, and Section~\ref{sec:conclusion} concludes this paper.
 
 
 
