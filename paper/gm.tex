@@ -1,14 +1,11 @@
 \section{TZ Model}
-In this section, we propose TZ model (short for TangZaiyang model), a
-graph DL based approach.
-
-\textcolor{red}{Unlike existing methods relies on experts to exhaustive enumerate all related features, we are the first to analyze Ethereum transactions and solve the identity inferring problem based on graph deep learning (graph DL). Identity inferring task is turned into node classification problem, simply, predicting the identity of accounts on a small sample of labeled accounts and the topology of the transaction graph.}
-
+In this section, we propose AIGL, an anonymous identification approach on blockchain. Unlike existing methods relies on experts to exhaustive enumerate all related features, we are the first to analyze cryptocurrency transactions and solve the identity inferring problem based on graph deep learning.
 
 \subsection{Overview}
 \label{subsec:methodology}
-Our approach consists of three phases: graph construction, graph embedding and node classification.
-The overall architecture of our XXX model is shown in Fig.~\ref{fig:architecture}.
+In AIGL, identity inferring task is turned into node classification problem, simply, predicting the identity of accounts on a small sample of labeled accounts and the topology of the transaction graph.
+
+Generally, as shown in Fig.~\ref{fig:architecture}, AIGL consists of three phases: graph construction, graph embedding and node classification.
 
 \begin{figure}[htbp]
 	\centering
@@ -17,9 +14,9 @@ The overall architecture of our XXX model is shown in Fig.~\ref{fig:architecture
 	\label{fig:architecture}
 \end{figure}
 
-\textbf{Phase 1: Graph construction}. We construct the Ethereum transaction graph as a directed graph $G_{t}=(V,E)$, \textcolor{red}{where node $v \in V$ represents an account which can be EOA and CA both. We use the terms account and node interchangeably in the remainder of this paper. And number of accounts is depicted as $|V|=N$.}
+\textbf{Phase 1: Graph construction}. We construct the Ethereum transaction graph as a directed graph $G_{t}=(V,E)$, where node $v \in V$ represents an account which can be EOA and CA both. We use the terms account and node interchangeably in the remainder of this paper. And number of accounts is depicted as $|V|=N$.
 
-\textcolor{red}{$E$ is a set of ordered pairs, where $E=\{(v_i,v_j)|v_i,v_j \in V\}$. The order of an edge indicates the direction of transaction (e.g., assets transfer or smart contract invocation) from $v_i$ to $v_j$.} %Analogously, the number of edges in ETG is represented as $|E|$.
+$E$ is a set of ordered pairs, where $E=\{(v_i,v_j)|v_i,v_j \in V\}$. The order of an edge indicates the direction of transaction (e.g., assets transfer or smart contract invocation) from $v_i$ to $v_j$.%Analogously, the number of edges in ETG is represented as $|E|$.
 
 \textbf{Phase 2: Graph embedding}.
 The embedding process can be defined as follows: given $G_{t}=(V,E)$, we represent each node $v$ in a low-dimensional vector space $\vec{y_v}$, so that graph analysis algorithms can then be computed efficiently.
@@ -28,27 +25,35 @@ Typical network embedding techniques, such as random-walk based and deep learnin
 
 
 \textbf{Phase 3: Node classification}.
-The final objective of our approach is to predict account identities on transaction graph, in essence, to classify given nodes into categories as shown in TABLE \ref{table:identity}.
+The final objective of our approach is to predict account identities on transaction graph. By given a labeled accounts set, supervised or semi-supervised methods can be used for entities classification. A intuitive way is simply stacking GCN layers of the form with a softmax ($\cdot$) activation on the output of the last layer~\cite{schlichtkrull2018modeling}. A cross-function can be the minimizing objective for training.
 
-\{By given a labeled account set, supervised or semi-supervised methods can be used for entities classification. Here we simply stack GCN layers of the form with a softmax ($\cdot$) activation on the output of the last layer. A cross-function can be the minimizing objective for training.\}
+The categorization is important to performance of classification as well. To be frank, the perfect categorization does not exist because Ethereum and Ethereum-like blockchains are still in a development stage. We try to give a coarse but effective taxonomy of accounts.
+
+
 
 \subsection{Graph Construction}
+The transaction graph can be constructed based on original transaction records synchronized from the blockchain. In AIGL, the graph is represented as several matrices: (a) \emph{account representations}, (b) \emph{adjacency matrices}, and (c) \emph{time density matrices}.
 
-The Ethereum transaction graph is constructed based on original transaction records synchronized from the Ethereum blockchain. Different from other studies~\cite{kipf2016semi,schlichtkrull2018modeling}, the graph is translated into several matrices: (1) a node representation matrix that captures the structural and additional information of accounts, (2) a list of adjacency matrices which describe different relations, and (3) a list of time-density matrices that represent transaction intensiveness between each pair of nodes.
 
-\paragraph{Account representations} We use a feature matrix $X \in \mathbb{R}^{N \times d}$ to encode the overall structural and additional information of accounts. There are $d$ features including:
-%The $d$ terms include some pre-defined vectors and here we use the following features
+%(1) a node representation matrix that captures the structural and additional information of accounts, (2) a list of adjacency matrices which describe different relations, and (3) a list of time-density matrices that represent transaction intensiveness between each pair of nodes.
+
+%Different from other studies~\cite{kipf2016semi,schlichtkrull2018modeling}, the graph is translated into 
+
+\paragraph{Account representations} To encode the overall structural and additional information of accounts, we use a feature matrix $X \in \mathbb{R}^{N \times d}$. The matrix $X$ includes the following $d$ pre-defined vectors.
+
 \begin{itemize}
 	\item \emph{in-degree}: the number of incoming edges of a node, that is, the number of transactions initiated by an account.
-	\item \emph{out-degree}: the number of outgoing edgesof a node, that is, the number of transactions which point to an account.
-	\item \emph{weighted in-degree}: the summation of weights of incoming edges of a node, which represents the total Eth received by an account.
-	\item \emph{weighted out-degree}: the summation of weights of outgoing edges outgoing to a node, which represents the total Eth sent from an account.
+	\item \emph{out-degree}: the number of outgoing edges of a node, that is, the number of transactions which point to an account.
+	\item \emph{weighted in-degree}: the value summation of incoming edges of a node, which represents the total crptocurrencies received by an account.
+	\item \emph{weighted out-degree}: the value summation of edges outgoing to a node, which represents the total cryptocurrencies sent from an account.
 	%\item eccentricity
 	%\item clustering coefficient
-	\item \emph{account type}: whether the account is a CA or EOA.
+	\item \emph{account type}: whether the account is a smart contract or normal one.
 \end{itemize}
 
-\paragraph{Multi-relations} To investigate the multi-relations between accounts in Ethereum transaction graph, we divide the raw transaction graph into several sub-graphs and capture the relations of graph neighboring nodes using adjacent matrices.
+\paragraph{Multi-relations} Different from other networks, edges in transaction graph stand for heterogeneous activities such as money transfer, contract creation and contract invocation. These multi-relations can not be measured in a uniform weighted model.
+
+To investigate the multi-relations between accounts in Ethereum transaction graph, we divide the raw transaction graph into several sub-graphs and capture the relations of graph neighboring nodes using adjacent matrices.
 
 The set of adjacency matrices, $\{A^1,A^2,\dots,A^R|A^i\in \mathbb{R}^{N \times N}\}$, describes the $R$ relations among $N$ nodes in ETG. As we mentioned before, the strategy of division has a large influence on classification performance.
 
