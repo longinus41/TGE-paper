@@ -88,7 +88,7 @@ Unless otherwise noted, all the GCN-based hidden layers have 16 units. Models ar
 \resizebox{\textwidth}{17mm}{
 \begin{tabular}{l|ccc|ccc|ccc|ccc|ccc}
 \toprule
- & \multicolumn{3}{c|}{DeepWalk} & \multicolumn{3}{c|}{PARW} & \multicolumn{3}{c|}{rGCN} & \multicolumn{3}{c|}{rGCN+asymmetric proximity} & \multicolumn{3}{c}{Ours} \\
+ & \multicolumn{3}{c|}{DeepWalk} & \multicolumn{3}{c|}{PARW} & \multicolumn{3}{c|}{rGCN} & \multicolumn{3}{c|}{rGCN+asymmetric proximity} & \multicolumn{3}{c}{AIGL} \\
 \midrule
 & \textbf{Precision} & \textbf{Recall} & $\mathbf{F_1}$ & \textbf{Precision} & \textbf{Recall} & $\mathbf{F_1}$ & \textbf{Precision} & \textbf{Recall} & $\mathbf{F_1}$ & \textbf{Precision} & \textbf{Recall} & $\mathbf{F_1}$ & \textbf{Precision} & \textbf{Recall} & $\mathbf{F_1}$ \\
 \midrule
@@ -122,7 +122,7 @@ In statistical analysis of label classification, the $F_1$ score is an important
 
 Results are summarized in TABLE~\ref{table:overall_results}. Our methods (with asymmetric proximity only and with asymmetric proximity and time-density both) outperform others in average $F_1$ score. Comparing with DeepWalk and PARW, our methods achieve higher $F_1$ scores in all labels, for these methods only utilize the local structure of nodes, while our methods involve global structural information and statistic information. 
 
-Note that rGCN achieves the highest average precision but a low average recall. Especially, rGCN has the lowest recall of category of phish and hack, which means that many normal accounts are inferred as threatening in rGCN model. \textcolor{red}{It will lead to ...} Our methods improve the overall performance by adding richer information, the time of transactions, into the model.
+Note that rGCN achieves the highest average precision but a low average recall. Especially, rGCN has the lowest recall of category of phish and hack, which means that many normal accounts are inferred as threatening in rGCN model. Our methods improve the overall performance by adding richer information, the time of transactions, into the model.
 
 \subsection{Asymmetric Proximity and Time-Density}
 Preserving asymmetric proximity by adjusting the adjacency matrix, our method greatly improves the robustness between different labels. We observe that in vanilla rGCN, performances of different labels vary a lot, but adding asymmetric property solves the problem. % This is because in vanilla rGCN, 

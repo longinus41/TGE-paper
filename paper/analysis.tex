@@ -4,11 +4,10 @@
 \label{sec:preliminary}
 This section investigates cryptocurrency, particularly ones supporting smart contract, from a logical perspective, and raised the identity inferring problem.
 
-
-\textcolor{blue}{Note that our work is general to blockchains that support
+Note that our work is general to blockchains that support
 smart contracts, not only Ethereum. However, terminologies in different
 blockchains vary a lot. Thus, we use terminologies in Ethereum in the
-following. And it is practical to apply our approach to other blockchains.}
+following. And it is practical to apply our approach to other blockchains.
 
 %\subsection{Accounts}
 %Accounts play a central role in Ethereum. There are two types of accounts in Ethereum: \emph{Externally Owned Accounts (EOAs)} and \emph{Contract Accounts (CAs)}. Both EOAs and CAs have unique addresses and \emph{Ether} (the cryptocurrency of Ethereum, or ETH for short) balance. Their major difference is that EOAs are controlled by people who hold the public-private key pairs, whereas CAs are ruled by executable codes of smart contracts. For a CA, code execution is triggered by transactions or messages (calls) received from other contracts.
@@ -48,28 +47,28 @@ Based on the above mentioned transactions, various activities can be enabled on 
 %\textcolor{gray}{The on-chain assets include ETH coin and ERC-20 token.}
 
 \subsection{Arbitrary Identity}
-\textcolor{blue}{
+%\textcolor{blue}{
 Smart contracts extend blockchain to some new users. Usually, smart contracts are for
 scenarios that totally different from cryptocurrency. As expected, users with new identities start experiencing
 blockchain. For example, ERC20, which is for
 crowdfunding. And because of that, investors and ICO wallets start using
 Ethereum, which is quite different from Bitcoin.
-}
+%}
 
-\textcolor{blue}{Today, there are more than hundreds of different smart contracts on
+%\textcolor{blue}{Today, there are more than hundreds of different smart contracts on
 Ethereum\footnote{https://eips.ethereum.org/all}. Besides, there are even more
 smart contracts are proposed. Some of them are for non-fungible token, while
 some are for name service. As smart
 contracts are Turing-complete, we may expect arbitrary smart contracts emerge,
 and correspondingly, users with arbitrary identities will be involved in
 blockchain.
-}
+%}
 
-\textcolor{blue}{
+%\textcolor{blue}{
 It is worthwhile to mention that it is very hard, if not impossible, to make a
 sound identity list. Generally, these accounts can be classified into different categories according to user roles on the blockchain. TokenAnalyst listed several prominent ones, including  mining pools, exchanges, token wallets, investors and so on\footnote{TokenAnalyst, https://www.tokenanalyst.io/}.
 However, Ethereum is still in a development stage. The implementation of DApps (decentralized applications) is being extended and deepened and various identities behind such DApps emerge inevitably.
-}
+%}
 %=======
 %\subsection{Arbitrary Identity}
 %Based on smart contract, lots of distributed applications (DApps) with complex functions spring up in Ethereum and other Ethereum-like blockchains.

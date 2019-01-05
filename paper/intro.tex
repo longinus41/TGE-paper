@@ -28,7 +28,7 @@ With such smart contracts, users could perform arbitrary behaviours, instead of 
 For example, there are more than $2500$ accounts are labeled as `Phish/Hack' in Etherscan~\footnote{https://etherscan.io/accounts?l=Phish/Hack.}, which are fraud addresses related to phishing and hacks. Many of them are disguised as ICO (Initial Coin Offering) wallet or DApps (decentralized applications) such as casino, and it is hard to detect them without source code analysis~\cite{cerchiello2018icos}. 
 %}
 
-\textcolor{blue}{
+%\textcolor{blue}{
 It is not trivial to address these challenges. Existing methods [ref] highly
 relies on experts to exhaustive enumerate all related features, which is easy
 in well-defined currency blockchain systems, like Bitcoin. However, due to the arbitrary behaviours
@@ -36,13 +36,7 @@ defined in smart contracts, it is
 almost impossible to enumerate corresponding related features in blockchains
 like Etherum. %Some graph based methods [ref] are also facing the challenges from
 %the unforeseeable identities and arbitrary behaviours.
-}
-
-
-\textcolor{blue}{
-  We propose graph deep learning approach~\cite{battaglia2018relational} to address the challenges of deanonymization,
-  unforeseeable identities and arbitrary behaviours.
-}
+%}
 
 %As the second major currency on the market with more than 10 billion dollars\footnote{At the time of this writing, the capitalization of Ethereum is about 11.8 billion dollars, once as high as more than 40 billion dolloars.} of capitalization, Ethereum is developed as a public, open-sourced blockchain-based platform~\cite{buterin2013ethereum}. Unlike Bitcoin, which was designed to be a currency, Ethereum aims to facilitate software processing using a token system called \emph{Ether} (ETH). Ethereum has the ability for users to build Turing-complete smart contract, which is a collection of code and data state that resides at a specific address on the Ethereum blockchain. Based on that, Ethereum can be applied to various scenarios beyond monetary exchange, such as voting, crowdfunding, lending, property rights protection and so on.
 
@@ -67,8 +61,8 @@ like Etherum. %Some graph based methods [ref] are also facing the challenges fro
 %Chen et al.~\cite{chen2018infocom} conduct an investigation on Ethereum by leveraging graph analysis.
 
 %\textcolor{red}{In this paper, we analyze Ethereum transactions and solve the identity inferring problem based on graph deep learning (graph DL)~\cite{battaglia2018relational}.}
-
-Unlike existing methods, we turn the identity inferring task into node classification, which is a typical graph analytics problem~\cite{cai2018comprehensive}. Graph deep learning techniques provide an effective way to solve the problem via converting the graph into a low dimensional space~\cite{hamilton2017representation}. %Based on the topology of cryptocurrency transaction graph, we can predict the identity.
+We propose graph deep learning approach to address the challenges of deanonymization, unforeseeable identities and arbitrary behaviours.
+Unlike existing methods, we turn the identity inferring task into node classification, which is a typical graph analytics problem~\cite{cai2018comprehensive}. Graph deep learning techniques provide an effective way to solve the problem via converting the graph into a low dimensional space~\cite{hamilton2017representation,battaglia2018relational}. %Based on the topology of cryptocurrency transaction graph, we can predict the identity.
 %Here we aim at determining the identity of accounts on other labeled accounts and the topology of the transaction graph. 
 According to what we have learnt, this paper is the first work to analyze the cryptocurrency transaction graph of cryptocurrency based on graph deep learning techniques.
 
@@ -93,7 +87,7 @@ In summary, this paper make the following major contributions.
 %we can still glean insight from examining the addresses with the most substantial balances by reviewing their on-chain transaction activity.
 
 %(3) To address these challenges, we introduce several techniques in data preprocessing and embedding. 
-The rest of the paper is organized as follows. Section~\ref{sec:preliminary} introduces background knowledge of cryptocurrency and raises identity inferring problem. Section~\ref{sec:graph_analysis} gives an overview of our analysis procedure and illustrates the challenges. In Section~\ref{sec:model}, the detailed architecture is described. Section~\ref{sec:experiments} is experimental evaluation. Section~\ref{sec:relatedworks} presents the related works, and Section~\ref{sec:conclusion} concludes this paper.
+The rest of the paper is organized as follows. Section~\ref{sec:preliminary} introduces background knowledge of cryptocurrency and raises identity inferring problem. Section~\ref{sec:approach} gives an overview of our analysis procedure first, then detailed architecture is described. Section~\ref{sec:experiments} is experimental evaluation. Section~\ref{sec:relatedworks} presents the related works, and Section~\ref{sec:conclusion} concludes this paper.
 
 
 
