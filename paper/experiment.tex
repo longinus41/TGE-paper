@@ -128,6 +128,16 @@ Note that rGCN achieves the highest average precision but a low average recall. 
 Preserving asymmetric proximity by adjusting the adjacency matrix, our method greatly improves the robustness between different labels. We observe that in vanilla rGCN, performances of different labels vary a lot, but adding asymmetric property solves the problem. % This is because in vanilla rGCN, 
 
 Based on this, the result is better when we take time-density into consideration. Different types of accounts have diverse active time distribution, so time-density helps to distinguish between them. Also, intensive transactions reflect more typical characteristics, therefore deserve higher weights.
+\subsection{classification result visualization}
+\begin{figure*}
+\centering     %%% not \center
+\subfigure[DeepWalk]{\label{fig:a}\includegraphics[width=42mm]{fig/rgcn_181_dw_20}}
+\subfigure[rGCN]{\label{fig:b}\includegraphics[width=42mm]{fig/rgcn_181_rgcn_20}}
+\subfigure[rGCN+asymmetric proximity]{\label{fig:a}\includegraphics[width=42mm]{fig/rgcn_181_rgcn_181_asym_only_20}}
+\subfigure[AIGL]{\label{fig:a}\includegraphics[width=42mm]{fig/rgcn_181_rgcn_ours_20}}
+
+\caption{my caption}
+\end{figure*}
 
 %%% Local Variables:
 %%% mode: latex
