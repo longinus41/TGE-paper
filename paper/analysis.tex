@@ -23,7 +23,7 @@ following. And it is practical to apply our approach to other blockchains.
 %Transactions can be categorized into different types, including \texttt{CALL}, \texttt{CRATE}, \texttt{REWARD} and \texttt{SUICIDE}. The most common type is the \texttt{CALL} transactions used for ETH transferring or contract invoking. The \texttt{CREATE} transactions are used to deploy smart contracts while the contract can be destroyed at the end of their cycles via the \texttt{SUICIDE} method. The \texttt{REWARD} transactions appear on the head of each block, which depicts the reward that block miner obtained from special system accounts.
 
 \subsection{Smart Contract}
-Although Bitcoin is the most striking example realizing the concept of a decentralized cryptocurrency system, it does not support complex programs. With the development of blockchain technology, more successors have merged and tried to extend the functions related to different applications. The most significant one is Ethereum, providing Turing-complete smart contracts, which is a collection of code  and data that resides at a specific address on the blockchain~\cite{buterin2013ethereum}.
+Although Bitcoin is the most striking example realizing the concept of a decentralized cryptocurrency system, it does not support complex programs. With the development of blockchain technology, more successors have merged and tried to extend the functions related to different applications. The most significant one is Ethereum, providing Turing-complete smart contract, which is a collection of code  and data that resides at a specific address on blockchain~\cite{buterin2013ethereum}.
 
 %\textcolor{red}{As the largest blockchain platform that supports various transactions including cryptocurrency transferring and smart contracts~\cite{chen2018infocom}, Ethereum is designed based on the \emph{Account/Balance} model which is more intuitive compared to the \emph{UTXO} model.}
 Unlike Bitcoin using \emph{unspent transaction output} (UTXO), Ethereum and other Ethereum-like blockchains are designed based on the \emph{Account/Balance} model to support smart contract. The major difference is that there are no accounts or balances in Bitcoin but Ethereum has them.
@@ -48,15 +48,13 @@ Based on the above mentioned transactions, various activities can be enabled on 
 
 \subsection{Arbitrary Identity}
 %\textcolor{blue}{
-Smart contracts extend blockchain to some new users. Usually, smart contracts are for
-scenarios that totally different from cryptocurrency. As expected, users with new identities start experiencing
-blockchain. For example, ERC20, which is for
-crowdfunding. And because of that, investors and ICO wallets start using
-Ethereum, which is quite different from Bitcoin.
-%}
+Smart contracts extend blockchain to some new users, which creates scenarios that totally different from cryptocurrency trading. One clear example is ERC-20, which is a technical standard used for smart contracts on the Ethereum for implementing tokens~\cite{erc-20-wiki}. It defines a common list of rules that an Ethereum token has to implement, giving developers the ability to program how new tokens. Within the Ethereum ecosystem, there are appearing many new identities such as primary market investor and ICO fundraiser.
+
+%ERC-20, which is a technical standard used for smart contracts on the Ethereum blockchain for implementing tokens [20]. It denes a common list of rules that an Ethereum token has to implement, giving developers the ability to program how new tokens will function within the Ethereum ecosystem.
 
 %\textcolor{blue}{Today, there are more than hundreds of different smart contracts on
-Ethereum\footnote{https://eips.ethereum.org/all}. Besides, there are even more
+%Ethereum\footnote{https://eips.ethereum.org/all}. 
+Besides, there are even more
 smart contracts are proposed. Some of them are for non-fungible token, while
 some are for name service. As smart
 contracts are Turing-complete, we may expect arbitrary smart contracts emerge,
@@ -66,8 +64,8 @@ blockchain.
 
 %\textcolor{blue}{
 It is worthwhile to mention that it is very hard, if not impossible, to make a
-sound identity list. Generally, these accounts can be classified into different categories according to user roles on the blockchain. TokenAnalyst listed several prominent ones, including  mining pools, exchanges, token wallets, investors and so on\footnote{TokenAnalyst, https://www.tokenanalyst.io/}.
-However, Ethereum is still in a development stage. The implementation of DApps (decentralized applications) is being extended and deepened and various identities behind such DApps emerge inevitably.
+sound identity categorization. Generally, these accounts can be classified into different categories according to user roles on the blockchain. TokenAnalyst listed several prominent ones, including  mining pools, exchanges, token wallets, investors and so on\footnote{TokenAnalyst, https://www.tokenanalyst.io/}.
+However, Ethereum is still in a development stage. The implementation of DApps is being extended and deepened and various identities behind such DApps emerge inevitably.
 %}
 %=======
 %\subsection{Arbitrary Identity}
