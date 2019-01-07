@@ -9,14 +9,15 @@ Blockchain technologies are gaining massive momentum in the last few years, larg
 
 %\textcolor{red}{
 %Identity inferring, or deanonymization, plays an important role in blockchains. 
-On the other hand, deanonymization attracts more and more people to think and concern as well. By tracking and inferring these anonymous accounts, people like traders, law-makers, financial security officers, etc, can have better understanding what is occurring on the blockchain. Thus, significant methods are proposed, such as usual trading detection~\cite{maesa2016analysis} and exchange pattern mining~\cite{ranshous2017exchange}. 
+On the other hand, deanonymization attracts more and more people to think and concern as well. By tracking and inferring these anonymous accounts, people like traders, law-makers, financial security officers, etc, can have better understanding what is occurring on the blockchain. Thus, significant works are proposed, such as usual trading detection~\cite{maesa2016analysis} and exchange pattern mining~\cite{ranshous2017exchange}. 
 %There are many people, including traders, law-makers, financial security officers, etc, needs understand the behaviours on blockchains. 
 %}.
 
 %\textcolor{red}{
 Challenges are accompanied by the rising of Ethereum, which is an open software platform based on blockchain technology that enables developers to build and deploy smart contracts~\cite{buterin2013ethereum}.
 %Ethereum denotes the practice of enabling users to build Turing-complete smart contract on blockchain. 
-With such smart contracts, users could perform arbitrary behaviours, instead of simple token transfer. This brings two challenges for identify inferring. First, there are various identities and such identities are unforeseeable without expert knowledge and external information. Second, the behaviours performed by each identify are unpredictable.
+With such smart contracts, users could perform arbitrary behaviours, instead of simple assets transfer. This brings new challenges for identify inferring. First, decentralized applications (DApps) are constantly expanding and adding new user roles to blockchain ecosystem. And such user roles are unforeseeable without expert knowledge and external information.
+%and such identities are unforeseeable without expert knowledge and external information. Second, the behaviours performed by each identify are unpredictable.
 %}
 
 %\textcolor{red}{
@@ -25,18 +26,16 @@ With such smart contracts, users could perform arbitrary behaviours, instead of 
 %identities, investors and ICO wallets. More complicated, phishes and hackers
 %disguise themselves as ERC20 accounts, which makes it even more difficult to
 %identify phishes and hackers.
-For example, there are more than $2500$ accounts are labeled as `Phish/Hack' in Etherscan~\footnote{https://etherscan.io/accounts?l=Phish/Hack.}, which are fraud addresses related to phishing and hacks. Many of them are disguised as ICO (Initial Coin Offering) wallet or DApps (decentralized applications) such as casino, and it is hard to detect them without source code analysis~\cite{cerchiello2018icos}. 
+One clear example is that there are more than $2500$ accounts are labeled as `Phish/Hack' in Etherscan\footnote{https://etherscan.io/accounts?l=Phish/Hack.}, which are fraud addresses related to phishing and hacks in Ethereum. Many of them are disguised as ICO (Initial Coin Offering) wallet or DApps like casino~\cite{cerchiello2018icos}, and it is hard to detect them without source code analysis~\cite{jiang2018contractfuzzer}. 
 %}
 
 %\textcolor{blue}{
-It is not trivial to address these challenges. Existing methods [ref] highly
-relies on experts to exhaustive enumerate all related features, which is easy
-in well-defined currency blockchain systems, like Bitcoin. However, due to the arbitrary behaviours
-defined in smart contracts, it is
-almost impossible to enumerate corresponding related features in blockchains
-like Etherum. %Some graph based methods [ref] are also facing the challenges from
+It is not trivial to address these challenges. Existing methods~\cite{maesa2016analysis,ranshous2017exchange,zhao2015graph} realized discerning transaction flows in blockchain system with currency trading only, like Bitcoin. They are far from achieving deanonymization in identity-rich blockchains like Ethereum. A proximate work is~\cite{chen2018infocom}, which has inferred the account identity by analyzing source codes (e.g., comments or keywords) of smart contracts. Such method relies on experts to exhaustive enumerate all related features, which is tedious, time-consuming and with low accuracy.
+
+ %Some graph based methods [ref] are also facing the challenges from
 %the unforeseeable identities and arbitrary behaviours.
 %}
+
 
 %As the second major currency on the market with more than 10 billion dollars\footnote{At the time of this writing, the capitalization of Ethereum is about 11.8 billion dollars, once as high as more than 40 billion dolloars.} of capitalization, Ethereum is developed as a public, open-sourced blockchain-based platform~\cite{buterin2013ethereum}. Unlike Bitcoin, which was designed to be a currency, Ethereum aims to facilitate software processing using a token system called \emph{Ether} (ETH). Ethereum has the ability for users to build Turing-complete smart contract, which is a collection of code and data state that resides at a specific address on the Ethereum blockchain. Based on that, Ethereum can be applied to various scenarios beyond monetary exchange, such as voting, crowdfunding, lending, property rights protection and so on.
 
