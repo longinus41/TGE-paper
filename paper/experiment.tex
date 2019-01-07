@@ -126,7 +126,7 @@ Note that rGCN achieves the highest average precision but a low average recall. 
 
 %\subsection{Asymmetric Proximity and Time-Density}
 \subsection{Visualization and Deeper Analysis}
-Because AIGL is a graph deep learning approach based on graph embedding, and each node in the graph can be represented as a low-dimensional vector. It allows us to visualize the nodes and gain a better understanding of classification. Note that PARW is based on label propagation instead of embedding, we illustrate the visualization of DeepWalk, rGCN and our methods in Fig.~\ref{fig:visualization}. Similar to [], we learn a 128-dimensional embedding for each method and input it to t-SNE[] to reduce the dimensionality to 2, then all nodes can be visualized in a 2-dimensional space.
+Because AIGL is a graph deep learning approach based on graph embedding, and each node in the graph can be represented as a low-dimensional vector. It allows us to visualize the nodes and gain a better understanding of classification. Note that PARW is based on label propagation instead of embedding, we illustrate the visualization of DeepWalk, rGCN and our methods in Fig.~\ref{fig:visualization}. Similar to~\cite{wang2016structural}, we learn a 128-dimensional embedding for each method and input it to t-SNE~\cite{maaten2008visualizing} to reduce the dimensionality to 2, then all nodes can be visualized in a 2-dimensional space.
 
 It can be observed that all GCN based approaches outperform DeepWalk since 2-layers GCN models preserve second-order proximity well~\cite{goyal2018graph}. This illustrates the importance of higher order proximity in the structure of transaction graph.
 
