@@ -60,20 +60,18 @@ It is not trivial to address these challenges. Existing methods~\cite{maesa2016a
 %Chen et al.~\cite{chen2018infocom} conduct an investigation on Ethereum by leveraging graph analysis.
 
 %\textcolor{red}{In this paper, we analyze Ethereum transactions and solve the identity inferring problem based on graph deep learning (graph DL)~\cite{battaglia2018relational}.}
-We propose graph deep learning approach to address the challenges of deanonymization, unforeseeable identities and arbitrary behaviours.
+We propose graph AIGL, an anonymity identification approach based on graph deep learning to address the challenges of deanonymization.%, unforeseeable identities and arbitrary behaviours.
 Unlike existing methods, we turn the identity inferring task into node classification, which is a typical graph analytics problem~\cite{cai2018comprehensive}. Graph deep learning techniques provide an effective way to solve the problem via converting the graph into a low dimensional space~\cite{hamilton2017representation,battaglia2018relational}. %Based on the topology of cryptocurrency transaction graph, we can predict the identity.
 %Here we aim at determining the identity of accounts on other labeled accounts and the topology of the transaction graph. 
-According to what we have learnt, this paper is the first work to analyze the cryptocurrency transaction graph of cryptocurrency based on graph deep learning techniques.
+According to what we have learnt, this paper is the first work to analyze the cryptocurrency transaction based on graph deep learning techniques as well.
 
-At the same time, we find that using such learning techniques directly achieves poor effect in identity inferring. This is due to cryptocurrency transaction graph has many properties different from traditional networks like as social media networks~\cite{geng2015learning} and knowledge graphs~\cite{bollacker2008freebase}.
+As a general analytic architecture for cryptocurrency, AIGL consists of three phases, \emph{graph construction}, \emph{graph embedding} and \emph{node classification}. In the construction phase, we construct a transaction graph and divide it into multi-relation graphs to capture the different graph neighboring of transactions. In the embedding phase, we propose a graph convolutional network and put the features of nodes and edges into representation. Last, a semi-supervised method is used for nodes classification.
 
- In cryptocurrency transaction graph, edges stand for different activities such as money transfer, contract creation and invocation, which can not be measured in a uniform weighted model. Besides, closeness features such as second-order proximity and asymmetric proximity in cryptocurrency transaction graph are characteristic, which should be preserved. We also find that the relationship between a pair of nodes differs from another, even they have the same transaction frequency which could be expressed by time-density information.
-
-Generally, our approach consists of three phases, \emph{graph construction}, \emph{graph embedding} and \emph{node classification}. In the construction phase, we construct a transaction graph and divide it into multi-relation graphs to capture the different graph neighboring of transactions. In the embedding phase, we propose a graph convolutional network and put the features of nodes and edges into representation. Last, a semi-supervised method is used for nodes classification.
+At the same time, we find that using such learning techniques directly achieves poor effect in identity inferring. This is due to cryptocurrency transaction graph has many properties different from traditional networks like as social media networks~\cite{geng2015learning} and knowledge graphs~\cite{bollacker2008freebase}. In cryptocurrency transaction graph, edges stand for different activities such as money transfer, contract creation and invocation, which can not be measured in a uniform weighted model. Besides, closeness features such as second-order proximity and asymmetric proximity in cryptocurrency transaction graph are characteristic, which should be preserved. We also find that the relationship between a pair of nodes differs from another, even they have the same transaction frequency which could be expressed by time-density information.
 
 In summary, this paper make the following major contributions.
 
-(1) To the best of our knowledge, we are the first to analyze cryptocurrency transaction graph based on graph deep learning techniques. And we propose a three-pronged approach to handle account inferring task.
+(1) To the best of our knowledge, we are the first to analyze cryptocurrency transaction based on graph deep learning techniques. And we propose a three-pronged approach to handle account inferring task.
 
 (2) We reveal the particularity of graph analysis in cryptocurrency transaction graph. To address these challenges, we introduce several techniques in data preprocessing and embedding.
 
