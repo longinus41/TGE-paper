@@ -42,7 +42,7 @@ The transaction graph can be constructed based on original transaction records s
 
 %Different from other studies~\cite{kipf2016semi,schlichtkrull2018modeling}, the graph is translated into 
 
-\paragraph{Account representations} To encode the overall structural and additional information of accounts, we use a feature matrix $X \in \mathbb{R}^{N \times d}$. In matrix $X$, each account contains the following $d$ pre-defined features.
+\paragraph{Account representations} To encode the overall structural and additional information of accounts, we \textcolor{red}{denote the account representations as} a feature matrix $X \in \mathbb{R}^{N \times d}$. In matrix $X$, each account contains the following $d$ pre-defined features.
 
 \begin{itemize}
 	\item \emph{in-degree}: the number of incoming edges of a node, that is, the number of transactions initiated by an account.
@@ -54,13 +54,13 @@ The transaction graph can be constructed based on original transaction records s
 	\item \emph{account type}: whether the account is a smart contract or normal one.
 \end{itemize}
 
-\paragraph{Multi-relations} Different from other networks, edges in transaction graph stand for heterogeneous activities such as money transfer, contract creation and contract invocation. These multi-relations can not be measured in a uniform weighted model.
+\paragraph{Multi-relations} Different from other networks, edges in transaction graph stand for heterogeneous activities such as money transfer, contract creation and contract invocation. \textcolor{red}{Obviously, such} multi-relations can not be measured in a uniform weighted model.
 
-To address such challenge, we divide the raw transaction graph into several sub-graphs and capture the relations of graph neighboring nodes using adjacent matrices. The set of adjacency matrices, $\{A^1,A^2,\dots,A^R|A^i\in \mathbb{R}^{N \times N}\}$, describes the $R$ relations among $N$ nodes in transaction graph. It is conceivable that, the strategy of division has a large influence on classification performance.
+To address the challenge, we divide the raw transaction graph into several sub-graphs and capture the relations of graph neighboring nodes using adjacent matrices. The set of adjacency matrices, $\{A^1,A^2,\dots,A^R|A^i\in \mathbb{R}^{N \times N}\}$, describes the $R$ relations among $N$ nodes in transaction graph. It is conceivable that, the strategy of division has a large influence on classification performance.
 
-In our model, we consider four kinds of relations, including \texttt{CALL} with value, \texttt{CALL} without value, \texttt{CREATION} and \texttt{REWARD}, which represent the relations of cryptocurrency transferring, smart contract invocation, smart contract deployment and mining rewarding, respectively. For relations of \texttt{CALL} without value, \texttt{CREATION} and \texttt{REWARD}, we calculate the frequency of repeated edges between a pair of nodes as the adjacent weight in the corresponding relation adjacent matrix. 
+\textcolor{red}{In AIGL, four major transactions are considered,} including \texttt{CALL} with value, \texttt{CALL} without value, \texttt{CREATION} and \texttt{REWARD}, which represent the relations of cryptocurrency transferring, smart contract invocation, smart contract deployment and mining rewarding, respectively. 
 
-For crptocurrency transferring, on the other hand, it is not sensible to use the transaction amount directly as the adjacent weight. That is because the accounts have varied enormously in terms of cryptocurrency transferring which will lead to underflow and overflow in the process of training.
+\textcolor{red}{On one hand,} for relations of \texttt{CALL} without value, \texttt{CREATION} and \texttt{REWARD}, we calculate the frequency of repeated edges between a pair of nodes as the adjacent weight in the corresponding relation adjacent matrix. For cryptocurrency transferring, on the other hand, it is not sensible to use the assets amount directly as the adjacent weight. That is because the accounts have varied enormously in terms of cryptocurrency transferring which will lead to underflow and overflow in the process of training.
 
  Taking Ethereum transaction as an example, the amount of assets transferring is discretized into three ranges: (1) small transfers which the transaction value is less than 1 ETH (the cryptocurrency used in Ethereum); (2) medium transfers which the transaction value is between 1 ETH and 10 ETH and (3) major transfers which the transaction value is above 10 ETH. Then the ETH transferring matrix can be calculated in a similar way with other relations.
 
@@ -71,8 +71,8 @@ For crptocurrency transferring, on the other hand, it is not sensible to use the
 \paragraph{Time-density matrices}
 Even in a single relation graph, there may be multiple edges between the same node pairs. This occurs quite naturally since an account may transfer or invoke to another account repeatedly for a period of time which is quite different from the knowledge graphs and citation networks.
 
-Intuitively, a simple solution is to merge those edges by frequency or weight summation. Nevertheless, it leads to loss of information. It is not hard to find that these repeated edges are located at different time intervals along the time axis which are characterized by the block height.
-
+Intuitively, a simple solution is to merge those edges by frequency or weight summation \textcolor{red}{in the same way as what is doing in adjacency matrices. In fact, each transaction is labeled with block height which can be considered timestamp these repeated edges are located at different time intervals along the time axis}. 
+ 
 \begin{figure}[htbp]
 \centering
 \begin{tabular}{c}
@@ -92,7 +92,7 @@ Intuitively, a simple solution is to merge those edges by frequency or weight su
 \label{fig:time_std}
 \end{figure}
 
-Fig.~\ref{fig:time_std} illustrates the distribution of time variance when transaction happens of whole accounts and hack \& phish accounts in Ethereum. It is not difficult to find that the time variance distribution of hack \& phish accounts is more concentrated compared with other accounts, which seems perfectly reasonable since the hacks and phishes are more active in a short time. This insight inspired us to use time information such as the variance of time transaction happens.
+Fig.~\ref{fig:time_std} illustrates the distribution of time variance when transaction happens of whole accounts and hack \& phish accounts in Ethereum. It is not difficult to find that the time variance distribution of hack \& phish accounts is more concentrated compared with other accounts, which seems perfectly reasonable since the hacks and phishes are more active in a short time. This insight inspires us to use time information such as the variance of time transaction happens.
 
 To describe time-density information, we use a set of matrices $\{K^1,K^2,\dots,K^R|K^i\in \mathbb{R}^{N \times N}\}$. Given a sequence $\{h_{ij1}^r,h_{ij2}^r,\dots,h_{ijm}^r | h_{ijk}^r>0\}$ as the block height of transactions in relation $r$ between node $v_i$ and $v_j$, the time-density of each relation $r$ is computed as%Equation \ref{eq:time}
 
@@ -115,9 +115,9 @@ H^{(l+1)}=\delta(\sum_{r\in R} (K^r\odot (D^r)^{-1}A^r)H^{(l)}W_r^{(l)})
 
 The edge weight $A_{ij}$ in adjacency matrix $A$ is defined as \emph{first-order proximity} which represents similarity between nodes $v_i$ and $v_j$~\cite{tang2015line}. Further, \emph{second-order proximity} compares the neighborhood of two nodes and treat them as similar if they have a similar neighborhood~\cite{goyal2018graph}.
 
-In cryptocurrency transaction graph, we find that second-order proximity is very important in preserving the local structure as well as first-order proximity. As shown in Figure \ref{fig:high_order}, nodes $a$ and $c$ are smart contracts and node $b$ is normal user. Obviously, $a$ is not adjacent to $c$  but they have similar neighbor structure. Embedding models with first-order proximity will keep them far apart although they have similar connection structures, while embedding with second-order proximity captures this similarity.
+In cryptocurrency transaction graph, \textcolor{red}{it turns out that second-order proximity plays important role}  in preserving the local structure as well as first-order proximity. As shown in Figure \ref{fig:high_order}, nodes $a$ and $c$ are smart contracts and node $b$ is normal user. Obviously, $a$ is not adjacent to $c$  but they have similar neighbor structure. Embedding models with first-order proximity will keep them far apart although they have similar connection structures, while embedding with second-order proximity captures this similarity.
 
- We feed the input into a rGCN model with 2 hidden layers, as a trade-off between preserving high-order proximities and introducing noise. 
+ We feed the input into a \textcolor{red}{GCN} model with 2 hidden layers, as a trade-off between preserving second-order proximity and introducing noise. 
  
  The input of the $l$-th layer is $H^{(l)}=\{h_1^{(l)},h_2^{(l)},...,h_N^{(l)}|h_i^{(l)}\in \mathbb{R}^{N \times d^{(l)}}\}$. Hence the method can be understood as special cases of the forward updating process.
 
@@ -147,7 +147,7 @@ h_i^{(l+1)}=\delta(\sum_{r\in R} \sum_{j \in N_i^r} \frac{\tau_{ij}^r}{\hat c_{i
 \end{figure}
 
 
-In cryptocurrency transaction graph, we find \emph{asymmetric proximity} should be preserved as well. For instance, as shown in Figure. \ref{fig:asymmetric}, node $a$ is a Ethereum investor address and node $c$ is an exchange root address. Generally, edge weight can be $A_{ab}=A_{bc}=A_{ca}$ since deposit and withdrawal come in pairs in symmetric model. However, the proximity $(a,c)$ is not equal to proximity $(c,a)$ due to their asymmetric local structures.
+\textcolor{red}{Another overlooked closeness, \emph{asymmetric proximity}} should also be preserved in transaction graph. For instance, as shown in Figure. \ref{fig:asymmetric}, \textcolor{red}{node $a$ denotes cryptocurrency trader and node $b$ and $c$ are cryptocurrency exchange accounts. Consequently, edge $(a,b)$ stands for deposit process while edge $(c,a)$ is withdrawal process.} Generally, edge weight can be $A_{ab}=A_{bc}=A_{ca}$ since deposit and withdrawal come in pairs in symmetric model. However, the proximity $(a,c)$ is not equal to proximity $(c,a)$ due to their asymmetric local structures.
 
 Unlike the asymmetric proximity preserving approach based on random walk~\cite{zhou2017scalable}, our method is based on a kind of non-probability graph embedding model.
  %Zhou et. proposed a scalable asymmetric proximity preserving graph embedding method based on random walk~\cite{zhou2017scalable}. In their model, the probability that $v_a$ arrives at $v_c$ is far less than the one that $v_c$ arrives at $v_a$, as the out degree of $v_c$ is bigger than the out degree of $v_a$
@@ -164,7 +164,7 @@ To preserve the asymmetric proximity, the coefficient $\hat c_{i,r}$ is introduc
 \subsection{Node Classification}
 The output of the last layer indicates the probability that each node being assigned to each class.
 
-The output of the last rGCN layer is regarded as a probability matrix $P=\{p_1,p_2,...,p_N|p_i\in \mathbb{R}^{N \times m}\}$, where $p_i=\{p_{i,1},p_{i,2},...,p_{i,m}\}$ describes the probability of classifying node $v_i$ into $m$ categories.
+The output of the last \textcolor{red}{GCN} layer is regarded as a probability matrix $P=\{p_1,p_2,...,p_N|p_i\in \mathbb{R}^{N \times m}\}$, where $p_i=\{p_{i,1},p_{i,2},...,p_{i,m}\}$ describes the probability of classifying node $v_i$ into $m$ categories.
 
 We utilize the cross-entropy loss function as the training objective:
 \begin{equation}
