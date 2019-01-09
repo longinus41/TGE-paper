@@ -31,7 +31,7 @@ Typical network embedding techniques, such as random-walk based and deep learnin
 
 
 \textbf{Phase 3: Node classification}.
-The final objective of AIGL is to predict account identities on transaction graph. Given a labeled accounts set, supervised or semi-supervised methods can be used for entities classification. A intuitive way is simply stacking GCN layers of the form with a softmax ($\cdot$) activation on the output of the last layer~\cite{schlichtkrull2018modeling}. \textcolor{blue}{A cross-function can be the minimizing objective for training.}
+The final objective of AIGL is to predict account identities on transaction graph. Given a labeled accounts set, supervised or semi-supervised methods can be used for entities classification. An intuitive way is simply stacking GCN layers of the form with a softmax ($\cdot$) activation on the output of the last layer~\cite{schlichtkrull2018modeling}. \textcolor{blue}{A loss function, such as cross-entropy error function, can be the minimizing objective for training.}
 
 \textcolor{red}{Last but not the least, the categorization is important to performance of classification. For cryptocurrencies that do support smart contract, such as Ethereum, we propose a coarse taxonomy which is illustrated in TABLE~\ref{table:identity}.} 
 
