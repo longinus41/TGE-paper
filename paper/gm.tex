@@ -1,14 +1,15 @@
 \section{AIGL Approach}
 \label{sec:approach}
-In this section, we propose AIGL, an anonymity identification approach based on graph deep learning. Unlike existing methods rely on experts to exhaustive enumerate all related features, AIGL is designed as general analytic architecture for blockchain.
+In this section, we propose AIGL, a cryptocurrency anonymity identification approach based on graph deep learning. We first give an overview of AIGL, and then present technical details including graph construction, embedding and node classification.
 
 %we are the first to analyze cryptocurrency transactions and solve the identity inferring problem based on graph deep learning.
 
 \subsection{Overview}
 \label{subsec:methodology}
-In AIGL, identity inferring task is turned into node classification problem, simply, predicting the identity of accounts on a small sample of labeled accounts and the topology of the transaction graph.
+%In AIGL, identity inferring task is turned into node classification problem, simply, predicting the identity of accounts on a small sample of labeled accounts and the topology of the transaction graph.
+\textcolor{red}{The basic idea of AIGL is to present the accounts in cryptocurrency and associated transactions as a graph. In the graph, accounts are represented as nodes with low dimensional vectors by embedding technique. Then, the identify inference is to classify nodes on the graph by given a labeled training set.}
 
-Generally, as shown in Fig.~\ref{fig:architecture}, AIGL consists of three phases: graph construction, graph embedding and node classification.
+Specifically, AIGL consists of three phases: graph construction, graph embedding and node classification as shown in Fig.~\ref{fig:architecture}.
 
 \begin{figure}[htbp]
 	\centering
@@ -17,22 +18,24 @@ Generally, as shown in Fig.~\ref{fig:architecture}, AIGL consists of three phase
 	\label{fig:architecture}
 \end{figure}
 
-\textbf{Phase 1: Graph construction}. We construct the blockchain transaction graph as a directed graph $G_{t}=(V,E)$, where node $v \in V$ represents an account which can be EOA and CA both. We use the terms account and node interchangeably in the remainder of this paper. And number of accounts is depicted as $|V|=N$.
+\textbf{Phase 1: Graph construction}. We construct the blockchain transaction graph as a directed graph $G_{t}=(V,E)$, where node $v \in V$ represents an account that can be an EOA or CA. We use the terms account and node interchangeably in the remainder of this paper. The total number of accounts is depicted as $|V|=N$.
 
-$E$ is a set of ordered pairs, where $E=\{(v_i,v_j)|v_i,v_j \in V\}$. The order of an edge indicates the direction of transaction (e.g., assets transfer or smart contract invocation) from $v_i$ to $v_j$.%Analogously, the number of edges in ETG is represented as $|E|$.
+$E$ contains ordered pairs, i.e., $E=\{(v_i,v_j)|v_i,v_j \in V\}$, where $(v_{i},v_{j})$ indicates the direction of transaction (e.g., assets transfer or smart contract invocation) from $v_i$ to $v_j$. \textcolor{red}{Within $E$, each edge has weight, and the specific method for calculating is detailed in the following sub-section.}
+
+%Analogously, the number of edges in ETG is represented as $|E|$.
 
 \textbf{Phase 2: Graph embedding}.
-The embedding process can be defined as follows: given $G_{t}=(V,E)$, we represent each node $v$ in a low-dimensional vector space $\vec{y_v}$, so that graph analysis algorithms can then be computed efficiently.
+\textcolor{red}{Graph embedding provides an effective yet efficient way to solve the graph analytics problem~\cite{cai2018comprehensive}.} The embedding process can be defined as follows: given $G_{t}=(V,E)$, we represent each node $v$ in a low-dimensional vector space $\vec{y_v}$. Based on such vectors, node classification can then be computed efficiently with high accuracy.
 
 Typical network embedding techniques, such as random-walk based and deep learning based models, use the pure network structure to map into the embedding space~\cite{goyal2018capturing}. Our model is primarily motivated as an extension of GCNs (Graph Convolutional Networks)~\cite{kipf2016semi,schlichtkrull2018modeling}, which puts the features of nodes and edges into the representation, since it shows effectiveness for entity classification in large-scale relational data.
 
 
 \textbf{Phase 3: Node classification}.
-The final objective of our approach is to predict account identities on transaction graph. By given a labeled accounts set, supervised or semi-supervised methods can be used for entities classification. A intuitive way is simply stacking GCN layers of the form with a softmax ($\cdot$) activation on the output of the last layer~\cite{schlichtkrull2018modeling}. A cross-function can be the minimizing objective for training.
+The final objective of AIGL is to predict account identities on transaction graph. Given a labeled accounts set, supervised or semi-supervised methods can be used for entities classification. A intuitive way is simply stacking GCN layers of the form with a softmax ($\cdot$) activation on the output of the last layer~\cite{schlichtkrull2018modeling}. \textcolor{blue}{A cross-function can be the minimizing objective for training.}
 
-The categorization is important to performance of classification as well. To be frank, the perfect categorization does not exist because Ethereum and Ethereum-like blockchains are still in a development stage. \textcolor{red}{For accounts in Ethereum, we propose} a coarse but effective taxonomy.
+\textcolor{red}{Last but not the least, the categorization is important to performance of classification. For cryptocurrencies that do support smart contract, such as Ethereum, we propose a coarse taxonomy which is illustrated in TABLE~\ref{table:identity}.} 
 
-
+ %To be frank, the perfect categorization does not exist because Ethereum and Ethereum-like blockchains are still in a development stage. \textcolor{red}{For accounts in Ethereum, we propose} a coarse but effective taxonomy.
 
 \subsection{Graph Construction}
 The transaction graph can be constructed based on original transaction records synchronized from the blockchain. In AIGL, the graph is represented as several matrices: (a) \emph{account representations}, (b) \emph{adjacency matrices}, and (c) \emph{time density matrices}.
@@ -42,7 +45,7 @@ The transaction graph can be constructed based on original transaction records s
 
 %Different from other studies~\cite{kipf2016semi,schlichtkrull2018modeling}, the graph is translated into 
 
-\paragraph{Account representations} To encode the overall structural and additional information of accounts, we \textcolor{red}{denote the account representations as} a feature matrix $X \in \mathbb{R}^{N \times d}$. In matrix $X$, each account contains the following $d$ pre-defined features.
+\paragraph{Account representations} To encode the overall structural and additional information of accounts, we denote the account representations as a feature matrix $X \in \mathbb{R}^{N \times d}$, where each account contains the following $d$ pre-defined features.
 
 \begin{itemize}
 	\item \emph{in-degree}: the number of incoming edges of a node, that is, the number of transactions initiated by an account.
@@ -54,13 +57,14 @@ The transaction graph can be constructed based on original transaction records s
 	\item \emph{account type}: whether the account is a smart contract or normal one.
 \end{itemize}
 
-\paragraph{Multi-relations} Different from other networks, edges in transaction graph stand for heterogeneous activities such as money transfer, contract creation and contract invocation. \textcolor{red}{Obviously, such} multi-relations can not be measured in a uniform weighted model.
+\paragraph{Adjacent matrices} Different from other networks, edges in transaction graph stand for heterogeneous activities such as money transfer, contract creation and contract invocation. Obviously, such %multi-relations can not be measured in a uniform weighted model.
+activitities should be represented as different edge types instead of being measured in uniform weighted graph.
 
 To address the challenge, we divide the raw transaction graph into several sub-graphs and capture the relations of graph neighboring nodes using adjacent matrices. The set of adjacency matrices, $\{A^1,A^2,\dots,A^R|A^i\in \mathbb{R}^{N \times N}\}$, describes the $R$ relations among $N$ nodes in transaction graph. It is conceivable that, the strategy of division has a large influence on classification performance.
 
-\textcolor{red}{In AIGL, four major transactions are considered,} including \texttt{CALL} with value, \texttt{CALL} without value, \texttt{CREATION} and \texttt{REWARD}, which represent the relations of cryptocurrency transferring, smart contract invocation, smart contract deployment and mining rewarding, respectively. 
+In AIGL, four major transactions are considered, including (1) \texttt{CALL} with value, (2) \texttt{CALL} without value, (3) \texttt{CREATION} and (4) \texttt{REWARD}, which represent the relations of cryptocurrency transferring, smart contract invocation, smart contract deployment and mining rewarding, respectively. \textcolor{red}{More specifically, transaction is regarded as type 1 that an account transfer some ETH (cryptocurrency in Ethereum) to another one. And the ERC-20 token transferring is regarded as type 2 since it is a contract invocation without any ETH.}
 
-\textcolor{red}{On one hand,} for relations of \texttt{CALL} without value, \texttt{CREATION} and \texttt{REWARD}, we calculate the frequency of repeated edges between a pair of nodes as the adjacent weight in the corresponding relation adjacent matrix. For cryptocurrency transferring, on the other hand, it is not sensible to use the assets amount directly as the adjacent weight. That is because the accounts have varied enormously in terms of cryptocurrency transferring which will lead to underflow and overflow in the process of training.
+On one hand, for relations of \textcolor{red}{type 2, type 3 and type 4}, we calculate the frequency of repeated edges between a pair of nodes as the adjacent weight in the corresponding relation adjacent matrix. For cryptocurrency transferring, on the other hand, it is not sensible to use the assets amount directly as the adjacent weight. That is because the accounts have varied enormously in terms of cryptocurrency transferring which will lead to underflow and overflow in the process of training.
 
  Taking Ethereum transaction as an example, the amount of assets transferring is discretized into three ranges: (1) small transfers which the transaction value is less than 1 ETH (the cryptocurrency used in Ethereum); (2) medium transfers which the transaction value is between 1 ETH and 10 ETH and (3) major transfers which the transaction value is above 10 ETH. Then the ETH transferring matrix can be calculated in a similar way with other relations.
 
@@ -69,9 +73,14 @@ To address the challenge, we divide the raw transaction graph into several sub-g
 %Specially, the adjacent matrices are modified to preserve the asymmetric proximity of transaction graph, which will be addressed in detail later.
 
 \paragraph{Time-density matrices}
-Even in a single relation graph, there may be multiple edges between the same node pairs. This occurs quite naturally since an account may transfer or invoke to another account repeatedly for a period of time which is quite different from the knowledge graphs and citation networks.
+\textcolor{red}{As noted above, the value $a^r_{ij}$ in adjacent matrix $A^r$ is equal to accumulated frequency of edges between $v_i$ and $v_j$ in relation $r$. }
 
-Intuitively, a simple solution is to merge those edges by frequency or weight summation \textcolor{red}{in the same way as what is doing in adjacency matrices. In fact, each transaction is labeled with block height which can be considered timestamp these repeated edges are located at different time intervals along the time axis}. 
+%Even in a single relation graph, there may be multiple edges between the same node pairs. This occurs quite naturally since an account may transfer or invoke to another account repeatedly for a period of time, which is quite different from the knowledge graphs and citation networks.
+
+%Intuitively, a simple solution is to merge those edges by frequency or weight summation \textcolor{red}{in the same way as what is doing in adjacency matrices. 
+\textcolor{red}{In fact, more information could be exploited on transaction graph. Within each block, transactions are labeled with block height which can be regarded as timestamp. These repeated edges are located at different time intervals along the time axis. Based on such information, we expand on these adjacent features to open a new dimension.}
+
+
  
 \begin{figure}[htbp]
 \centering
@@ -88,16 +97,16 @@ Intuitively, a simple solution is to merge those edges by frequency or weight su
     \input{fig/fake_time_std_pdf.tex}
 	}
 \end{tabular}
-\caption{Examples.}
+\caption{Time variance histogram of accounts in Ethereum.}
 \label{fig:time_std}
 \end{figure}
 
-Fig.~\ref{fig:time_std} illustrates the distribution of time variance when transaction happens of whole accounts and hack \& phish accounts in Ethereum. It is not difficult to find that the time variance distribution of hack \& phish accounts is more concentrated compared with other accounts, which seems perfectly reasonable since the hacks and phishes are more active in a short time. This insight inspires us to use time information such as the variance of time transaction happens.
+Fig.~\ref{fig:time_std} illustrates the distribution of time variance when transaction happens of whole accounts and hack \& phish accounts in Ethereum. We observe that the time variance distribution of hack \& phish accounts is more concentrated compared with other accounts, since they are more active in a short period. This insight inspires us to use time information such as the variance of time transaction happens.
 
-To describe time-density information, we use a set of matrices $\{K^1,K^2,\dots,K^R|K^i\in \mathbb{R}^{N \times N}\}$. Given a sequence $\{h_{ij1}^r,h_{ij2}^r,\dots,h_{ijm}^r | h_{ijk}^r>0\}$ as the block height of transactions in relation $r$ between node $v_i$ and $v_j$, the time-density of each relation $r$ is computed as%Equation \ref{eq:time}
+To describe time-density information, we use a set of matrices $\{T^1,T^2,\dots,T^R|T^i\in \mathbb{R}^{N \times N}\}$. Given a sequence $\{h_{ij1}^r,h_{ij2}^r,\dots,h_{ijm}^r | h_{ijk}^r>0\}$ as the block height of $m$ transactions in relation $r$ between node $v_i$ and $v_j$, the time-density of each relation $r$ is computed as%Equation \ref{eq:time}
 
 \begin{equation}
-k_{ij}^r=g(\sqrt{Var[\frac{1}{m}\sum_{k=1}^m h_{ijk}^r]})
+t{ij}^r=g(\sqrt{Var[\frac{1}{m}\sum_{k=1}^m h_{ijk}^r]})
 \label{eq:time}
 \end{equation}
 
@@ -109,15 +118,15 @@ Based on the above input matrices, we propose a multi-layer Graph Convolutional 
 
 %The method can be understood as a more abstract propagation rule:
 \begin{equation}
-H^{(l+1)}=\delta(\sum_{r\in R} (K^r\odot (D^r)^{-1}A^r)H^{(l)}W_r^{(l)})
+H^{(l+1)}=\delta(\sum_{r\in R} (K^r\odot (D^r)^{-1}A^r)H^{(l)}W_r^{(l)}),\forall r
 \end{equation}
-\noindent where $H^{(l)}$ is the matrix of activations of the $l$-th layer, and here the $0$ layer is set as the account representations, that is, $H^{(0)}=X$. We use $\delta(\cdot)$ to denote an activation function such as the ReLU$(\cdot)$ = max$(0,\cdot)$, $D^r$ is a diagonal matrix where $D^r_{ii}=\sum_{j}A^r_{ij}$, and $A^r$ is the adjacent matrix of relation $r$. $\odot$ indicates point-wise multiplication.
+\noindent where $H^{(l)}$ is the matrix of activations of the $l$-th layer, and here the $0$ layer is set as the account representations, that is, $H^{(0)}=X$. We use $\delta(\cdot)$ to denote an activation function such as the ReLU$(\cdot)$ = max$(0,\cdot)$. $A^r$ is the adjacent matrix of relation $r$, and $D^r$ is a diagonal matrix of relation $r$ where $d^r_{ii}=\sum_{j}a^r_{ij}$. $\odot$ indicates point-wise multiplication.
 
-The edge weight $A_{ij}$ in adjacency matrix $A$ is defined as \emph{first-order proximity} which represents similarity between nodes $v_i$ and $v_j$~\cite{tang2015line}. Further, \emph{second-order proximity} compares the neighborhood of two nodes and treat them as similar if they have a similar neighborhood~\cite{goyal2018graph}.
+The edge weight $a^r_{ij}$ in adjacency matrix $A^r$ is defined as \emph{first-order proximity} which represents similarity between nodes $v_i$ and $v_j$~\cite{tang2015line}. Further, \emph{second-order proximity} compares the neighborhood of two nodes and treat them as similar if they have a similar neighborhood~\cite{goyal2018graph}.
 
-In cryptocurrency transaction graph, \textcolor{red}{it turns out that second-order proximity plays important role}  in preserving the local structure as well as first-order proximity. As shown in Figure \ref{fig:high_order}, nodes $a$ and $c$ are smart contracts and node $b$ is normal user. Obviously, $a$ is not adjacent to $c$  but they have similar neighbor structure. Embedding models with first-order proximity will keep them far apart although they have similar connection structures, while embedding with second-order proximity captures this similarity.
+In cryptocurrency transaction graph, it turns out that second-order proximity plays important role in preserving the local structure as well as first-order proximity. As shown in Figure \ref{fig:high_order}, nodes $a$ and $c$ are smart contracts and node $b$ is normal user. Obviously, $a$ is not adjacent to $c$  but they have similar neighbor structure. Embedding models with first-order proximity will keep them far apart although they have similar connection structures, while embedding with second-order proximity captures this similarity.
 
- We feed the input into a \textcolor{red}{GCN} model with 2 hidden layers, as a trade-off between preserving second-order proximity and introducing noise. 
+ We feed the input into a GCN model with 2 hidden layers, as a trade-off between preserving second-order proximity and introducing noise. 
  
  The input of the $l$-th layer is $H^{(l)}=\{h_1^{(l)},h_2^{(l)},...,h_N^{(l)}|h_i^{(l)}\in \mathbb{R}^{N \times d^{(l)}}\}$. Hence the method can be understood as special cases of the forward updating process.
 
@@ -147,7 +156,7 @@ h_i^{(l+1)}=\delta(\sum_{r\in R} \sum_{j \in N_i^r} \frac{\tau_{ij}^r}{\hat c_{i
 \end{figure}
 
 
-\textcolor{red}{Another overlooked closeness, \emph{asymmetric proximity}} should also be preserved in transaction graph. For instance, as shown in Figure. \ref{fig:asymmetric}, \textcolor{red}{node $a$ denotes cryptocurrency trader and node $b$ and $c$ are cryptocurrency exchange accounts. Consequently, edge $(a,b)$ stands for deposit process while edge $(c,a)$ is withdrawal process.} Generally, edge weight can be $A_{ab}=A_{bc}=A_{ca}$ since deposit and withdrawal come in pairs in symmetric model. However, the proximity $(a,c)$ is not equal to proximity $(c,a)$ due to their asymmetric local structures.
+Another overlooked closeness, \emph{asymmetric proximity} should also be preserved in transaction graph. For instance, as shown in Figure. \ref{fig:asymmetric}, node $a$ denotes cryptocurrency trader and node $b$ and $c$ are cryptocurrency exchange accounts. Consequently, edge $(a,b)$ stands for deposit process while edge $(c,a)$ is withdrawal process. Generally, edge weight can be $A_{ab}=A_{bc}=A_{ca}$ since deposit and withdrawal come in pairs in symmetric model. However, the proximity $(a,c)$ is not equal to proximity $(c,a)$ due to their asymmetric local structures.
 
 Unlike the asymmetric proximity preserving approach based on random walk~\cite{zhou2017scalable}, our method is based on a kind of non-probability graph embedding model.
  %Zhou et. proposed a scalable asymmetric proximity preserving graph embedding method based on random walk~\cite{zhou2017scalable}. In their model, the probability that $v_a$ arrives at $v_c$ is far less than the one that $v_c$ arrives at $v_a$, as the out degree of $v_c$ is bigger than the out degree of $v_a$
