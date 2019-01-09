@@ -124,25 +124,41 @@ Results are summarized in TABLE~\ref{table:overall_results}. Our methods (with a
 Note that rGCN achieves the highest average precision but a low average recall. Especially, rGCN has the lowest recall of category of phish and hack, which means that many normal accounts are inferred as threatening in rGCN model. Our methods improve the overall performance by adding richer information, the time of transactions, into the model.
 
 %\subsection{Asymmetric Proximity and Time-Density}
-\subsection{Visualization and Deeper Analysis}
+\subsection{Visualization}
 Because AIGL is a graph deep learning approach based on graph embedding, and each node in the graph can be represented as a low-dimensional vector. It allows us to visualize the nodes and gain a better understanding of classification. Note that PARW is based on label propagation instead of embedding, we illustrate the visualization of DeepWalk, rGCN and our methods in Fig.~\ref{fig:visualization}. Similar to~\cite{wang2016structural}, we learn a 128-dimensional embedding for each method and input it to t-SNE~\cite{maaten2008visualizing} to reduce the dimensionality to 2, then all nodes can be visualized in a 2-dimensional space.
 
-It can be observed that all GCN based approaches outperform DeepWalk since 2-layers GCN models preserve second-order proximity well~\cite{goyal2018graph}. This illustrates the importance of higher order proximity in the structure of transaction graph.
-
-Preserving asymmetric proximity by adjusting the adjacency matrix, our method greatly improves the robustness between different labels. We observe that in vanilla rGCN, performances of different labels vary a lot, but adding asymmetric property solves the problem. % This is because in vanilla rGCN, 
-
-Based on this, the result is better when we take time-density into consideration. Different types of accounts have diverse active time distribution, so time-density helps to distinguish between them. Also, intensive transactions reflect more typical characteristics, therefore deserve higher weights.
- 
 \begin{figure*}
 \centering     %%% not \center
 \subfigure[DeepWalk]{\label{fig:a}\includegraphics[width=42mm]{fig/rgcn_181_dw_20}}
 \subfigure[rGCN]{\label{fig:b}\includegraphics[width=42mm]{fig/rgcn_181_rgcn_20}}
 \subfigure[rGCN+asymmetric proximity]{\label{fig:a}\includegraphics[width=42mm]{fig/rgcn_181_rgcn_181_asym_only_20}}
 \subfigure[AIGL]{\label{fig:a}\includegraphics[width=42mm]{fig/rgcn_181_rgcn_ours_20}}
-
 \caption{Visualization of nodes with different labels in 2-dimensional space.}
 \label{fig:visualization}
 \end{figure*}
+
+It can be observed that all GCN based approaches outperform DeepWalk since GCN models preserve global structure information well~\cite{goyal2018graph}. %This illustrates the importance of higher order proximity in the structure of transaction graph.
+
+\subsection{Deeper Analysis}
+\textcolor{red}{
+To investigate the characters of transaction graph, we make further experiments. 
+}
+
+\textcolor{red}{
+First, we compare the classification performance of AIGL and AIGL with single adjacent matrix which using single relation (AIGL$_{sR}$ for short). It is obvious that the classification accuracy increases greatly by introducing multi-adjacent matrices, which indicates that such heterogeneous activities is important in preserving features of transaction graph.
+}
+
+\textcolor{red}{
+ Second, we test the performance of AIGL with 1 layer convolutional network (AIGL$_{1L}$ for short) and AIGL without asymmetric coefficient (AIGL$_{nA}$ for short). The performance is better when we take asymmetric proximity and second-order proximity into consideration respectively.
+The recall increases $13$\% by preserving second-order proximity. This illustrates the importance of higher order proximity in the structure of transaction graph. Besides, we observe that in vanilla rGCN, performances of different labels vary a lot, but adding asymmetric property solves the problem.
+}
+
+\textcolor{red}{
+Last, we test the performance of AIGL without time-density matrices (AIGL$_{nT}$ for short). AIGL outperforms AIGL$_{nT}$ in all indicators. The reason is that different types of accounts have diverse active time distribution, time-density helps to distinguish between them. Also, intensive transactions reflect more typical characteristics, therefore deserve higher weights.
+}
+%Preserving asymmetric proximity by adjusting the adjacency matrix, our method greatly improves the robustness between different labels.  % This is because in vanilla rGCN, 
+
+
 
 %%% Local Variables:
 %%% mode: latex
