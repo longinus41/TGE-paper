@@ -91,14 +91,14 @@ Unless otherwise noted, all the GCN-based hidden layers have 16 units. Models ar
 \midrule
 & \textbf{Precision} & \textbf{Recall} & $\mathbf{F_1}$ & \textbf{Precision} & \textbf{Recall} & $\mathbf{F_1}$ & \textbf{Precision} & \textbf{Recall} & $\mathbf{F_1}$ & \textbf{Precision} & \textbf{Recall} & $\mathbf{F_1}$ & \textbf{Precision} & \textbf{Recall} & $\mathbf{F_1}$ \\
 \midrule
- phish and hack & 0.609 & 0.394 & 0.479 &0.565 & 0.333 & 0.419 & 0.913& 0.212& 0.344& 0.720& 0.727& 0.724& 0.714& 0.758& 0.735\\
- token contract & 0.857& 0.735 & 0.791 &0.354& 0.718& 0.475& 0.908& 0.602& 0.724& 0.958& 0.939& 0.949& 0.958& 0.939& 0.949\\
- exchange deposit & 0.586 & 0.531 & 0.557 &0.692& 0.281& 0.400& 0.688& 0.440& 0.537& 0.615& 0.640& 0.628& 0.556& 0.600& 0.579\\
- exchange root & 0.647 & 0.759 & 0.698 &0.667& 0.759& 0.710& 0.923& 0.686& 0.787& 0.862& 0.714& 0.781& 0.828& 0.686& 0.750\\
- pool & 0.692 & 0.750 & 0.720 &0.789& 0.625& 0.697& 1.000& 0.727& 0.842& 0.842& 0.727& 0.781& 1.000& 0.727& 0.842\\
- miner & 0.400 & 0.694 & 0.508 &0.667& 0.872& 0.756& 0.867& 0.951& 0.907& 0.826& 0.927& 0.874& 0.841& 0.902& 0.871\\
- primary market & 0.405 & 0.548 & 0.466 & 0.727& 0.516& 0.604& 0.739& 0.548& 0.630& 0.680& 0.548& 0.607& 0.750& 0.484& 0.588\\
- ICO wallet & 0.364 & 0.353 & 0.358 & 0.630& 0.500& 0.558& 0.546& 0.158& 0.245& 0.769& 0.526& 0.625& 0.742& 0.605& 0.668\\
+ Phish/Hack & 0.609 & 0.394 & 0.479 &0.565 & 0.333 & 0.419 & 0.913& 0.212& 0.344& 0.720& 0.727& 0.724& 0.714& 0.758& 0.735\\
+ Token Contract & 0.857& 0.735 & 0.791 &0.354& 0.718& 0.475& 0.908& 0.602& 0.724& 0.958& 0.939& 0.949& 0.958& 0.939& 0.949\\
+ Exchange Deposit & 0.586 & 0.531 & 0.557 &0.692& 0.281& 0.400& 0.688& 0.440& 0.537& 0.615& 0.640& 0.628& 0.556& 0.600& 0.579\\
+ Exchange Root & 0.647 & 0.759 & 0.698 &0.667& 0.759& 0.710& 0.923& 0.686& 0.787& 0.862& 0.714& 0.781& 0.828& 0.686& 0.750\\
+ Pool & 0.692 & 0.750 & 0.720 &0.789& 0.625& 0.697& 1.000& 0.727& 0.842& 0.842& 0.727& 0.781& 1.000& 0.727& 0.842\\
+ Miner & 0.400 & 0.694 & 0.508 &0.667& 0.872& 0.756& 0.867& 0.951& 0.907& 0.826& 0.927& 0.874& 0.841& 0.902& 0.871\\
+Investor & 0.405 & 0.548 & 0.466 & 0.727& 0.516& 0.604& 0.739& 0.548& 0.630& 0.680& 0.548& 0.607& 0.750& 0.484& 0.588\\
+ ICO Wallet & 0.364 & 0.353 & 0.358 & 0.630& 0.500& 0.558& 0.546& 0.158& 0.245& 0.769& 0.526& 0.625& 0.742& 0.605& 0.668\\
  \midrule
  average & 0.614 & 0.583 & \bf{0.585} & 0.623& 0.577& \bf{0.570}& 0.848& 0.496& \bf{0.593}& 0.806& 0.761& \bf{0.779}& 0.811& 0.764& \bf{0.782}\\
 \bottomrule
@@ -131,7 +131,7 @@ Because AIGL is a graph deep learning approach based on graph embedding, and eac
 \centering     %%% not \center
 \subfigure[DeepWalk]{\label{fig:a}\includegraphics[width=42mm]{fig/rgcn_181_dw_20}}
 \subfigure[rGCN]{\label{fig:b}\includegraphics[width=42mm]{fig/rgcn_181_rgcn_20}}
-\subfigure[rGCN+asymmetric proximity]{\label{fig:a}\includegraphics[width=42mm]{fig/rgcn_181_rgcn_181_asym_only_20}}
+%\subfigure[rGCN+asymmetric proximity]{\label{fig:a}\includegraphics[width=42mm]{fig/rgcn_181_rgcn_181_asym_only_20}}
 \subfigure[AIGL]{\label{fig:a}\includegraphics[width=42mm]{fig/rgcn_181_rgcn_ours_20}}
 \caption{Visualization of nodes with different labels in 2-dimensional space.}
 \label{fig:visualization}
@@ -143,6 +143,16 @@ It can be observed that all GCN based approaches outperform DeepWalk since GCN m
 \textcolor{red}{
 To investigate the characters of transaction graph, we make further experiments. 
 }
+
+\begin{figure*}
+\centering     %%% not \center
+\subfigure[Multi-Adjacent Matrices]{\label{fig:a}\includegraphics[width=42mm]{fig/multi_relation_result}}
+\subfigure[Second-order Proximity]{\label{fig:b}\includegraphics[width=42mm]{fig/second_order_result}}
+\subfigure[Asymmetric Proximity]{\label{fig:a}\includegraphics[width=42mm]{fig/asymmetric_result}}
+\subfigure[Time-density Matrices]{\label{fig:a}\includegraphics[width=42mm]{fig/time_density_result}}
+\caption{Visualization of nodes with different labels in 2-dimensional space.}
+\label{fig:deeper_analysis}
+\end{figure*}
 
 \textcolor{red}{
 First, we compare the classification performance of AIGL and AIGL with single adjacent matrix which using single relation (AIGL$_{sR}$ for short). It is obvious that the classification accuracy increases greatly by introducing multi-adjacent matrices, which indicates that such heterogeneous activities is important in preserving features of transaction graph.
