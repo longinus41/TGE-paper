@@ -1,8 +1,8 @@
 % !TEX root = main.tex
 
-\section{Experiments}
+I$^2$GL
 \label{sec:experiments}
-In this section, we conduct experiments to evaluate the performance of our method on Ethereum transaction. Note that AIGL does not only apply to Ethereum, but also other cryptocurrencies \textcolor{red}{which support smart contracts.}
+In this section, we conduct experiments to evaluate the performance of our method on Ethereum transaction. Note that I$^2$GL does not only apply to Ethereum, but also other cryptocurrencies \textcolor{red}{which support smart contracts.}
 
 \subsection{Data Collection}
 We collect \textcolor{red}{116,293,867 transactions} by running Ethereum client\footnote{Parity Ethereum Client, https://www.parity.io/ethereum/} which maintains the same copy of blockchain with all historical transactions. Note that we choose the transaction logs on Ethereum from January 1, 2018 to March 31, 2018 as the input of graph construction since it is the most active period with various activities.
@@ -14,7 +14,7 @@ Specially, we extend the pre-processing scheme to adapt our model. First we cons
 %Last, a set of accounts with label introduced before is provided to train the model and evaluate classification accuracy. It is hard to reveal the identity of addresses since the anonymity of blockchain. We obtain these labeled examples in two ways, \emph{Etherscan}\footnote{Etherscan LabelCloud, https://etherscan.io/labelcloud} and \emph{Searchain}\footnote{Searchain, http://www.searchain.io/}. In the label set, the number of samples of each category is 100.
 
 \subsection{Identity Categorization}
-Since AIGL is semi-supervised learning method, and a small set of labeled accounts should be provided for training. We obtain these labeled examples via \emph{Etherscan}\footnote{Etherscan LabelCloud, https://etherscan.io/labelcloud} and \emph{Searchain}\footnote{Searchain, http://www.searchain.io/}.
+Since I$^2$GL is semi-supervised learning method, and a small set of labeled accounts should be provided for training. We obtain these labeled examples via \emph{Etherscan}\footnote{Etherscan LabelCloud, https://etherscan.io/labelcloud} and \emph{Searchain}\footnote{Searchain, http://www.searchain.io/}.
 
 TABLE~\ref{table:identity} shows the taxonomy of Ethereum accounts and here we depict them in detail. Here we introduce the prominent identity tag which is provided to train the model and evaluate classification accuracy.
  %It is hard to reveal the identity of addresses since the anonymity of blockchain.  %In the label set, the number of samples of each category is 100.
@@ -76,7 +76,7 @@ Phishes\&Hacks & EOA\&CA & Fraud address related to phishing and hacks. \\ \hlin
 
 
 \subsection{Experimental Set-Up}
-As a baseline for our experiments, we compare against state-of-the-art classification results from DeepWalk~\cite{perozzi2014deepwalk}, PARW~\cite{wu2012learning} and rGCN~\cite{schlichtkrull2018modeling}. \textcolor{red}{DeepWalk is an embedding technique using random walks on graphs to obtain node representations. Like AIGL, rGCN tackles node representation by defining a convolution operator on graph. PARW is a label propagation method based on partially absorbing random walks. Note that DeepWalk is an unsupervised method, a logistic regression model is added for classification.}
+As a baseline for our experiments, we compare against state-of-the-art classification results from DeepWalk~\cite{perozzi2014deepwalk}, PARW~\cite{wu2012learning} and rGCN~\cite{schlichtkrull2018modeling}. \textcolor{red}{DeepWalk is an embedding technique using random walks on graphs to obtain node representations. Like I$^2$GL, rGCN tackles node representation by defining a convolution operator on graph. PARW is a label propagation method based on partially absorbing random walks. Note that DeepWalk is an unsupervised method, a logistic regression model is added for classification.}
 
 Unless otherwise noted, all the GCN-based hidden layers have 16 units. Models are trained with Adam optimizer for 100 epochs, and dropout with $dropout\_rate=0.5$ is utilized to avoid overfitting.
 
@@ -87,7 +87,7 @@ Unless otherwise noted, all the GCN-based hidden layers have 16 units. Models ar
 \resizebox{\textwidth}{17mm}{
 \begin{tabular}{l|ccc|ccc|ccc|ccc|ccc}
 \toprule
- & \multicolumn{3}{c|}{DeepWalk} & \multicolumn{3}{c|}{PARW} & \multicolumn{3}{c|}{rGCN} & \multicolumn{3}{c|}{rGCN+asymmetric proximity} & \multicolumn{3}{c}{AIGL} \\
+ & \multicolumn{3}{c|}{DeepWalk} & \multicolumn{3}{c|}{PARW} & \multicolumn{3}{c|}{rGCN} & \multicolumn{3}{c|}{rGCN+asymmetric proximity} & \multicolumn{3}{c}{I$^2$GL} \\
 \midrule
 & \textbf{Precision} & \textbf{Recall} & $\mathbf{F_1}$ & \textbf{Precision} & \textbf{Recall} & $\mathbf{F_1}$ & \textbf{Precision} & \textbf{Recall} & $\mathbf{F_1}$ & \textbf{Precision} & \textbf{Recall} & $\mathbf{F_1}$ & \textbf{Precision} & \textbf{Recall} & $\mathbf{F_1}$ \\
 \midrule
@@ -110,7 +110,7 @@ Investor & 0.405 & 0.548 & 0.466 & 0.727& 0.516& 0.604& 0.739& 0.548& 0.630& 0.6
 All embedding and classification programs were run on the server, which includes Intel Xeon E5 CPU with 55 processors and 128GB of memory, and the GPU used for deep learning is Nvidia 1080.
 
 \subsection{Classification Results}
-In the first experiment, we test AIGL on classification with the label set. To make the classification more intuitive, there are two assumptions. (1) Account is supposed to have a single identity instead of multiple identities, and (2) identity of a certain account is not easy to change. Reasons for these are that, people who take on many identities, e.g., miner and investor both, tend to hold multiple accounts usually and each account is related to one identity. Besides, as as the time span of data we collected is merely three months, cases of identity conversion is negligible.
+In the first experiment, we test I$^2$GL on classification with the label set. To make the classification more intuitive, there are two assumptions. (1) Account is supposed to have a single identity instead of multiple identities, and (2) identity of a certain account is not easy to change. Reasons for these are that, people who take on many identities, e.g., miner and investor both, tend to hold multiple accounts usually and each account is related to one identity. Besides, as as the time span of data we collected is merely three months, cases of identity conversion is negligible.
 
 We use three indicators to evaluate each model, including precision, recall and $F_1$ score. Precision is the fraction of relevant instances among the retrieved instances, while recall is the fraction of relevant instances that have been retrieved over the total amount of relevant instances. And $F_1$ score is a measure that combines precision and recall, which is computed as
 \begin{equation}
@@ -125,14 +125,14 @@ Note that rGCN achieves the highest average precision but a low average recall. 
 
 %\subsection{Asymmetric Proximity and Time-Density}
 \subsection{Visualization}
-Because AIGL is a graph deep learning approach based on graph embedding, and each node in the graph can be represented as a low-dimensional vector. It allows us to visualize the nodes and gain a better understanding of classification. Note that PARW is based on label propagation instead of embedding, we illustrate the visualization of DeepWalk, rGCN and our methods in Fig.~\ref{fig:visualization}. Similar to~\cite{wang2016structural}, we learn a 128-dimensional embedding for each method and input it to t-SNE~\cite{maaten2008visualizing} to reduce the dimensionality to 2, then all nodes can be visualized in a 2-dimensional space.
+Because I$^2$GL is a graph deep learning approach based on graph embedding, and each node in the graph can be represented as a low-dimensional vector. It allows us to visualize the nodes and gain a better understanding of classification. Note that PARW is based on label propagation instead of embedding, we illustrate the visualization of DeepWalk, rGCN and our methods in Fig.~\ref{fig:visualization}. Similar to~\cite{wang2016structural}, we learn a 128-dimensional embedding for each method and input it to t-SNE~\cite{maaten2008visualizing} to reduce the dimensionality to 2, then all nodes can be visualized in a 2-dimensional space.
 
 \begin{figure*}
 \centering     %%% not \center
 \subfigure[DeepWalk]{\label{fig:a}\includegraphics[width=42mm]{fig/rgcn_181_dw_20}}
 \subfigure[rGCN]{\label{fig:b}\includegraphics[width=42mm]{fig/rgcn_181_rgcn_20}}
 %\subfigure[rGCN+asymmetric proximity]{\label{fig:a}\includegraphics[width=42mm]{fig/rgcn_181_rgcn_181_asym_only_20}}
-\subfigure[AIGL]{\label{fig:a}\includegraphics[width=42mm]{fig/rgcn_181_rgcn_ours_20}}
+\subfigure[I$^2$GL]{\label{fig:a}\includegraphics[width=42mm]{fig/rgcn_181_rgcn_ours_20}}
 \caption{Visualization of nodes with different labels in 2-dimensional space.}
 \label{fig:visualization}
 \end{figure*}
@@ -171,16 +171,16 @@ To investigate the characters of transaction graph, we make further experiments.
 \end{figure*}
 
 \textcolor{red}{
-First, we compare the classification performance of AIGL and AIGL with single adjacent matrix which using single relation (AIGL$_{sR}$ for short). It is obvious that the classification accuracy increases greatly by introducing multi-adjacent matrices, which indicates that such heterogeneous activities is important in preserving features of transaction graph.
+First, we compare the classification performance of I$^2$GL and I$^2$GL with single adjacent matrix which using single relation (I$^2$GL$_{sR}$ for short). It is obvious that the classification accuracy increases greatly by introducing multi-adjacent matrices, which indicates that such heterogeneous activities is important in preserving features of transaction graph.
 }
 
 \textcolor{red}{
- Second, we test the performance of AIGL with 1 layer convolutional network (AIGL$_{1L}$ for short) and AIGL without asymmetric coefficient (AIGL$_{nA}$ for short). The performance is better when we take asymmetric proximity and second-order proximity into consideration respectively.
+ Second, we test the performance of I$^2$GL with 1 layer convolutional network (I$^2$GL$_{1L}$ for short) and I$^2$GL without asymmetric coefficient (I$^2$GL$_{nA}$ for short). The performance is better when we take asymmetric proximity and second-order proximity into consideration respectively.
 The recall increases $13$\% by preserving second-order proximity. This illustrates the importance of higher order proximity in the structure of transaction graph. Besides, we observe that in vanilla rGCN, performances of different labels vary a lot, but adding asymmetric property solves the problem.
 }
 
 \textcolor{red}{
-Last, we test the performance of AIGL without time-density matrices (AIGL$_{nT}$ for short). AIGL outperforms AIGL$_{nT}$ in all indicators. The reason is that different types of accounts have diverse active time distribution, time-density helps to distinguish between them. Also, intensive transactions reflect more typical characteristics, therefore deserve higher weights.
+Last, we test the performance of I$^2$GL without time-density matrices (I$^2$GL$_{nT}$ for short). I$^2$GL outperforms I$^2$GL$_{nT}$ in all indicators. The reason is that different types of accounts have diverse active time distribution, time-density helps to distinguish between them. Also, intensive transactions reflect more typical characteristics, therefore deserve higher weights.
 }
 %Preserving asymmetric proximity by adjusting the adjacency matrix, our method greatly improves the robustness between different labels.  % This is because in vanilla rGCN,
 
