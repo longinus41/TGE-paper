@@ -1,15 +1,15 @@
-\section{AIGL Approach}
-\label{sec:approach}
-In this section, we propose AIGL, a cryptocurrency anonymity identification approach based on graph deep learning. We first give an overview of AIGL, and then present technical details including graph construction, embedding and node classification.
+\section{I$^2$GL Approach}
+\label{sec:approach}I$^2$GL
+In this section, we propose I$^2$GL, an identity inference approach based on graph deep learning. We first give an overview of I$^2$GL, and then present technical details including graph construction, embedding and node classification.
 
 %we are the first to analyze cryptocurrency transactions and solve the identity inferring problem based on graph deep learning.
 
 \subsection{Overview}
 \label{subsec:methodology}
-%In AIGL, identity inferring task is turned into node classification problem, simply, predicting the identity of accounts on a small sample of labeled accounts and the topology of the transaction graph.
-\textcolor{red}{The basic idea of AIGL is to present the accounts in cryptocurrency and associated transactions as a graph. In the graph, accounts are represented as nodes with low dimensional vectors by embedding technique. Then, the identify inference is to classify nodes on the graph by given a labeled training set.}
+%In I$^2$GL, identity inferring task is turned into node classification problem, simply, predicting the identity of accounts on a small sample of labeled accounts and the topology of the transaction graph.
+\textcolor{red}{The basic idea of I$^2$GL is to present the accounts in cryptocurrency and associated transactions as a graph. In the graph, accounts are represented as nodes with low dimensional vectors by embedding technique. Then, the identify inference is to classify nodes on the graph by given a labeled training set.}
 
-Specifically, AIGL consists of three phases: graph construction, graph embedding and node classification as shown in Fig.~\ref{fig:architecture}.
+Specifically, I$^2$GL consists of three phases: graph construction, graph embedding and node classification as shown in Fig.~\ref{fig:architecture}.
 
 \begin{figure}[htbp]
 	\centering
@@ -20,7 +20,7 @@ Specifically, AIGL consists of three phases: graph construction, graph embedding
 
 \textbf{Phase 1: Graph construction}. We construct the blockchain transaction graph as a directed graph $G_{t}=(V,E)$, where node $v \in V$ represents an account that can be an EOA or CA. We use the terms account and node interchangeably in the remainder of this paper. The total number of accounts is depicted as $|V|=N$.
 
-$E$ contains ordered pairs, i.e., $E=\{(v_i,v_j)|v_i,v_j \in V\}$, where $(v_{i},v_{j})$ indicates the direction of transaction (e.g., assets transfer or smart contract invocation) from $v_i$ to $v_j$. \textcolor{red}{Within $E$, each edge has weight, and the specific method for calculating is detailed in the following sub-section.}
+\textcolor{red}{$E$ is the set of edges, which represented as quintuple, i.e., $E=\{(v_i,v_j,w,h,r)|v_i,v_j \in V, w\in \mathbb{R}^+ \cup\{0\}, h\in \mathbb{Z}, r\in R\}$, where $(v_{i},v_{j})$ indicates the direction of transaction (e.g., assets transfer or smart contract invocation) from $v_i$ to $v_j$. Within $E$, each edge has a weight $w$ representing the amount of cryptocurrency, $h$ is the block height of transaction and $r$ is a relation type which is detailed in the following sub-section.}
 
 %Analogously, the number of edges in ETG is represented as $|E|$.
 
@@ -31,14 +31,14 @@ Typical network embedding techniques, such as random-walk based and deep learnin
 
 
 \textbf{Phase 3: Node classification}.
-The final objective of AIGL is to predict account identities on transaction graph. Given a labeled accounts set, supervised or semi-supervised methods can be used for entities classification. An intuitive way is simply stacking GCN layers of the form with a softmax ($\cdot$) activation on the output of the last layer~\cite{schlichtkrull2018modeling}. \textcolor{blue}{A loss function, such as cross-entropy error function, can be the minimizing objective for training.}
+The final objective of I$^2$GL is to predict account identities on transaction graph. Given a labeled accounts set, supervised or semi-supervised methods can be used for entities classification. An intuitive way is simply stacking GCN layers of the form with a softmax ($\cdot$) activation on the output of the last layer~\cite{schlichtkrull2018modeling}. \textcolor{red}{A loss function, such as cross-entropy error function, can be the minimizing objective for training.}
 
 \textcolor{red}{Last but not the least, the categorization is important to performance of classification. For cryptocurrencies that do support smart contract, such as Ethereum, we propose a coarse taxonomy which is illustrated in TABLE~\ref{table:identity}.} 
 
  %To be frank, the perfect categorization does not exist because Ethereum and Ethereum-like blockchains are still in a development stage. \textcolor{red}{For accounts in Ethereum, we propose} a coarse but effective taxonomy.
 
 \subsection{Graph Construction}
-The transaction graph can be constructed based on original transaction records synchronized from the blockchain. In AIGL, the graph is represented as several matrices: (a) \emph{account representations}, (b) \emph{adjacency matrices}, and (c) \emph{time density matrices}.
+The transaction graph can be constructed based on original transaction records synchronized from the blockchain. In I$^2$GL, the graph is represented as several matrices: (a) \emph{account representations}, (b) \emph{adjacency matrices}, and (c) \emph{time density matrices}.
 
 
 %(1) a node representation matrix that captures the structural and additional information of accounts, (2) a list of adjacency matrices which describe different relations, and (3) a list of time-density matrices that represent transaction intensiveness between each pair of nodes.
@@ -48,10 +48,10 @@ The transaction graph can be constructed based on original transaction records s
 \paragraph{Account representations} To encode the overall structural and additional information of accounts, we denote the account representations as a feature matrix $X \in \mathbb{R}^{N \times d}$, where each account contains the following $d$ pre-defined features.
 
 \begin{itemize}
-	\item \emph{in-degree}: the number of incoming edges of a node, that is, the number of transactions initiated by an account.
-	\item \emph{out-degree}: the number of outgoing edges of a node, that is, the number of transactions which point to an account.
-	\item \emph{weighted in-degree}: the value summation of incoming edges of a node, which represents the total crptocurrencies received by an account.
-	\item \emph{weighted out-degree}: the value summation of edges outgoing to a node, which represents the total cryptocurrencies sent from an account.
+	\item \emph{in-degree}: the number of incoming edges of a node, that is, the number of transactions point to an account. \textcolor{red}{For example, the in-degree of node $v_i$ can be counted as $|E_{i\leftarrow}|$ where $E_{i\leftarrow}=\{(v_j,v_i,w,h,r)| \forall v_j \in V\}$.}
+	\item \emph{out-degree}: the number of outgoing edges of a node, that is, the number of transactions initiated by an account. \textcolor{red}{For example, the out-degree of node $v_i$ can be counted as $|E_{i\rightarrow}|$ where $E_{i\rightarrow}=\{(v_i,v_j,w,h,r)| \forall v_j \in V\}$.}
+	\item \emph{weighted in-degree}: the value summation of incoming edges of a node, which represents the total crptocurrencies received by an account. \textcolor{red}{For example, the weighted in-degree of node $v_i$ can be counted as $|E_{i\Leftarrow}|$ where $E_{i\Leftarrow}=\{(v_j,v_i,w,h,r)| \forall v_j \in V\wedge w>0\}$.}
+	\item \emph{weighted out-degree}: the value summation of edges outgoing to a node, which represents the total cryptocurrencies sent from an account. \textcolor{red}{For example, the weighted out-degree of node $v_i$ can be counted as $|E_{i\Rightarrow}|$ where $E_{i\Rightarrow}=\{(v_i,v_j,w,h,r)| \forall v_j \in V\wedge w>0\}$.}
 	%\item eccentricity
 	%\item clustering coefficient
 	\item \emph{account type}: whether the account is a smart contract or normal one.
@@ -62,7 +62,7 @@ activitities should be represented as different edge types instead of being meas
 
 To address the challenge, we divide the raw transaction graph into several sub-graphs and capture the relations of graph neighboring nodes using adjacent matrices. The set of adjacency matrices, $\{A^1,A^2,\dots,A^R|A^i\in \mathbb{R}^{N \times N}\}$, describes the $R$ relations among $N$ nodes in transaction graph. It is conceivable that, the strategy of division has a large influence on classification performance.
 
-In AIGL, four major transactions are considered, including (1) \texttt{CALL} with value, (2) \texttt{CALL} without value, (3) \texttt{CREATION} and (4) \texttt{REWARD}, which represent the relations of cryptocurrency transferring, smart contract invocation, smart contract deployment and mining rewarding, respectively. \textcolor{red}{More specifically, transaction is regarded as type 1 that an account transfer some ETH (cryptocurrency in Ethereum) to another one. And the ERC-20 token transferring is regarded as type 2 since it is a contract invocation without any ETH.}
+In I$^2$GL, four major transactions are considered, including (1) \texttt{CALL} transactions with \textcolor{red}{weigh $w>0$}, (2) \texttt{CALL} transactions with \textcolor{red}{weigh $w=0$}, (3) \texttt{CREATION} transactions and (4) \texttt{REWARD} transactions, which represent the relations of cryptocurrency transferring, smart contract invocation, smart contract deployment and mining rewarding, respectively. \textcolor{red}{More specifically, transaction is regarded as type 1 that an account transfer some ETH (cryptocurrency in Ethereum) to another one. And the ERC-20 token transferring is regarded as type 2 since it is a contract invocation without any ETH.}
 
 On one hand, for relations of \textcolor{red}{type 2, type 3 and type 4}, we calculate the frequency of repeated edges between a pair of nodes as the adjacent weight in the corresponding relation adjacent matrix. For cryptocurrency transferring, on the other hand, it is not sensible to use the assets amount directly as the adjacent weight. That is because the accounts have varied enormously in terms of cryptocurrency transferring which will lead to underflow and overflow in the process of training.
 
@@ -106,7 +106,7 @@ Fig.~\ref{fig:time_std} illustrates the distribution of time variance when trans
 To describe time-density information, we use a set of matrices $\{T^1,T^2,\dots,T^R|T^i\in \mathbb{R}^{N \times N}\}$. Given a sequence $\{h_{ij1}^r,h_{ij2}^r,\dots,h_{ijm}^r | h_{ijk}^r>0\}$ as the block height of $m$ transactions in relation $r$ between node $v_i$ and $v_j$, the time-density of each relation $r$ is computed as%Equation \ref{eq:time}
 
 \begin{equation}
-t{ij}^r=g(\sqrt{Var[\frac{1}{m}\sum_{k=1}^m h_{ijk}^r]})
+t_{ij}^r=g(\sqrt{Var[\frac{1}{m}\sum_{k=1}^m h_{ijk}^r]})
 \label{eq:time}
 \end{equation}
 
