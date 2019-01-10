@@ -91,7 +91,7 @@ legend image code/.code={%
                 }
   }}
 
-\title{AIGL: a Cryptocurrency Anonymity Identification Approach based on Graph Deep Learning*\\
+\title{I$^2$GL: an Identity Inference Approach based on Graph Deep Learning*\\
 {\footnotesize \textsuperscript{*}Note: Sub-titles are not captured in Xplore and
 should not be used}
 %\thanks{Identify applicable funding agency here. If none, delete this.}
@@ -137,29 +137,7 @@ should not be used}
 \maketitle
 
 \begin{abstract}
-  %\textcolor{blue}{
-%Anonymity, as the born feature of blockchain, let users can perform actions
- % underneath public-keys only.
-%Although different identities hide behind those public-keys, people need
- % deanonymize such identities for various
- % reasons, like trading,
- % making laws, or financial securities.
- % However,
- % smart contracts, which is
- % regarded as the core technology of the future blockchain, make users'
- % anonymous actions arbitrary. As a result, new transaction types, new user
- % behaviours, and correspondingly new identities emerges in blockchain. And
- % existing analysis technologies, are helpless to infer identities from the arbitrariness.
-%}
-
-  %\textcolor{blue}{
-  %In this paper, we propose graph deep learning approach to address the
-  %arbitrariness. Relying only on the transaction graph structure, our approach shows effectiveness in the evaluation through real date set.
-%}
-
-  In cryptocurrencies, such as Bitcoin and Ethereum, anonymity is a key feature, which realizing privacy protection by mapping users' identity to public-keys only. Meanwhile, deanonymization is equally important since it helps people have better understanding what is occurring on the ecosystem. Challenges are accompanied by the emerging of smart contract. Existing analytic methods are helpless to infer identities without expert knowledge or external information.
-
-  In this paper, a graph deep learning approach is proposed to handle account inferring task. We designed three-pronged approach and address challenges due to the particularity of cryptocurrency transaction graph. Relying only on the transaction graph structure, our approach shows effectiveness in the evaluation through real date set.
+Current cryptocurrencies, such as Bitcoin and Ethereum, enable anonymity by mapping user identity to public-keys only. On the other hand, deanonymization, i.e., inferring the real identity of blockchain users, is significant in many scenarios such as risk assessment and trade regulation. Existing work on blockchain deanonymization mainly focuses on Bitcoin that supports simple asset transferring. As the popularity of DApp platform blockchains with Turing-complete smart contracts, represented by Ethereum, blockchain deanonymization faces new challenges because of user diversity and complexity of activities. In this paper, we propose I$^2$GL, an identify inference approach based on graph deep learning to address these challenges. Specifically, I$^2$GL constructs a transaction graph and aims to inferring the identity of nodes using graph embedding technique based on Graph Convolutional Networks. Furthermore, a series of enhancement has been proposed by exploiting unique features of blockchain transaction graph. The experimental results on Ethereum transaction records show that I$^2$GL significantly outperform other state-of-the-art. 
 \end{abstract}
 
 \begin{IEEEkeywords}
