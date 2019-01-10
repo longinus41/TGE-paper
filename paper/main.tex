@@ -33,7 +33,63 @@
 \usetikzlibrary{intersections}
 %\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
 %    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+\usepackage{pgfplotstable} % For \pgfplotstableread
+
+
 \begin{document}
+\pgfplotstableread{
+x a-min a-max a b-min b-max b
+0 0.6000 0.9592 0.8022 0.5667 0.9596 0.8287
+1 0.3871 0.9592 0.6761 0.5161 0.9694 0.7918
+2 0.4706 0.9592 0.7186 0.6038 0.9645 0.8058
+}\multilayertable
+
+\pgfplotstableread{
+x a-min a-max a b-min b-max b
+0 0.6154 0.9583 0.8058 0.5667 0.9596 0.8287
+1 0.5263 0.9388 0.7609 0.5161 0.9756 0.7918
+2 0.6071 0.9485 0.7794 0.6038 0.9645 0.8058
+}\timedensitytable
+
+\pgfplotstableread{
+x a-min a-max a b-min b-max b
+0 0.546 1.0 0.848 0.615 0.958 0.806
+1 0.158 0.951 0.496 0.526 0.939 0.761
+2 0.245 0.907 0.593 0.607 0.949 0.779
+}\symtable
+
+\pgfplotstableread{
+x a-min a-max a b-min b-max b
+0 0.2381 0.6957 0.5660 0.546 1.0 0.848
+1 0.1613 0.7429 0.3779 0.158 0.951 0.496
+2 0.1923 0.6500 0.4358 0.245 0.907 0.593
+}\multirelationtable
+
+  \pgfplotsset{avg/.style={%
+    legend style={
+      legend columns=2,
+      font=\footnotesize,
+    },
+    ybar,
+    xtick pos = left,
+    bar width=9pt,
+    ymin=0,
+    ymax=1.35,
+    xmin=-0.5,
+    xmax=2.5,
+    scale only axis,
+    xtick={0, 1, 2},
+    ytick={0.2, 0.4, 0.6, 0.8, 1.0},
+    xticklabels={\footnotesize{Precision}, Recall, $F_1$},
+    xlabel=\empty,
+    ylabel=\empty,
+    width=0.2\textwidth,
+    height=0.2\textwidth,
+    every axis/.append style={font=\footnotesize},
+legend image code/.code={%
+                    \draw[#1, draw=none] (0cm,-0.1cm) rectangle (0.4cm,0.1cm);
+                }
+  }}
 
 \title{AIGL: a Cryptocurrency Anonymity Identification Approach based on Graph Deep Learning*\\
 {\footnotesize \textsuperscript{*}Note: Sub-titles are not captured in Xplore and
@@ -101,8 +157,8 @@ should not be used}
   %arbitrariness. Relying only on the transaction graph structure, our approach shows effectiveness in the evaluation through real date set.
 %}
 
-  In cryptocurrencies, such as Bitcoin and Ethereum, anonymity is a key feature, which realizing privacy protection by mapping users' identity to public-keys only. Meanwhile, deanonymization is equally important since it helps people have better understanding what is occurring on the ecosystem. Challenges are accompanied by the emerging of smart contract. Existing analytic methods are helpless to infer identities without expert knowledge or external information. 
-  
+  In cryptocurrencies, such as Bitcoin and Ethereum, anonymity is a key feature, which realizing privacy protection by mapping users' identity to public-keys only. Meanwhile, deanonymization is equally important since it helps people have better understanding what is occurring on the ecosystem. Challenges are accompanied by the emerging of smart contract. Existing analytic methods are helpless to infer identities without expert knowledge or external information.
+
   In this paper, a graph deep learning approach is proposed to handle account inferring task. We designed three-pronged approach and address challenges due to the particularity of cryptocurrency transaction graph. Relying only on the transaction graph structure, our approach shows effectiveness in the evaluation through real date set.
 \end{abstract}
 

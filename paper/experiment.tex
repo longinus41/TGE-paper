@@ -14,17 +14,17 @@ Specially, we extend the pre-processing scheme to adapt our model. First we cons
 %Last, a set of accounts with label introduced before is provided to train the model and evaluate classification accuracy. It is hard to reveal the identity of addresses since the anonymity of blockchain. We obtain these labeled examples in two ways, \emph{Etherscan}\footnote{Etherscan LabelCloud, https://etherscan.io/labelcloud} and \emph{Searchain}\footnote{Searchain, http://www.searchain.io/}. In the label set, the number of samples of each category is 100.
 
 \subsection{Identity Categorization}
-Since AIGL is semi-supervised learning method, and a small set of labeled accounts should be provided for training. We obtain these labeled examples via \emph{Etherscan}\footnote{Etherscan LabelCloud, https://etherscan.io/labelcloud} and \emph{Searchain}\footnote{Searchain, http://www.searchain.io/}. 
+Since AIGL is semi-supervised learning method, and a small set of labeled accounts should be provided for training. We obtain these labeled examples via \emph{Etherscan}\footnote{Etherscan LabelCloud, https://etherscan.io/labelcloud} and \emph{Searchain}\footnote{Searchain, http://www.searchain.io/}.
 
 TABLE~\ref{table:identity} shows the taxonomy of Ethereum accounts and here we depict them in detail. Here we introduce the prominent identity tag which is provided to train the model and evaluate classification accuracy.
  %It is hard to reveal the identity of addresses since the anonymity of blockchain.  %In the label set, the number of samples of each category is 100.
 
 \noindent 1) \emph{Miners \& Mining Pools}
-The existing implementation of Ethereum blockchain use the \emph{Proof-of-Work (PoW)} protocol, similar with Bitcoin. 
-%in which a block is only valid if it contains \emph{Proof-of-Work} (PoW) of a given difficulty\footnote{Note that in the Ethereum Serenity milestone, this is likely going to be replaced by a Proof-of-Stake mechanism.}. 
+The existing implementation of Ethereum blockchain use the \emph{Proof-of-Work (PoW)} protocol, similar with Bitcoin.
+%in which a block is only valid if it contains \emph{Proof-of-Work} (PoW) of a given difficulty\footnote{Note that in the Ethereum Serenity milestone, this is likely going to be replaced by a Proof-of-Stake mechanism.}.
 The \emph{miners} are the individuals or groups who validate transaction information by solving the cryptographic puzzles. Whoever is the first to find a valid hash of block will get the reward in the form of ETH which is paid by users sending transactions. And an efficient solution is working together to solve the PoW problems. Miners with mining machines can register on a special institution named \emph{mining pool}, which aggregates all the registrants' computing power to solve mining problem and distributes the reward to the registrants according to their proportion of contributed computing power. Up to \textcolor{red}{March} 2018, top $3$ mining pools occupy more than 65\% of hash rate in Ethereum\footnote{Investoon, https://investoon.com/charts/mining/eth.}.
 
-%In the early stage, most people participate the mining process independently. As more participants into this high profit industry, the mining competition gradually becomes fiercer. 
+%In the early stage, most people participate the mining process independently. As more participants into this high profit industry, the mining competition gradually becomes fiercer.
 
 
 \noindent 2) \emph{Exchanges}
@@ -34,11 +34,11 @@ The exchanges are the platforms for trading ETH and even other digital currencie
 
 %The exchange charges the user a commission for both recharge and withdraw services.
 
-%The DEXs are a new technology that facilitate cryptocurrency trading on a distributed ledger. Being completely on-chain, all orders interact with each other directly through the blockchain. This makes it fully decentralized, but also expensive and slow. Besides, another difference is that user will get a new address with corresponding private key when registers to the DEX, which means the address belongs to user itself instead of exchange. 
- 
+%The DEXs are a new technology that facilitate cryptocurrency trading on a distributed ledger. Being completely on-chain, all orders interact with each other directly through the blockchain. This makes it fully decentralized, but also expensive and slow. Besides, another difference is that user will get a new address with corresponding private key when registers to the DEX, which means the address belongs to user itself instead of exchange.
+
  %User calls the smart contract in the decentralized exchange address to start a transaction. Intuitively, the transaction will take a long time for making match and confirming compared with in centralized way.
 
-%Since most ERC-20 token transactions happen via smart contracts and in a decentralized mechanism, some big exchanges which support both ETH and ERC-20 token transaction (e.g., Binance and Huobi) are mixture of centralized and decentralized exchange. 
+%Since most ERC-20 token transactions happen via smart contracts and in a decentralized mechanism, some big exchanges which support both ETH and ERC-20 token transaction (e.g., Binance and Huobi) are mixture of centralized and decentralized exchange.
 
 
 \noindent 3) \emph{ERC-20 \& ICO}
@@ -47,7 +47,7 @@ The exchanges are the platforms for trading ETH and even other digital currencie
 Participants in the initial ICO round are \emph{primary market investors} who buy the ERC-20 token from ERC-20 smart contracts of the crowdfunding companies. And these addresses where ETH holding of token teams are \emph{ICO wallets}.
 
 \noindent 4) \emph{Phishes \& Hacks}
-Since virtual property transactions are now becoming increasingly commonplace and that leads to many security issues. At the same time, the frauds associated with ETH and ERC-20 tokens have also increased. We call these addresses related to frauds \emph{phishes \& hacks}. According to Ethersacan, there are more than $2500$ addresses are labeled as Phish/Hack, which takes up the highest proportion. Most of them are disguised as ERC-20 token sales or DApps such as casino. 
+Since virtual property transactions are now becoming increasingly commonplace and that leads to many security issues. At the same time, the frauds associated with ETH and ERC-20 tokens have also increased. We call these addresses related to frauds \emph{phishes \& hacks}. According to Ethersacan, there are more than $2500$ addresses are labeled as Phish/Hack, which takes up the highest proportion. Most of them are disguised as ERC-20 token sales or DApps such as casino.
 
 \begin{table}[t]
 \caption{Typical Account Identities}
@@ -119,7 +119,7 @@ F_1=(\frac{{precision}^{-1}+{recall}^{-1}}{2})^{-1}=2\cdot\frac{precision \cdot 
 
 In statistical analysis of label classification, the $F_1$ score is an important indicator since it is the harmonic average of the precision and recall.
 
-Results are summarized in TABLE~\ref{table:overall_results}. Our methods (with asymmetric proximity only and with asymmetric proximity and time-density both) outperform others in average $F_1$ score. Comparing with DeepWalk and PARW, our methods achieve higher $F_1$ scores in all labels, for these methods only utilize the local structure of nodes, while our methods involve global structural information and statistic information. 
+Results are summarized in TABLE~\ref{table:overall_results}. Our methods (with asymmetric proximity only and with asymmetric proximity and time-density both) outperform others in average $F_1$ score. Comparing with DeepWalk and PARW, our methods achieve higher $F_1$ scores in all labels, for these methods only utilize the local structure of nodes, while our methods involve global structural information and statistic information.
 
 Note that rGCN achieves the highest average precision but a low average recall. Especially, rGCN has the lowest recall of category of phish and hack, which means that many normal accounts are inferred as threatening in rGCN model. Our methods improve the overall performance by adding richer information, the time of transactions, into the model.
 
@@ -141,17 +141,33 @@ It can be observed that all GCN based approaches outperform DeepWalk since GCN m
 
 \subsection{Deeper Analysis}
 \textcolor{red}{
-To investigate the characters of transaction graph, we make further experiments. 
+To investigate the characters of transaction graph, we make further experiments.
 }
 
 \begin{figure*}
-\centering     %%% not \center
-\subfigure[Multi-Adjacent Matrices]{\label{fig:a}\includegraphics[width=42mm]{fig/multi_relation_result}}
-\subfigure[Second-order Proximity]{\label{fig:b}\includegraphics[width=42mm]{fig/second_order_result}}
-\subfigure[Asymmetric Proximity]{\label{fig:a}\includegraphics[width=42mm]{fig/asymmetric_result}}
-\subfigure[Time-density Matrices]{\label{fig:a}\includegraphics[width=42mm]{fig/time_density_result}}
+\setlength{\tabcolsep}{-5pt}
+  \centering
+  \begin{tabular}{cccc}
+	\subfigure[Multi-Adjacent Matrices]{
+		\label{fig:a}
+  \input{fig/multi_relation.tex}
+    } &
+	\subfigure[Second-order Proximity]{
+		\label{fig:b}
+  \input{fig/multi_layer.tex}
+    } &
+	\subfigure[Asymmetric Proximity]{
+		\label{fig:c}
+  \input{fig/asym.tex}
+    } &
+	\subfigure[Time-density Matrices]{
+		\label{fig:d}
+  \input{fig/time_density.tex}
+    } \\
+  \end{tabular}
 \caption{Visualization of nodes with different labels in 2-dimensional space.}
 \label{fig:deeper_analysis}
+
 \end{figure*}
 
 \textcolor{red}{
@@ -166,7 +182,7 @@ The recall increases $13$\% by preserving second-order proximity. This illustrat
 \textcolor{red}{
 Last, we test the performance of AIGL without time-density matrices (AIGL$_{nT}$ for short). AIGL outperforms AIGL$_{nT}$ in all indicators. The reason is that different types of accounts have diverse active time distribution, time-density helps to distinguish between them. Also, intensive transactions reflect more typical characteristics, therefore deserve higher weights.
 }
-%Preserving asymmetric proximity by adjusting the adjacency matrix, our method greatly improves the robustness between different labels.  % This is because in vanilla rGCN, 
+%Preserving asymmetric proximity by adjusting the adjacency matrix, our method greatly improves the robustness between different labels.  % This is because in vanilla rGCN,
 
 
 

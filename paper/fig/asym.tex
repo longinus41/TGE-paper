@@ -1,0 +1,22 @@
+\begin{tikzpicture}
+\begin{axis}[avg]
+\addplot+ [black, fill=blue!30, error bars/.cd,y dir=both,y explicit] table [
+col sep=comma,
+  x=x,
+  y=a,
+  y error plus expr=\thisrow{a-max}-\thisrow{a},
+  y error minus expr=\thisrow{a}-\thisrow{a-min},
+]{\symtable};
+
+\addplot+ [black, fill=white, postaction={pattern=north east lines}, error bars/.cd,y dir=both,y explicit] table [
+col sep=comma,
+  x=x,
+  y=b,
+  y error plus expr=\thisrow{b-max}-\thisrow{b},
+  y error minus expr=\thisrow{b}-\thisrow{b-min},
+]{\symtable};
+
+\legend{I$^2$GL$_{\text{nT,nA}}$, I$^2$GL$_{\text{nT}}$};
+
+\end{axis}
+\end{tikzpicture}
