@@ -1,6 +1,6 @@
 % !TEX root = main.tex
 
-I$^2$GL
+\section{Experiments}
 \label{sec:experiments}
 In this section, we conduct experiments to evaluate the performance of our method on Ethereum transaction. Note that I$^2$GL does not only apply to Ethereum, but also other cryptocurrencies \textcolor{red}{which support smart contracts.}
 
@@ -125,7 +125,7 @@ Note that rGCN achieves the highest average precision but a low average recall. 
 
 %\subsection{Asymmetric Proximity and Time-Density}
 \subsection{Visualization}
-Because I$^2$GL is a graph deep learning approach based on graph embedding, and each node in the graph can be represented as a low-dimensional vector. It allows us to visualize the nodes and gain a better understanding of classification. Note that PARW is based on label propagation instead of embedding, we illustrate the visualization of DeepWalk, rGCN and our methods in Fig.~\ref{fig:visualization}. Similar to~\cite{wang2016structural}, we learn a 128-dimensional embedding for each method and input it to t-SNE~\cite{maaten2008visualizing} to reduce the dimensionality to 2, then all nodes can be visualized in a 2-dimensional space.
+Because I$^2$GL is a graph deep learning approach based on graph embedding, and each node in the graph can be represented as a low-dimensional vector. It allows us to visualize the nodes and gain a better understanding of classification. Note that PARW is based on label propagation instead of embedding, we illustrate the visualization of DeepWalk, rGCN and our method in Fig.~\ref{fig:visualization}. Similar to~\cite{wang2016structural}, we learn a 128-dimensional embedding for each method and input it to t-SNE~\cite{maaten2008visualizing} to reduce the dimensionality to 2, then all nodes can be visualized in a 2-dimensional space.
 
 \begin{figure*}
 \centering     %%% not \center
@@ -137,7 +137,11 @@ Because I$^2$GL is a graph deep learning approach based on graph embedding, and 
 \label{fig:visualization}
 \end{figure*}
 
-It can be observed that all GCN based approaches outperform DeepWalk since GCN models preserve global structure information well~\cite{goyal2018graph}. %This illustrates the importance of higher order proximity in the structure of transaction graph.
+\textcolor{red}{For accounts which are labelled as different identities, we use different colors on the corresponded points. Therefore, a good embedding result is that the points of the same color are near from each other.}
+
+It can be observed that all GCN based approaches outperform DeepWalk since GCN models preserve global structure information well~\cite{goyal2018graph}. \textcolor{red}{What’s more, from the distances between phis/hack nodes and others, we can infer that many phishing or hacking accounts are disguised as ICO wallets and exchange deposits.}
+
+%This illustrates the importance of higher order proximity in the structure of transaction graph.
 
 \subsection{Deeper Analysis}
 \textcolor{red}{
@@ -148,39 +152,42 @@ To investigate the characters of transaction graph, we make further experiments.
 \setlength{\tabcolsep}{-5pt}
   \centering
   \begin{tabular}{cccc}
-	\subfigure[Multi-Adjacent Matrices]{
-		\label{fig:a}
+	\subfigure[Multi-Adjacencies]{
+		\label{fig:multi_relation_result}
   \input{fig/multi_relation.tex}
     } &
-	\subfigure[Second-order Proximity]{
-		\label{fig:b}
+	\subfigure[Second-order proximity]{
+		\label{fig:second-oder_result}
   \input{fig/multi_layer.tex}
     } &
-	\subfigure[Asymmetric Proximity]{
-		\label{fig:c}
+	\subfigure[Asymmetric proximity]{
+		\label{fig:asymmetric_order_result}
   \input{fig/asym.tex}
     } &
-	\subfigure[Time-density Matrices]{
-		\label{fig:d}
+	\subfigure[Time-density]{
+		\label{fig:time-density_result}
   \input{fig/time_density.tex}
     } \\
   \end{tabular}
-\caption{Visualization of nodes with different labels in 2-dimensional space.}
+\caption{Classification results of diminished I$^2$GLs.}
 \label{fig:deeper_analysis}
 
 \end{figure*}
 
 \textcolor{red}{
-First, we compare the classification performance of I$^2$GL and I$^2$GL with single adjacent matrix which using single relation (I$^2$GL$_{sR}$ for short). It is obvious that the classification accuracy increases greatly by introducing multi-adjacent matrices, which indicates that such heterogeneous activities is important in preserving features of transaction graph.
+First, we compare the classification performance of I$^2$GL with single adjacency matrix which using single relation (I$^2$GL$_{sR}$ for short) and I$^2$GL with multi-adjacency matrices (I$^2$GL$_{mR}$ for short). Note that both I$^2$GL$_{sR}$ and I$^2$GL$_{mR}$ do not make other enhancements like time-density matrices. As shown in Fig.~\ref{fig:multi_relation_result}, the classification accuracy of I$^2$GL$_{mR}$ increases greatly by introducing multi-adjacency matrices, which indicates that such heterogeneous activities is important in preserving features of transaction graph.
 }
 
 \textcolor{red}{
- Second, we test the performance of I$^2$GL with 1 layer convolutional network (I$^2$GL$_{1L}$ for short) and I$^2$GL without asymmetric coefficient (I$^2$GL$_{nA}$ for short). The performance is better when we take asymmetric proximity and second-order proximity into consideration respectively.
-The recall increases $13$\% by preserving second-order proximity. This illustrates the importance of higher order proximity in the structure of transaction graph. Besides, we observe that in vanilla rGCN, performances of different labels vary a lot, but adding asymmetric property solves the problem.
+ Second, we test the performance of I$^2$GL with 1 layer convolutional network (I$^2$GL$_{1L}$ for short) and I$^2$GL with 2 layers convolutional network, which is complete I$^2$GL. As shown in Fig.~\ref{fig:second-oder_result}, the $F_{1}$ increases $13$\% by preserving second-order proximity. This illustrates the importance of second-order proximity in the structure of transaction graph. 
 }
 
 \textcolor{red}{
-Last, we test the performance of I$^2$GL without time-density matrices (I$^2$GL$_{nT}$ for short). I$^2$GL outperforms I$^2$GL$_{nT}$ in all indicators. The reason is that different types of accounts have diverse active time distribution, time-density helps to distinguish between them. Also, intensive transactions reflect more typical characteristics, therefore deserve higher weights.
+Then, we investigate the asymmetric proximity in Ethereum transaction graph, via comparing the I$^2$GL without asymmetric coefficient and time-density matrices (I$^2$GL$_{nT,nA}$ for short) and one without time-density matrices (I$^2$GL$_{nT}$ for short). As shown in Fig.~\ref{fig:asymmetric_order_result}, I$^2$GL$_{nT,nA}$ has higher precision but I$^2$GL$_{nT}$ outperforms in recall and aggregative $F_1$.
+}
+
+\textcolor{red}{
+Last, we test the performance of I$^2$GL without time-density matrices (I$^2$GL$_{nT}$ for short). As shown in Fig.~\ref{fig:time-density_result}, I$^2$GL outperforms I$^2$GL$_{nT}$ in all indicators. The reason is that different types of accounts have diverse active time distribution, time-density helps to distinguish between them. Also, intensive transactions reflect more typical characteristics, therefore deserve higher weights.
 }
 %Preserving asymmetric proximity by adjusting the adjacency matrix, our method greatly improves the robustness between different labels.  % This is because in vanilla rGCN,
 
