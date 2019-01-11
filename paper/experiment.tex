@@ -41,18 +41,18 @@ Since virtual property transactions are now becoming increasingly common, but le
 \begin{table}[t]
 \caption{Typical Account Identities}
 \begin{center}
-\begin{tabular}{|p{2.1cm}|c|p{3.9cm}|}
+\begin{tabular}{c|c|l}
 \hline
-\textbf{Identity} & \textbf{Account Type}& \textbf{Description} \\
+\textbf{Identity} & \textbf{Type}& \textbf{Description} \\
 \hline
-Miners & EOA & Nodes who take part in the block validation process. \\ \hline
-Mining Pools & EOA & The pooling of resources by miners, who share their processing power over a network.\\ \hline
-Token Contracts & CA & Contracts that allow customers to transfer ERC-20 tokens. \\ \hline
-Primary Market Investors & EOA & Large holders of ETH, who usually got in early on ICOs. \\ \hline
-ICO Wallets & EOA\&CA & ETH holdings of token teams, typically raised from ICOs. \\ \hline
-Exchange Deposits & EOA\&CA & Addresses for user to deposit ETH at exchange. \\ \hline
-Exchange Roots\&Withdrawals & EOA\&CA & Addresses collect ETH from deposit addresses and withdraw ETH to users. \\ \hline
-Phishes\&Hacks & EOA\&CA & Fraud address related to phishing and hacks. \\ \hline
+Miner & EOA & \tabincell{l}{Node who takes part in the block \\validation process} \\ \hline
+Mining Pool & EOA & \tabincell{l}{The pooling of resources by miners, \\who share their processing power \\over a network}\\ \hline
+Token Contract & CA & \tabincell{l}{Smart contract that allows customers \\to transfer ERC-20 tokens} \\ \hline
+Investor & EOA & \tabincell{l}{Large holder of ETH, who usually \\got in early on ICOs} \\ \hline
+ICO Wallet & EOA/CA & \tabincell{l}{ETH holding of token team, typically \\raised from ICOs} \\ \hline
+Exchange Deposit & EOA/CA & \tabincell{l}{Address for user to deposit ETH at \\exchange} \\ \hline
+Exchange Root & EOA/CA & \tabincell{l}{Address collect ETH from deposit \\addresses and withdraw ETH to users} \\ \hline
+Phish/Hack & EOA/CA & \tabincell{l}{Fraud address related to phishing and \\hack} \\ \hline
 %\multicolumn{4}{l}{$^{\mathrm{a}}$Sample of a Table footnote.}
 \end{tabular}
 \label{table:identity}
@@ -65,7 +65,7 @@ Phishes\&Hacks & EOA\&CA & Fraud address related to phishing and hacks. \\ \hlin
 %We've seen increased use of sophisticated forms and letterhead to send what appears to be legitimate World Bank Group correspondence, as well as several schemes that reference the Bank.
 
 
-\subsection{Experimental Set-Up}
+\subsection{Experiment Setting}
 We compare I$^2$GL against state-of-the-art DeepWalk~\cite{perozzi2014deepwalk}, PARW~\cite{wu2012learning} and rGCN~\cite{schlichtkrull2018modeling}. DeepWalk is an embedding technique using random walks on graphs to obtain node representations. Like I$^2$GL, rGCN tackles node representation by defining a convolution operator on graph. PARW is a label propagation method based on partially absorbing random walks. Note that DeepWalk is an unsupervised method, a logistic regression model is added for classification. Unless otherwise noted, all the GCN-based hidden layers have 16 units. Models are trained with Adam optimizer for 100 epochs, and $dropout\_rate=0.5$ is used to avoid overfitting. All embedding and classification programs were run on the server, with an Intel Xeon E5 CPU of 55 processors and 128GB of memory. The GPU used for deep learning is Nvidia 1080.
 
 \begin{table*}
@@ -107,13 +107,13 @@ Investor & 0.405 & 0.548 & 0.466 & 0.727& 0.516& 0.604& 0.739& 0.548& 0.630& 0.7
 \subsection{Experiment Results}
 For clarity, we have two assumptions about identity inference: 1) each account is supposed to have a single identity instead of multiple identities, and (2) identity of a certain account does not change. These assumptions are reasonable because even though a participant may have multiple identities (e.g., it can be a miner and an investor simultaneously) in practice, it uses different accounts for these activities, respectively. Because we use transaction records during a period of merely three month, cases of identity conversion is negligible.
 
-We use three metrics, precision, recall and $F_1$ score, to evaluate the performance of different approaches. \textcolor{red}{\{unclear\}Precision is the fraction of relevant instances among the retrieved instances, while recall is the fraction of relevant instances that have been retrieved over the total amount of relevant instances. A high precision means the classifier is unlikely to consider other addresses as this type, while a high recall means that most of addresses in this type will be recognized.} The $F_1$ score is a measurement that combines precision and recall, which is computed as
+We use three metrics, precision, recall and $F_1$ score, to evaluate the performance of different approaches. \textcolor{red}{Precision is the fraction of relevant instances among the retrieved instances, while recall is the fraction of relevant instances that have been retrieved over the total amount of relevant instances. A high precision means the classifier is unlikely to consider accounts with other identities as this identity, while a high recall means that most of accounts in this identity will be recognized.} The $F_1$ score is a measurement that combines precision and recall, which is computed as
 
 \begin{equation}
 F_1=(\frac{{precision}^{-1}+{recall}^{-1}}{2})^{-1}=2\cdot\frac{precision \cdot recall}{precision + recall}
 \end{equation}
 
-In statistical analysis of label classification, the $F_1$ score is an important indicator since it is the harmonic average of the precision and recall. \textcolor{red}{\{unclear\}An ideal classifier has both high precision and recall, thus a high $F_1$ score.}
+In statistical analysis of label classification, the $F_1$ score is an important indicator since it is the harmonic average of the precision and recall. \textcolor{red}{An ideal classifier has both high precision and recall, thus a high $F_1$ score.}
 
 Results are summarized in TABLE~\ref{table:overall_results}. I$^2$GL outperforms other approaches in average $F_1$ score. Comparing with DeepWalk and PARW, our I$^2$GL achieve higher $F_1$ scores in all labels, because these methods only use the local structure of nodes, but our proposed approach use global structural information and statistic information.
 
