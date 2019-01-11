@@ -1,5 +1,5 @@
 \section{I$^2$GL Approach}
-\label{sec:approach}I$^2$GL
+\label{sec:approach}
 In this section, we propose I$^2$GL, an identity inference approach based on graph deep learning. We first give an overview of I$^2$GL, and then present technical details including graph construction, embedding and node classification.
 
 %we are the first to analyze cryptocurrency transactions and solve the identity inferring problem based on graph deep learning.
@@ -48,19 +48,19 @@ The transaction graph can be constructed based on original transaction records s
 \paragraph{Account representations} To encode the overall structural and additional information of accounts, we denote the account representations as a feature matrix $X \in \mathbb{R}^{N \times d}$, where each account contains the following $d$ pre-defined features.
 
 \begin{itemize}
-	\item \emph{in-degree}: the number of incoming edges of a node, that is, the number of transactions point to an account. \textcolor{red}{For example, the in-degree of node $v_i$ can be counted as $|E_{i\leftarrow}|$ where $E_{i\leftarrow}=\{(v_j,v_i,w,h,r)| \forall v_j \in V\}$.}
-	\item \emph{out-degree}: the number of outgoing edges of a node, that is, the number of transactions initiated by an account. \textcolor{red}{For example, the out-degree of node $v_i$ can be counted as $|E_{i\rightarrow}|$ where $E_{i\rightarrow}=\{(v_i,v_j,w,h,r)| \forall v_j \in V\}$.}
-	\item \emph{weighted in-degree}: the value summation of incoming edges of a node, which represents the total crptocurrencies received by an account. \textcolor{red}{For example, the weighted in-degree of node $v_i$ can be counted as $|E_{i\Leftarrow}|$ where $E_{i\Leftarrow}=\{(v_j,v_i,w,h,r)| \forall v_j \in V\wedge w>0\}$.}
-	\item \emph{weighted out-degree}: the value summation of edges outgoing to a node, which represents the total cryptocurrencies sent from an account. \textcolor{red}{For example, the weighted out-degree of node $v_i$ can be counted as $|E_{i\Rightarrow}|$ where $E_{i\Rightarrow}=\{(v_i,v_j,w,h,r)| \forall v_j \in V\wedge w>0\}$.}
+	\item \emph{in-degree}: the number of incoming edges of a node, that is, the number of transactions point to an account. \textcolor{red}{For example, the in-degree of node $v_i$ can be counted as $|E_{i}^{+}|$ where $E_{i}^{+}=\{(v_j,v_i,w,h,r)| \forall v_j \in V\}$.}
+	\item \emph{out-degree}: the number of outgoing edges of a node, that is, the number of transactions initiated by an account. \textcolor{red}{For example, the out-degree of node $v_i$ can be counted as $|E_{i}^{-}|$ where $E_{i}^{-}=\{(v_i,v_j,w,h,r)| \forall v_j \in V\}$.}
+	\item \emph{weighted in-degree}: the value summation of incoming edges of a node, which represents the total crptocurrencies received by an account. \textcolor{red}{For example, the weighted in-degree of node $v_i$ can be counted as $\sum_{e\in E_{i}^{+}}w$.}
+	\item \emph{weighted out-degree}: the value summation of edges outgoing to a node, which represents the total cryptocurrencies sent from an account. \textcolor{red}{For example, the weighted out-degree of node $v_i$ can be counted as $\sum_{e\in E_{i}^{-}}w$.}
 	%\item eccentricity
 	%\item clustering coefficient
 	\item \emph{account type}: whether the account is a smart contract or normal one.
 \end{itemize}
 
-\paragraph{Adjacent matrices} Different from other networks, edges in transaction graph stand for heterogeneous activities such as money transfer, contract creation and contract invocation. Obviously, such %multi-relations can not be measured in a uniform weighted model.
+\paragraph{Adjacency matrices} Different from other networks, edges in transaction graph stand for heterogeneous activities such as money transfer, contract creation and contract invocation. Obviously, such %multi-relations can not be measured in a uniform weighted model.
 activitities should be represented as different edge types instead of being measured in uniform weighted graph.
 
-To address the challenge, we divide the raw transaction graph into several sub-graphs and capture the relations of graph neighboring nodes using adjacent matrices. The set of adjacency matrices, $\{A^1,A^2,\dots,A^R|A^i\in \mathbb{R}^{N \times N}\}$, describes the $R$ relations among $N$ nodes in transaction graph. It is conceivable that, the strategy of division has a large influence on classification performance.
+To address the challenge, we divide the raw transaction graph into several sub-graphs and capture the relations of graph neighboring nodes using adjacent matrices. The set of adjacency matrices, $\{A^1,A^2,\dots,A^R|A^r\in \mathbb{R}^{N \times N}\}$, describes the $R$ relations among $N$ nodes in transaction graph. It is conceivable that, the strategy of division has a large influence on classification performance.
 
 In I$^2$GL, four major transactions are considered, including (1) \texttt{CALL} transactions with \textcolor{red}{weight $w>0$}, (2) \texttt{CALL} transactions with \textcolor{red}{weight $w=0$}, (3) \texttt{CREATION} transactions and (4) \texttt{REWARD} transactions, which represent the relations of cryptocurrency transferring, smart contract invocation, smart contract deployment and mining rewarding, respectively. \textcolor{red}{More specifically, transaction is regarded as type 1 that an account transfer some ETH (cryptocurrency in Ethereum) to another one. And the ERC-20 token transferring is regarded as type 2 since it is a contract invocation without any ETH.}
 
