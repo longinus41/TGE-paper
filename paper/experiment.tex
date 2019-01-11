@@ -107,13 +107,13 @@ Investor & 0.405 & 0.548 & 0.466 & 0.727& 0.516& 0.604& 0.739& 0.548& 0.630& 0.7
 \subsection{Experiment Results}
 For clarity, we have two assumptions about identity inference: 1) each account is supposed to have a single identity instead of multiple identities, and (2) identity of a certain account does not change. These assumptions are reasonable because even though a participant may have multiple identities (e.g., it can be a miner and an investor simultaneously) in practice, it uses different accounts for these activities, respectively. Because we use transaction records during a period of merely three month, cases of identity conversion is negligible.
 
-We use three metrics, precision, recall and $F_1$ score, to evaluate the performance of different approaches. \textcolor{red}{\{unclear\}Precision is the fraction of relevant instances among the retrieved instances, while recall is the fraction of relevant instances that have been retrieved over the total amount of relevant instances}. The $F_1$ score is a measurement that combines precision and recall, which is computed as
+We use three metrics, precision, recall and $F_1$ score, to evaluate the performance of different approaches. \textcolor{red}{\{unclear\}Precision is the fraction of relevant instances among the retrieved instances, while recall is the fraction of relevant instances that have been retrieved over the total amount of relevant instances. A high precision means the classifier is unlikely to consider other addresses as this type, while a high recall means that most of addresses in this type will be recognized.} The $F_1$ score is a measurement that combines precision and recall, which is computed as
 
 \begin{equation}
 F_1=(\frac{{precision}^{-1}+{recall}^{-1}}{2})^{-1}=2\cdot\frac{precision \cdot recall}{precision + recall}
 \end{equation}
 
-In statistical analysis of label classification, the $F_1$ score is an important indicator since it is the harmonic average of the precision and recall.
+In statistical analysis of label classification, the $F_1$ score is an important indicator since it is the harmonic average of the precision and recall. \textcolor{red}{\{unclear\}An ideal classifier has both high precision and recall, thus a high $F_1$ score.}
 
 Results are summarized in TABLE~\ref{table:overall_results}. I$^2$GL outperforms other approaches in average $F_1$ score. Comparing with DeepWalk and PARW, our I$^2$GL achieve higher $F_1$ scores in all labels, because these methods only use the local structure of nodes, but our proposed approach use global structural information and statistic information.
 
