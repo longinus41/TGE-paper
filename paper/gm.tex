@@ -180,7 +180,7 @@ h_i^{(l+1)}=\delta(\sum_{r\in R} \sum_{j \in N_i^r} \frac{t_{ij}^r}{\hat c_{i,r}
 \end{figure}
 
 
-Another overlooked closeness, \emph{asymmetric proximity} should also be preserved in the transaction graph. For instance, as shown in Fig. \ref{fig:asymmetric}, suppose node $v_a$ is cryptocurrency trader, and node $v_b$ and $v_c$ are cryptocurrency exchange accounts. Consequently, edge $(v_a,v_b)$ stands for a deposit process and edge $(c,a)$ is a withdrawal process. \textcolor{red}{Generally, edge weight can be $w^r_{ab}=w^r_{bc}=w^r_{ca}$ since deposit and withdrawal come in pairs in symmetric model. However, the proximity $(v_a,v_c)$ is not equal to proximity $(v_c,v_a)$ due to their asymmetric local structures.}
+Another overlooked closeness, \emph{asymmetric proximity} should also be preserved in the transaction graph. For instance, as shown in Fig. \ref{fig:asymmetric}, suppose node $v_a$ is cryptocurrency trader, and node $v_b$ and $v_c$ are cryptocurrency exchange accounts. Consequently, edge $(v_a,v_b)$ stands for a deposit process and edge $(v_c,v_a)$ is a withdrawal process. \textcolor{red}{Generally, edge weight can be $w^r_{ab}=w^r_{bc}=w^r_{ca}$ since deposit and withdrawal come in pairs in symmetric model. However, the proximity $(v_a,v_c)$ is not equal to proximity $(v_c,v_a)$ due to their asymmetric local structures.}
 
 Different from the asymmetric proximity preserving approach based on random walk~\cite{zhou2017scalable}, I$^2$GL use a non-probability graph embedding model. To preserve the asymmetric proximity, the coefficient $\hat c_{i,r}$ is introduced as:
 
