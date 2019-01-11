@@ -41,7 +41,7 @@ Since virtual property transactions are now becoming increasingly common, but le
 \begin{table}[t]
 \caption{Typical Account Identities}
 \begin{center}
-\begin{tabular}{c|c|l}
+\begin{tabular}{|l|c|l|}
 \hline
 \textbf{Identity} & \textbf{Type}& \textbf{Description} \\
 \hline
@@ -110,7 +110,10 @@ For clarity, we have two assumptions about identity inference: 1) each account i
 We use three metrics, precision, recall and $F_1$ score, to evaluate the performance of different approaches. \textcolor{red}{Precision is the fraction of relevant instances among the retrieved instances, while recall is the fraction of relevant instances that have been retrieved over the total amount of relevant instances. A high precision means the classifier is unlikely to consider accounts with other identities as this identity, while a high recall means that most of accounts in this identity will be recognized.} The $F_1$ score is a measurement that combines precision and recall, which is computed as
 
 \begin{equation}
-F_1=(\frac{{precision}^{-1}+{recall}^{-1}}{2})^{-1}=2\cdot\frac{precision \cdot recall}{precision + recall}
+\begin{split}
+F_1&=(\frac{{precision}^{-1}+{recall}^{-1}}{2})^{-1}\\
+&=2\cdot\frac{precision \cdot recall}{precision + recall}
+\end{split}
 \end{equation}
 
 In statistical analysis of label classification, the $F_1$ score is an important indicator since it is the harmonic average of the precision and recall. \textcolor{red}{An ideal classifier has both high precision and recall, thus a high $F_1$ score.}
