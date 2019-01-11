@@ -4,6 +4,42 @@ In this section, we propose I$^2$GL, an identity inference approach based on gra
 
 %we are the first to analyze cryptocurrency transactions and solve the identity inferring problem based on graph deep learning.
 
+\newcommand{\tabincell}[2]{\begin{tabular}{@{}#1@{}}#2\end{tabular}}
+\begin{table}[!t]
+  \centering
+  \scriptsize
+  \caption{NOTATIONS}
+  \label{tab:notations}
+  \begin{tabular}{ll}
+    \\[-2mm]
+    \hline
+    \hline\\[-2mm]
+    {\bf \small Symbol}&\qquad {\bf\small Meaning}\\
+    \hline
+    \vspace{1mm}\\[-3mm]
+    $G_t$      &   \tabincell{l}{The transaction graph}\\
+    \vspace{1mm}
+    $V$          &  \tabincell{l}{Nodes set which is equal to accounts set}\\
+    \vspace{1mm}
+    $E$          &  \tabincell{l}{Edges set which is equal to transactions set}\\
+    \vspace{1mm}
+    $(v_i,v_j,w,h,r)$  &   \tabincell{l}{Directed edge from node $v_i$ to $v_j$, with weight $w$, block \\height $h$ and relation $r$}\\
+    \vspace{1mm}
+    $E_{i}^{+}$   &  \tabincell{l}{Set of edges that point to node $v_i$}\\
+    \vspace{1mm}
+    $E_{i}^{-}$   &  \tabincell{l}{Set of edges that initiated from node $v_i$}\\
+    \vspace{1mm}
+    $X$    &	\tabincell{l}{Feature matrix of nodes}\\
+    \vspace{1mm}
+    $A^r,a^r_{ij}$    &	\tabincell{l}{Adjacency matrix of relation $r$, and the element is defined as \\first-order proximity}\\
+    \vspace{1mm}
+    $T^r,t^r_{ij}$    &	\tabincell{l}{Time-density matrix of relation $r$, and the element is defined \\as time variance of edges between node $v_i$ and $v_j$}\\
+    \hline
+    \hline
+  \end{tabular}
+\end{table}
+
+
 \subsection{Overview}
 \label{subsec:methodology}
 %In I$^2$GL, identity inferring task is turned into node classification problem, simply, predicting the identity of accounts on a small sample of labeled accounts and the topology of the transaction graph.

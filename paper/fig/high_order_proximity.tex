@@ -1,43 +1,43 @@
 \begin{tikzpicture}
 \tikzset{
-  base/.style={draw, on grid, align=center, minimum height=2.5ex},
+  base/.style={draw, on grid, align=center, minimum height=2.8ex},
   pn/.style={base, circle},
 }
 
 
-\tikzmath{\r=1.0;}
+\tikzmath{\r=1.2;}
 
-\node [pn] (a) at (0, 0) {};
+\node [pn, thick] (a) at (0, 0) {};
 \node at (a) {\footnotesize a};
-\node [pn] (b) at (\r, 0) {};
+\node [pn, thick] (b) at (\r, 0) {};
 \node at (b) {\footnotesize b};
-\node [pn] (c) at (2*\r, 0) {};
+\node [pn, thick] (c) at (2*\r, 0) {};
 \node at (c) {\footnotesize c};
 
-\node[pn] (a1) at ({\r*cos(60)}, {\r*sin(60)}) {};
-\node[pn] (a2) at ({\r*cos(120)}, {\r*sin(120)}) {};
-\node[pn] (a3) at ({\r*cos(180)}, {\r*sin(180)}) {};
-\node[pn] (a4) at ({\r*cos(240)}, {\r*sin(240)}) {};
-\node[pn] (a5) at ({\r*cos(300)}, {\r*sin(300)}) {};
+\node[pn, thick] (a1) at ({\r*cos(60)}, {\r*sin(60)}) {};
+\node[pn, thick] (a2) at ({\r*cos(120)}, {\r*sin(120)}) {};
+\node[pn, thick] (a3) at ({\r*cos(180)}, {\r*sin(180)}) {};
+\node[pn, thick] (a4) at ({\r*cos(240)}, {\r*sin(240)}) {};
+\node[pn, thick] (a5) at ({\r*cos(300)}, {\r*sin(300)}) {};
 
-\node[pn] (b1) at ({2*\r + \r*cos(60)}, {\r*sin(60)}) {};
-\node[pn] (b2) at ({2*\r + \r*cos(120)}, {\r*sin(120)}) {};
-\node[pn] (b3) at ({2*\r + \r*cos(0)}, {\r*sin(0)}) {};
-\node[pn] (b4) at ({2*\r + \r*cos(240)}, {\r*sin(240)}) {};
-\node[pn] (b5) at ({2*\r + \r*cos(300)}, {\r*sin(300)}) {};
+\node[pn, thick] (b1) at ({2*\r + \r*cos(60)}, {\r*sin(60)}) {};
+\node[pn, thick] (b2) at ({2*\r + \r*cos(120)}, {\r*sin(120)}) {};
+\node[pn, thick] (b3) at ({2*\r + \r*cos(0)}, {\r*sin(0)}) {};
+\node[pn, thick] (b4) at ({2*\r + \r*cos(240)}, {\r*sin(240)}) {};
+\node[pn, thick] (b5) at ({2*\r + \r*cos(300)}, {\r*sin(300)}) {};
 
-\draw[->, >=stealth] (a1)-- (a);
-\draw[->, >=stealth] (a2) -- (a);
-\draw[->, >=stealth] (a3) -- (a);
-\draw[->, >=stealth] (a4) -- (a);
-\draw[->, >=stealth] (a5) -- (a);
+\draw[->, >=stealth, thick] (a1)-- (a);
+\draw[->, >=stealth, thick] (a2) -- (a);
+\draw[->, >=stealth, thick] (a3) -- (a);
+\draw[->, >=stealth, thick] (a4) -- (a);
+\draw[->, >=stealth, thick] (a5) -- (a);
 
-\draw[->, >=stealth] (b1) -- (c);
-\draw[->, >=stealth] (b2) -- (c);
-\draw[->, >=stealth] (b3) -- (c);
-\draw[->, >=stealth] (b4) -- (c);
-\draw[->, >=stealth] (b5) -- (c);
+\draw[->, >=stealth, thick] (b1) -- (c);
+\draw[->, >=stealth, thick] (b2) -- (c);
+\draw[->, >=stealth, thick] (b3) -- (c);
+\draw[->, >=stealth, thick] (b4) -- (c);
+\draw[->, >=stealth, thick] (b5) -- (c);
 
-\draw[->, >=stealth] (b) -- (a) node [midway, above] {\tiny invoke};
-\draw[->, >=stealth] (b) -- (c) node [midway, above] {\tiny invoke};
+\draw[->, >=stealth, thick] (b) -- (a) node [midway, above] {\scriptsize invoke};
+\draw[->, >=stealth, thick] (b) -- (c) node [midway, above] {\scriptsize invoke};
 \end{tikzpicture}
