@@ -110,7 +110,6 @@ On one hand, for types II, III and IV, we calculate the frequency of repeated ed
 \textcolor{red}{In fact, more information could be exploited on transaction graph. Within each block, transactions are labeled with block height which can be regarded as timestamp. These repeated edges are located at different time intervals along the time axis. Based on such information, we expand on these adjacent features to open a new dimension.}
 
 
- 
 \begin{figure}[htbp]
 \centering
 \begin{tabular}{c}
@@ -132,7 +131,7 @@ On one hand, for types II, III and IV, we calculate the frequency of repeated ed
 
 \textcolor{red}{Fig.~\ref{fig:time_std} illustrates the distribution of time variance when transaction happens of whole accounts and hack \& phish accounts in Ethereum. We observe that the time variance distribution of hack \& phish accounts is more concentrated compared with other accounts, since they are more active in a short period. This insight inspires us to use time information such as the variance of time transaction happens.}
 
-To describe time-density information, we use a set of matrices $\{T^1,T^2,\dots,T^R|T^i\in \mathbb{R}^{N \times N}\}$. Given a sequence $\{h_{ij1}^r,h_{ij2}^r,\dots,h_{ijm}^r | h_{ijk}^r>0\}$ as the block height of $m$ transactions in relation $r$ between node $v_i$ and $v_j$, the time-density of each relation $r$ is computed as%Equation \ref{eq:time}
+To describe time-density information, we use a set of matrices $\{T^1,T^2,\dots,T^R|T^r\in \mathbb{R}^{N \times N}\}$. Given a sequence $\{h_{ij1}^r,h_{ij2}^r,\dots,h_{ijm}^r | h_{ijk}^r>0\}$ as the block height of $m$ transactions in relation $r$ between node $v_i$ and $v_j$, the time-density of each relation $r$ is computed as%Equation \ref{eq:time}
 
 \begin{equation}
 t_{ij}^r=g\Bigg(\sqrt{Var\Big[\frac{1}{m}\sum_{k=1}^m h_{ijk}^r\Big]}\Bigg)
@@ -147,20 +146,20 @@ Based on the above matrices, we propose a multi-layer Graph Convolutional Networ
 
 %The method can be understood as a more abstract propagation rule:
 \begin{equation}
-H^{(l+1)}=\delta(\sum_{r\in R} (K^r\odot (D^r)^{-1}A^r)H^{(l)}W_r^{(l)}),\forall r
+H^{(l+1)}=\delta(\sum_{r\in R} (T^r\odot (D^r)^{-1}A^r)H^{(l)}W_r^{(l)}),\forall r
 \end{equation}
 
 \noindent where $H^{(l)}$ is the matrix of activations of the $l$-th layer, and here the $0$ layer is set as the account representations, that is, $H^{(0)}=X$. We use $\delta(\cdot)$ to denote an activation function such as the ReLU$(\cdot)$ = max$(0,\cdot)$. Note that $A^r$ is the adjacent matrix of relation $r$, and $D^r$ is a diagonal matrix of relation $r$ where $d^r_{ii}=\sum_{j}a^r_{ij}$. The symbol $\odot$ indicates point-wise multiplication.
 
-The edge weight $a^r_{ij}$ in adjacency matrix $A^r$ is defined as the \emph{first-order proximity}~\cite{tang2015line} which represents similarity between nodes $v_i$ and $v_j$. Further, the \emph{second-order proximity} evaluates the similarity of two nodes by comparing their neighborhood~\cite{goyal2018graph}. In cryptocurrency transaction graph, we find that second-order proximity also plays an important role in preserving the local structure. As shown in Figure \ref{fig:high_order}, nodes $a$ and $c$ are smart contracts and node $b$ is a normal user. Obviously, $a$ is not adjacent to $c$  but they have a similar neighbor structure. First-order proximity may miss the similarity of nodes that are separated far away, but second-order proximity can capture this similarity.
+The edge weight $a^r_{ij}$ in adjacency matrix $A^r$ is defined as the \emph{first-order proximity}~\cite{tang2015line} which represents similarity between nodes $v_i$ and $v_j$. Further, the \emph{second-order proximity} evaluates the similarity of two nodes by comparing their neighborhood~\cite{goyal2018graph}. In cryptocurrency transaction graph, we find that second-order proximity also plays an important role in preserving the local structure. As shown in Figure \ref{fig:high_order}, nodes $v_a$ and $v_c$ are smart contracts and node $v_b$ is a normal user. Obviously, $v_a$ is not adjacent to $v_c$  but they have a similar neighbor structure. First-order proximity may miss the similarity of nodes that are separated far away, but second-order proximity can capture this similarity.
 
 We feed the input into a GCN model with 2 hidden layers, as a trade-off between preserving second-order proximity and introducing noise. The input of the $l$-th layer is $H^{(l)}=\{h_1^{(l)},h_2^{(l)},...,h_N^{(l)}|h_i^{(l)}\in \mathbb{R}^{N \times d^{(l)}}\}$. Hence, the method can be treated as a special case of the forward updating process as
 
 \begin{equation}
-h_i^{(l+1)}=\delta(\sum_{r\in R} \sum_{j \in N_i^r} \frac{\tau_{ij}^r}{\hat c_{i,r}}W_r^{(l)}h_j^{(l)})
+h_i^{(l+1)}=\delta(\sum_{r\in R} \sum_{j \in N_i^r} \frac{t_{ij}^r}{\hat c_{i,r}}W_r^{(l)}h_j^{(l)})
 \end{equation}
 
-\noindent where $h_i^{(l)}$ is the hidden state of node $v_i$ in the $l$-th layer of the neural network, $r \in R$ represents a kind of relation, $N_i^r$ denotes the set of neighbors of node $v_i$ under relation $r$, and $k_{ij}^r$ is the time-density of transactions from node $v_i$ to $v_j$, which is represented in Eq.~(\ref{eq:time}).
+\noindent where $h_i^{(l)}$ is the hidden state of node $v_i$ in the $l$-th layer of the neural network, $r \in R$ represents a kind of relation, $N_i^r$ denotes the set of neighbors of node $v_i$ under relation $r$, and $t_{ij}^r$ is the time-density of transactions from node $v_i$ to $v_j$, which is represented in Eq.~(\ref{eq:time}).
 
 
 \begin{figure}[htbp]
@@ -181,7 +180,7 @@ h_i^{(l+1)}=\delta(\sum_{r\in R} \sum_{j \in N_i^r} \frac{\tau_{ij}^r}{\hat c_{i
 \end{figure}
 
 
-Another overlooked closeness, \emph{asymmetric proximity} should also be preserved in the transaction graph. For instance, as shown in Fig. \ref{fig:asymmetric}, suppose node $a$ is cryptocurrency trader, and node $b$ and $c$ are cryptocurrency exchange accounts. Consequently, edge $(a,b)$ stands for a deposit process and edge $(c,a)$ is a withdrawal process. \textcolor{red}{Generally, edge weight can be $A_{ab}=A_{bc}=A_{ca}$ since deposit and withdrawal come in pairs in symmetric model. However, the proximity $(a,c)$ is not equal to proximity $(c,a)$ due to their asymmetric local structures.}
+Another overlooked closeness, \emph{asymmetric proximity} should also be preserved in the transaction graph. For instance, as shown in Fig. \ref{fig:asymmetric}, suppose node $v_a$ is cryptocurrency trader, and node $v_b$ and $v_c$ are cryptocurrency exchange accounts. Consequently, edge $(v_a,v_b)$ stands for a deposit process and edge $(c,a)$ is a withdrawal process. \textcolor{red}{Generally, edge weight can be $w^r_{ab}=w^r_{bc}=w^r_{ca}$ since deposit and withdrawal come in pairs in symmetric model. However, the proximity $(v_a,v_c)$ is not equal to proximity $(v_c,v_a)$ due to their asymmetric local structures.}
 
 Different from the asymmetric proximity preserving approach based on random walk~\cite{zhou2017scalable}, I$^2$GL use a non-probability graph embedding model. To preserve the asymmetric proximity, the coefficient $\hat c_{i,r}$ is introduced as:
 
@@ -189,7 +188,7 @@ Different from the asymmetric proximity preserving approach based on random walk
 \hat c_{i,r}=\frac{1}{g(d_i^r)\cdot |N_i^r|}
 \end{equation}
 
-\noindent where $d_i^r=\sum_{j}A^r_{ij}$, $g$ is a squash function, and $|N_i^r|$ is used for normalization.
+\noindent where $d_i^r=\sum_{j}a^r_{ij}$, $g$ is a squash function, and $|N_i^r|$ is used for normalization.
 
 
 
