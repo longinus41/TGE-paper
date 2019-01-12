@@ -31,10 +31,13 @@
 \usetikzlibrary{positioning, fit}
 \usetikzlibrary{backgrounds}
 \usetikzlibrary{intersections}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations.markings}
 %\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
 %    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \usepackage{pgfplotstable} % For \pgfplotstableread
 
+\input{fig/tge.tex}
 
 \begin{document}
 \pgfplotstableread{
@@ -137,7 +140,7 @@ legend image code/.code={%
 \maketitle
 
 \begin{abstract}
-Current cryptocurrencies, such as Bitcoin and Ethereum, enable anonymity by mapping user identity to public-keys only. On the other hand, deanonymization, i.e., inferring the real identity of blockchain users, is significant in many scenarios such as risk assessment and trade regulation. Existing work on blockchain deanonymization mainly focuses on Bitcoin that supports simple asset transferring. As the popularity of DApp platform blockchains with Turing-complete smart contracts, represented by Ethereum, blockchain deanonymization faces new challenges because of user diversity and complexity of activities. In this paper, we propose I$^2$GL, an identify inference approach based on graph deep learning to address these challenges. Specifically, I$^2$GL constructs a transaction graph and aims to inferring the identity of nodes using graph embedding technique based on Graph Convolutional Networks. Furthermore, a series of enhancement has been proposed by exploiting unique features of blockchain transaction graph. The experimental results on Ethereum transaction records show that I$^2$GL significantly outperforms other state-of-the-art. 
+Current cryptocurrencies, such as Bitcoin and Ethereum, enable anonymity by mapping user identity to public-keys only. On the other hand, deanonymization, i.e., inferring the real identity of blockchain users, is significant in many scenarios such as risk assessment and trade regulation. Existing work on blockchain deanonymization mainly focuses on Bitcoin that supports simple asset transferring. As the popularity of DApp platform blockchains with Turing-complete smart contracts, represented by Ethereum, blockchain deanonymization faces new challenges because of user diversity and complexity of activities. In this paper, we propose I$^2$GL, an identify inference approach based on graph deep learning to address these challenges. Specifically, I$^2$GL constructs a transaction graph and aims to inferring the identity of nodes using graph embedding technique based on Graph Convolutional Networks. Furthermore, a series of enhancement has been proposed by exploiting unique features of blockchain transaction graph. The experimental results on Ethereum transaction records show that I$^2$GL significantly outperforms other state-of-the-art.
 \end{abstract}
 
 \begin{IEEEkeywords}

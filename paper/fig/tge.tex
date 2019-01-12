@@ -1,0 +1,220 @@
+\newcommand\tgematrixwidth{5pt}
+
+\tikzset{
+  big arrow/.style={
+    very thick,
+    decoration={markings,mark=at position 1 with {\arrow[scale=1.5,#1]{>}}},
+    postaction={decorate},
+    shorten >=0.3pt},
+  big arrow/.default=black
+  }
+\tikzset{mbox/.style={rectangle, draw, fill=red, minimum size=\tgematrixwidth}}
+
+\newcommand\tgematrix[1]{%
+\begin{tikzpicture}
+\draw[step=\tgematrixwidth,black, fill=#1] (0pt,0pt) grid
+(7*\tgematrixwidth,7*\tgematrixwidth);
+
+%\node[mbox] at (0, 3*\tgematrixwidth){};
+\end{tikzpicture}
+}
+\newcommand\tgecol[1]{%
+\begin{tikzpicture}
+\draw[step=\tgematrixwidth,black, fill=#1] (0pt,0pt) grid
+(\tgematrixwidth,5*\tgematrixwidth);
+\end{tikzpicture}
+}
+\newcommand\tgelog[2]{%
+\begin{tikzpicture}
+\draw [thick] (0,0) rectangle (#1, 1.732*#1);
+\draw [thin](0.1*#1, 1.732*#2*1) -- (0.45*#1, 1.732*#2*1);
+\draw [thin](0.1*#1, 1.732*#2*2) -- (0.45*#1, 1.732*#2*2);
+\draw [thin](0.1*#1, 1.732*#2*3) -- (0.45*#1, 1.732*#2*3);
+\draw [thin](0.1*#1, 1.732*#2*4) -- (0.45*#1, 1.732*#2*4);
+
+\draw [thin](0.55*#1, 1.732*#2*1) -- (0.9*#1, 1.732*#2*1);
+\draw [thin](0.55*#1, 1.732*#2*2) -- (0.9*#1, 1.732*#2*2);
+\draw [thin](0.55*#1, 1.732*#2*3) -- (0.9*#1, 1.732*#2*3);
+\draw [thin](0.55*#1, 1.732*#2*4) -- (0.9*#1, 1.732*#2*4);
+\end{tikzpicture}
+}
+
+\tikzset{ca/.style={draw,circle,fill=blue!30,minimum height=1.5ex,inner
+sep=1pt}}
+\tikzset{eoa/.style={draw,circle,fill=white,minimum height=1.5ex,inner sep=1pt}}
+\tikzset{ma/.style={-> }}
+\tikzset{conn/.style={->,>=stealth, thick}}
+\tikzset{coord/.style={none, minimum height=0ex, inner sep=0pt}}
+
+\tikzset{rectlabel/.style={draw,rectangle,minimum height=1.5ex,inner
+sep=2pt}}
+
+\newcommand\tgegraphdesc{%
+\begin{tikzpicture}
+\node[eoa] (a1) at(0, 0) [label=right:{EOA}]{};
+\node[ca] [below=3pt of a1.south, anchor=north](a2) [label=right:{CA}]{};
+\end{tikzpicture}
+}
+%#1:distance, #2:radius
+\newcommand\tgegraph[1]{%
+\begin{tikzpicture}
+\node[eoa] (a) at (0, 0) {\footnotesize{1}};
+\node[ca] (b) at (#1, 0){\footnotesize{2}};
+\node[eoa] (c) at (2*#1, 0){\footnotesize{3}};
+\node[eoa] (d) at ({cos(45)*#1}, {sin(45)*#1}){\footnotesize{4}};
+\node[eoa] (e) at ({cos(135)*#1}, {sin(135)*#1}){\footnotesize{5}};
+\node[eoa] (f) at ({cos(225)*#1}, {sin(225)*#1}){\footnotesize{6}};
+\node[ca] (g) at ({cos(315)*#1}, {sin(315)*#1}){\footnotesize{7}};
+\draw[ma] (a) -- (b);
+\draw[ma] (b) -- (c);
+\draw[ma] (a) -- (d);
+\draw[ma] (a) -- (g);
+\draw[ma] (e) -- (a);
+\draw[ma] (f) -- (a);
+\end{tikzpicture}
+}
+
+\newcommand\tgesgone[1]{%
+\begin{tikzpicture}
+\node[eoa] (a) at (0, 0) {\footnotesize{1}};
+\node[ca] (b) at (#1, 0){\footnotesize{2}};
+\node[eoa] (c) at (2*#1, 0){\footnotesize{3}};
+\node[eoa] (d) at ({cos(45)*#1}, {sin(45)*#1}){\footnotesize{4}};
+\node[eoa] (e) at ({cos(135)*#1}, {sin(135)*#1}){\footnotesize{5}};
+\node[eoa] (f) at ({cos(225)*#1}, {sin(225)*#1}){\footnotesize{6}};
+\draw[ma] (b) -- (c);
+\draw[ma] (a) -- (d);
+\draw[ma] (e) -- (a);
+\draw[ma] (f) -- (a);
+\end{tikzpicture}
+}
+
+\newcommand\tgesgtwo[1]{%
+\begin{tikzpicture}
+
+\node[eoa] (a) at (0, 0) {\footnotesize{1}};
+\node[ca] (b) at (#1, 0){\footnotesize{2}};
+\draw[ma] (a) -- (b);
+\end{tikzpicture}
+}
+\newcommand\tgesgthree[1]{%
+\begin{tikzpicture}
+
+\node[eoa] (a) at (0, 0) {\footnotesize{1}};
+\node[ca] (g) at ({cos(315)*#1}, {sin(315)*#1}){\footnotesize{7}};
+\draw[ma] (a) -- (g);
+\end{tikzpicture}
+}
+
+\newcommand\tgepartone[1]{%
+\begin{tikzpicture}[background rectangle/.style={fill=olive!30}, show background rectangle]
+
+\node [eoa] (a) at (0, 0) {\footnotesize{1}};
+\node [ca] (b) at (1.0/6*#1, 0) {\footnotesize{2}};
+\node [eoa] (c) at (2.0/6*#1, 0) {\footnotesize{3}};
+\node [eoa] (d) at (3.0/6*#1, 0) {\footnotesize{4}};
+\node [eoa] (e) at (4.0/6*#1, 0) {\footnotesize{5}};
+\node [eoa] (f) at (5.0/6*#1, 0) {\footnotesize{6}};
+\node [ca] (g) at (6.0/6*#1, 0) {\footnotesize{7}};
+
+\node [below=2pt of a, anchor=north]  [label=below:{$\vec{x_1}$}]{\tgecol{white}};
+\node [below=2pt of b, anchor=north]  [label=below:{$\vec{x_2}$}]{\tgecol{white}};
+\node [below=2pt of c, anchor=north]  [label=below:{$\vec{x_3}$}]{\tgecol{white}};
+\node [below=2pt of d, anchor=north]  [label=below:{$\vec{x_4}$}]{\tgecol{white}};
+\node [below=2pt of e, anchor=north]  [label=below:{$\vec{x_5}$}]{\tgecol{white}};
+\node [below=2pt of f, anchor=north]  [label=below:{$\vec{x_6}$}]{\tgecol{white}};
+\node [below=2pt of g, anchor=north]  [label=below:{$\vec{x_7}$}]{\tgecol{white}};
+
+\node [anchor=south,inner sep=2pt] at (d|-d.north){\small{Account
+Representations
+}};
+\end{tikzpicture}
+}
+
+\newcommand\tgeparttwo[2]{%
+\begin{tikzpicture}[background rectangle/.style={fill=#2}, show background rectangle]
+\node at(0, 0) (na) {\tgesgone{0.7}};
+\node [right=8pt of na.east, anchor=west] (nb) {\tgesgtwo{0.7}};
+\node [right=8pt of nb.east, anchor=west] (nx) {\huge{...}};
+\node [right=8pt of nx.east, anchor=west] (nc) {\tgesgthree{0.7}};
+
+\node [below=1pt of na.south, anchor=north ] (naa) [label=below:{A$^\text{1}$}]{\tgematrix{blue}};
+\node [anchor=center] at (nb|-naa) [label=below:{A$^\text{2}$}]{\tgematrix{blue}};
+\node [anchor=center] at (nx|-naa) {\huge{...}};
+\node [anchor=center] at(nc|-naa)  [label=below:{A$^\text{R}$}]{\tgematrix{blue}};
+\node [anchor=south,inner sep=0pt] at (nb|-na.north){\small{Adjancency
+Matrices}};
+\end{tikzpicture}
+}
+
+\newcommand\tgeparthree[2]{%
+\begin{tikzpicture}[background rectangle/.style={fill=#2}, show background rectangle]
+\node at(0, 0) (ta) {\tgesgone{0.7}};
+\node [right=8pt of ta.east, anchor=west] (tb) {\tgesgtwo{0.7}};
+\node [right=8pt of tb.east, anchor=west] (tx) {\huge{...}};
+\node [right=8pt of tx.east, anchor=west] (tc) {\tgesgthree{0.7}};
+
+\node [below=1pt of ta.south, anchor=north ] (taa)[label=below:{T$^\text{1}$}] {\tgematrix{blue}};
+\node [anchor=center] at (tb|-taa) [label=below:{T$^\text{2}$}]{\tgematrix{blue}};
+\node [anchor=center] at (tx|-taa) {\huge{...}};
+\node [anchor=center] at(tc|-taa)  [label=below:{T$^\text{R}$}]{\tgematrix{blue}};
+\node [anchor=south,inner sep=0pt] at (tb|-ta.north){\small{Time-density
+Matrices}};
+\end{tikzpicture}
+}
+
+\newcommand\tgecolebd[1]{%
+\begin{tikzpicture}
+\draw[xstep=\tgematrixwidth,ystep=\tgematrixwidth/3.0, black, fill=#1, very
+thin] (0pt,0pt) grid
+(\tgematrixwidth,12*\tgematrixwidth);
+\end{tikzpicture}
+}
+\newcommand\tgeebd[1]{%
+\begin{tikzpicture}[background rectangle/.style={fill=green!30}, show background rectangle]
+
+\node [eoa] (a) at (0, 0) {\footnotesize{1}};
+\node [ca] (b) at (1.0/6*#1, 0) {\footnotesize{2}};
+\node [eoa] (c) at (2.0/6*#1, 0) {\footnotesize{3}};
+\node [eoa] (d) at (3.0/6*#1, 0) {\footnotesize{4}};
+\node [eoa] (e) at (4.0/6*#1, 0) {\footnotesize{5}};
+\node [eoa] (f) at (5.0/6*#1, 0) {\footnotesize{6}};
+\node [ca] (g) at (6.0/6*#1, 0) {\footnotesize{7}};
+
+\node [below=2pt of a, anchor=north] [label=below:{$\vec{y_1}$}] {\tgecolebd{white}};
+\node [below=2pt of b, anchor=north] [label=below:{$\vec{y_2}$}]{\tgecolebd{white}};
+\node [below=2pt of c, anchor=north]  [label=below:{$\vec{y_3}$}]{\tgecolebd{white}};
+\node [below=2pt of d, anchor=north]  [label=below:{$\vec{y_4}$}]{\tgecolebd{white}};
+\node [below=2pt of e, anchor=north]  [label=below:{$\vec{y_5}$}]{\tgecolebd{white}};
+\node [below=2pt of f, anchor=north]  [label=below:{$\vec{y_6}$}]{\tgecolebd{white}};
+\node [below=2pt of g, anchor=north]  [label=below:{$\vec{y_7}$}]{\tgecolebd{white}};
+
+\node [anchor=south,inner sep=2pt] at (d|-d.north){\small{Embeddings
+}};
+\end{tikzpicture}
+}
+
+\newcommand\tgeret{%
+\begin{tikzpicture}[background rectangle/.style={fill=yellow!45}, show background rectangle]
+\node (la) at(0, 0) {\footnotesize{Investor:}};
+\node [below=5pt of la.south west, anchor=north west](lb) {\footnotesize{Token
+Contract:}};
+\node [below=5pt of lb.south west, anchor=north west](lc) {\footnotesize{ICO
+Wallet:}};
+\node [below=5pt of lc.south west, anchor=north west](ld)
+{\footnotesize{Exchange Deposit:}};
+\node [below=5pt of ld.south west, anchor=north west](le)
+{\footnotesize{Phish/Hack:}};
+
+\node [eoa, right=2pt of la.east, anchor=west] (ax) {\footnotesize{1}};
+\node [eoa, right=2pt of ax.east, anchor=west] (bx) {\footnotesize{5}};
+\node [eoa, right=2pt of bx.east, anchor=west] (cx) {\footnotesize{6}};
+
+
+\node [ca, right=2pt of lb.east, anchor=west] (dx) {\footnotesize{2}};
+\node [eoa, right=2pt of lc.east, anchor=west] (ex) {\footnotesize{4}};
+\node [eoa, right=2pt of ld.east, anchor=west] (fx) {\footnotesize{3}};
+\node [ca, right=2pt of le.east, anchor=west] (gx) {\footnotesize{7}};
+\end{tikzpicture}
+
+}

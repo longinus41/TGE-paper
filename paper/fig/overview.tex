@@ -1,0 +1,47 @@
+\begin{figure*}
+\centering
+\begin{tikzpicture}[inner sep=1pt]
+\node (log) at(0, 0) [label=above:{transaction logs}] {\tgelog{0.5}{0.1}};
+
+\node [below=1 of log.south,anchor=north] (graph) [label=below:{transaction graph}]
+{\tgegraph{0.7}};
+\node[below=1 of graph.south, anchor=north] (desc) {\tgegraphdesc};
+
+\node[right=1 of graph,anchor=west] (p2){\tgeparttwo{6}{gray!30}};
+\node[above=1pt of p2.north,anchor=south] (p1){\tgepartone{5.7}};
+\node[below=1pt of p2.south,anchor=north] (p3){\tgeparthree{6}{red!30}};
+
+\node[eoa, right=1.3 of p2.east, anchor=west] (plus){+};
+
+\node[rectlabel, right=0.5 of plus.east, anchor=west]
+(relu){ReLU};
+
+\node[right=0.5 of relu.east, anchor=west] (em) {\tgeebd{3}};
+
+\node[rectlabel, below=0.5 of em.south, anchor=north]
+(softmax){Softmax};
+
+\node[below=0.7 of softmax.south, anchor=north] (ret) {\tgeret};
+
+
+\draw[black, big arrow] (log.south) -- ($(graph.north) + (0, 4pt)$);
+
+\draw[conn ] (graph.east) to [out=0,in=180] (p1.west);
+\draw[conn ] (graph.east) to [out=0,in=180] (p2.west);
+\draw[conn ] (graph.east) to [out=0,in=180] (p3.west);
+
+\draw[conn ] (p1.east) to [out=0,in=180] (plus.west);
+\draw[conn ] (p2.east) to [out=0,in=180] (plus.west);
+\draw[conn ] (p3.east) to [out=0,in=180] (plus.west);
+
+\draw[conn ] (plus.east) to [out=0,in=180] (relu.west);
+\draw[conn ] (relu.east) to [out=0,in=180] (em.west);
+\draw[conn ] (em.south) to [out=270,in=90] (softmax.north);
+\draw[conn] (softmax.south) to (ret.north);
+%\draw [decorate,thick, decoration={brace,amplitude=10pt, mirror}] (ri.west) --
+%(ri.west|-rp.west);
+
+\end{tikzpicture}
+	\caption{Overall architecture.}
+	\label{fig:architecture}
+\end{figure*}

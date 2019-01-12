@@ -51,12 +51,7 @@ In this section, we propose I$^2$GL, an identity inference approach based on gra
 %In I$^2$GL, identity inferring task is turned into node classification problem, simply, predicting the identity of accounts on a small sample of labeled accounts and the topology of the transaction graph.
 The basic idea of I$^2$GL is to present the accounts in cryptocurrency and associated transactions as a graph. In the graph, accounts are represented as nodes with low dimensional vectors by embedding technique. Then, the identify inference is to classify nodes on the graph by given a labeled training set. Specifically, I$^2$GL consists of three phases: graph construction, graph embedding and node classification, as shown in Fig.~\ref{fig:architecture}.
 
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width=3.5in]{fig/architecture.eps}
-	\caption{Overall architecture.}
-	\label{fig:architecture}
-\end{figure}
+\input{fig/overview.tex}
 
 \textbf{Phase 1: Graph construction}. We construct the blockchain transaction graph as a directed graph $G=(V,E)$, where node $v \in V$ represents an account that can be an EOA or CA. We use the terms account and node interchangeably in the remainder of this paper. The total number of accounts is $N=|V|$.
 
