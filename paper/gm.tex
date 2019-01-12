@@ -1,6 +1,6 @@
-\section{I$^2$GL Approach}
+\section{I$^2$GL Design}
 \label{sec:approach}
-In this section, we propose I$^2$GL, an identity inference approach based on graph deep learning. We first give an overview of I$^2$GL, and then present technical details including graph construction, embedding and node classification.
+In this section, we propose the design of I$^2$GL. We first give an overview of I$^2$GL, and then present technical details including graph construction, embedding and node classification.
 
 %we are the first to analyze cryptocurrency transactions and solve the identity inferring problem based on graph deep learning.
 
@@ -49,7 +49,7 @@ In this section, we propose I$^2$GL, an identity inference approach based on gra
 \subsection{Overview}
 \label{subsec:methodology}
 %In I$^2$GL, identity inferring task is turned into node classification problem, simply, predicting the identity of accounts on a small sample of labeled accounts and the topology of the transaction graph.
-The basic idea of I$^2$GL is to present the accounts in cryptocurrency and associated transactions as a graph. In the graph, accounts are represented as nodes with low dimensional vectors by embedding technique. Then, the identify inference is to classify nodes on the graph by given a labeled training set. Specifically, I$^2$GL consists of three phases: graph construction, graph embedding and node classification, as shown in Fig.~\ref{fig:architecture}.
+The basic idea of I$^2$GL is to present the accounts in cryptocurrency and associated transactions as a graph. In the graph, accounts are represented as nodes with low dimensional vectors by embedding technique. Then, the identify inference is to classify nodes on the graph by given a labeled training set. Specifically, I$^2$GL consists of three phases: graph construction, graph embedding and node classification, as shown in Fig.~\ref{fig:architecture}. The main notations used in this section are summarized in TABLE~\ref{tab:notations}.
 
 \input{fig/overview.tex}
 
@@ -62,7 +62,7 @@ The set $E$ contains edges, each of which can be represented as a quintuple, i.e
 \textbf{Phase 2: Graph embedding}.
 Graph embedding provides an effective yet efficient way to solve the graph analytics problem~\cite{cai2018comprehensive}. The embedding process can be defined as follows: given $G=(V,E)$, we represent each node $v_{i}$ in a low-dimensional vector space $\vec{y_i}$. Based on such vectors \textcolor{red}{(represented as a matrix $Y$)}, node classification can then be computed efficiently with high accuracy.
 
-Typical network embedding techniques, such as random-walk based and deep learning based models, use the pure network structure to map into the embedding space~\cite{goyal2018capturing}. Our model is primarily motivated as an extension of GCNs (Graph Convolutional Networks)~\cite{kipf2016semi,schlichtkrull2018modeling}, \textcolor{red}{which expand the convolution operator onto the non-Euclid graph structural space, and shows effectiveness for entity classification in large-scale relational data.}
+Typical network embedding techniques, such as random-walk based and deep learning based models, use the pure network structure to map into the embedding space~\cite{goyal2018capturing}. Our model is primarily motivated as an extension of GCNs (Graph Convolutional Networks)~\cite{kipf2016semi,schlichtkrull2018modeling}, which expand the convolution operator onto the non-Euclid graph structural space, and show effectiveness for entity classification in large-scale relational data.
 
 \textbf{Phase 3: Node classification}.
 The final objective of I$^2$GL is to predict account identities on the transaction graph. Given a labeled accounts set, supervised or semi-supervised methods can be used for entities classification. An intuitive way is simply stacking GCN layers of the form with a softmax ($\cdot$) activation on the output of the last layer~\cite{schlichtkrull2018modeling}. A loss function, such as cross-entropy error function, can be used as the objective in training.
@@ -79,7 +79,7 @@ The transaction graph can be constructed based on original transaction records s
 
 %Different from other studies~\cite{kipf2016semi,schlichtkrull2018modeling}, the graph is translated into
 
-\paragraph{Account representations} To encode the overall structural and additional information of accounts, we denote the account representations as a feature matrix $X \in \mathbb{R}^{N \times d}$, where each account \textcolor{red}{is depicted as $\vec{x_i}$} contains the following $d$ pre-defined features.
+\paragraph{Account representations} To encode the overall structural and additional information of accounts, we denote the account representations as a feature matrix $X \in \mathbb{R}^{N \times d}$, where each account is depicted as $\vec{x_i}$ containing the following $d$ pre-defined features.
 
 \begin{itemize}
 	\item \emph{in-degree}: the number of incoming edges of a node, that is, the number of transactions pointing to an account. The in-degree of node $v_i$ can be counted as $|E_{i}^{+}|$, and $E_{i}^{+}=\{(v_j,v_i,w,h,r)| \forall v_j \in V\}$.
@@ -114,13 +114,13 @@ In fact, more information could be exploited on transaction graph. Within each b
 \begin{figure}[htbp]
 \centering
 \begin{tabular}{c}
-	\subfigure[Time variance histogram of whole nodes.]{
+	\subfigure[Time variance histogram of all nodes.]{
 		\label{fig:high_order}
 		%\includegraphics[width=0.22\textwidth]{fig/all_time_std_pdf.eps}
     \input{fig/all_time_std_pdf.tex}
 	%\caption{Example of a high-order proximity caption.}
 	}\\
-	\subfigure[Time variance histogram of hack\&phish nodes.]{
+	\subfigure[Time variance histogram of Phish/Hack nodes.]{
 		\label{fig:asymmetric}
 		%\includegraphics[width=0.22\textwidth]{fig/fake_time_std_pdf.eps}
     \input{fig/fake_time_std_pdf.tex}
@@ -130,7 +130,8 @@ In fact, more information could be exploited on transaction graph. Within each b
 \label{fig:time_std}
 \end{figure}
 
-Fig.~\ref{fig:time_std} illustrates the distribution of time variance when transaction happens of whole accounts and hack \& phish accounts in Ethereum. We observe that the time variance distribution of hack \& phish accounts is more concentrated compared with other accounts, since they are more active in a short period. This insight inspires us to use time information such as the variance of time transaction happens.
+%Fig.~\ref{fig:time_std} illustrates the distribution of time variance when transaction happens of whole accounts and hack \& phish accounts in Ethereum. 
+We observe that the time variance distribution of Phish/Hack accounts is more concentrated compared with other accounts, because they are more active in a short period. This observation inspires us to exploit transaction time information to increase inference performance.
 
 To describe time-density information, we use a set of matrices $\{T^1,T^2,\dots,T^R|T^r\in \mathbb{R}^{N \times N}\}$. Given a sequence $\{h_{ij1}^r,h_{ij2}^r,\dots,h_{ijm}^r | h_{ijk}^r>0\}$ as the block height of $m$ transactions in relation $r$ between node $v_i$ and $v_j$, the time-density of each relation $r$ is computed as%Equation \ref{eq:time}
 
@@ -160,7 +161,7 @@ We feed the input into a GCN model with 2 hidden layers, as a trade-off between 
 h_i^{(l+1)}=\delta(\sum_{r\in R} \sum_{j \in N_i^r} \frac{t_{ij}^r}{\hat c_{i,r}}W_r^{(l)}h_j^{(l)})
 \end{equation}
 
-\noindent where $h_i^{(l)}$ is the hidden state of node $v_i$ in the $l$-th layer of the neural network, $r \in R$ represents a kind of relation, $N_i^r$ denotes the set of neighbors of node $v_i$ under relation $r$, and $t_{ij}^r$ is the time-density of transactions from node $v_i$ to $v_j$, which is represented in Eq.~(\ref{eq:time}).
+\noindent where $h_i^{(l)}$ is the hidden state of node $v_i$ in the $l$-th layer of the neural network, $r \in R$ represents a kind of relation, $N_i^r$ denotes the set of neighbors of node $v_i$ under relation $r$, and $t_{ij}^r$ is the time-density of transactions from node $v_i$ to $v_j$, which is represented in Eq.~(\ref{eq:time}). $\hat c_{i,r}$ is normalization coefficient. 
 
 
 \begin{figure}[htbp]
@@ -181,7 +182,7 @@ h_i^{(l+1)}=\delta(\sum_{r\in R} \sum_{j \in N_i^r} \frac{t_{ij}^r}{\hat c_{i,r}
 \end{figure}
 
 
-Another overlooked closeness, \emph{asymmetric proximity} should also be preserved in the transaction graph. For instance, as shown in Fig. \ref{fig:asymmetric}, suppose node $v_a$ is cryptocurrency trader, and node $v_b$ and $v_c$ are cryptocurrency exchange accounts. Consequently, edge $(v_a,v_b)$ stands for a deposit process and edge $(v_c,v_a)$ is a withdrawal process. \textcolor{red}{Generally, edge weight can be $w^r_{ab}=w^r_{bc}=w^r_{ca}$ since deposit and withdrawal come in pairs in symmetric model. However, the proximity $(v_a,v_c)$ is not equal to proximity $(v_c,v_a)$ due to their asymmetric local structures.}
+Another overlooked closeness, \emph{asymmetric proximity} should also be preserved in the transaction graph. For instance, as shown in Fig. \ref{fig:asymmetric}, suppose node $v_a$ is cryptocurrency trader, and node $v_b$ and $v_c$ are cryptocurrency exchange accounts. Consequently, edge $(v_a,v_b)$ stands for a deposit process and edge $(v_c,v_a)$ is a withdrawal process. Generally, edge weight can be $w^r_{ab}=w^r_{bc}=w^r_{ca}$ since deposit and withdrawal come in pairs in symmetric model. However, the proximity $(v_a,v_c)$ is not equal to proximity $(v_c,v_a)$ due to their asymmetric local structures.
 
 Different from the asymmetric proximity preserving approach based on random walk~\cite{zhou2017scalable}, I$^2$GL use a non-probability graph embedding model. To preserve the asymmetric proximity, the coefficient $\hat c_{i,r}$ is introduced as:
 
@@ -198,4 +199,4 @@ We use the cross-entropy loss function as the training objective:
 \begin{equation}
 L=-\sum_{i=1}^T\sum_{j=1}^m y_{i,j}\log p_{i,j}+\lambda ||\theta||^2
 \end{equation}
-where $T$ is the number of training samples, $y_{i,j}$ is the true probability of node $v_i$ belonging to category $j$, $\theta$ is the set of all parameters and $\lambda$ is the coefficient for $L_2$  regularization. The output of the last GCN layer is a probability matrix \textcolor{red}{$P=\{\vec{p_1},\vec{p_2},...,\vec{p_N}|\vec{p_i}\in \mathbb{R}^{1 \times m}\}$, where $\vec{p_i}$ describes the probability of classifying node $v_i$ into $m$ categories.}
+where $T$ is the number of training samples, $y_{i,j}$ is the true probability of node $v_i$ belonging to category $j$, $\theta$ is the set of all parameters and $\lambda$ is the coefficient for $L_2$  regularization. The output of the last GCN layer is a probability matrix $P=\{\vec{p_1},\vec{p_2},...,\vec{p_N}|\vec{p_i}\in \mathbb{R}^{1 \times m}\}$, where $\vec{p_i}$ describes the probability of classifying node $v_i$ into $m$ categories.
