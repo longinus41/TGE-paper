@@ -16,8 +16,11 @@
 (7*\tgematrixwidth,7*\tgematrixwidth);
 
 %\node[mbox] at (0, 3*\tgematrixwidth){};
+%\node[mbox] at (2, 4*\tgematrixwidth){};
 \end{tikzpicture}
 }
+
+
 \newcommand\tgecol[1]{%
 \begin{tikzpicture}
 \draw[step=\tgematrixwidth,black, fill=#1] (0pt,0pt) grid
@@ -142,7 +145,7 @@ Representations
 \node [anchor=center] at (nb|-naa) [label=below:{A$^\text{2}$}]{\tgematrix{blue}};
 \node [anchor=center] at (nx|-naa) {\huge{...}};
 \node [anchor=center] at(nc|-naa)  [label=below:{A$^\text{R}$}]{\tgematrix{blue}};
-\node [anchor=south,inner sep=0pt] at (nb|-na.north){\small{Adjancency
+\node [anchor=south,inner sep=0pt] at (nb|-na.north){\small{Adjacency
 Matrices}};
 \end{tikzpicture}
 }
