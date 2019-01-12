@@ -4,7 +4,7 @@
 %\pagestyle{empty}
 %\begin{document}
 \begin{tikzpicture}
-\begin{axis}[ymax=0.0001,ybar,ymode=log,bar width=19860.32,log origin=infty,xmin=-19860.32,ytick align=outside,enlargelimits=0,
+\begin{axis}[ymax=0.0001,ybar,ymode=log,bar width=19860.32,log origin=infty,xmin=-50000.32,enlargelimits=0,
 width=.22\textwidth,
 height=.20\textwidth,
 ylabel=Probability,
@@ -16,8 +16,8 @@ every axis x label/.append style={
       yshift=4pt,
     },
 every x tick scale label/.style={at={(xticklabel cs:1)},anchor=south west},
-  label style={font=\tiny},
-tick label style={font=\tiny} ,
+  label style={font=\scriptsize},
+tick label style={font=\scriptsize} ,
 ]
 \addplot  plot coordinates {
 (0.0, 5.03431102238e-05)

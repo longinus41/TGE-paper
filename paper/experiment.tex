@@ -5,9 +5,7 @@
 In this section, we conduct experiments to evaluate the performance of I$^2$GL. Note that I$^2$GL can be applied for not only Ethereum, but also other cryptocurrencies that support smart contracts.
 
 \subsection{Data Collection}
-We collect data by running a  Ethereum client\footnote{Parity Ethereum Client, https://www.parity.io/ethereum/}, which synchronizes all historical transaction records from the Ethereum blockchain. We choose the transaction records during January 1, 2018 and March 31, 2018, including 116,293,867 external transactions and internal transactions in total, as the input of graph construction. This is the most active period with various activities. By parsing these transactions, we obtain 16,599,825 active accounts, including 14,450,993 EOAs and 2,148,831 CAs\footnote{Besides the EOAs and CAs, we abstract a system account which is in charge of paying out ETH bonuses to miners.}.
-
-Fig.~\ref{fig:degree} shows the degree distributions of Ethereum transaction graph.
+We collect data by running a  Ethereum client\footnote{Parity Ethereum Client, https://www.parity.io/ethereum/}, which synchronizes all historical transaction records from the Ethereum blockchain. We choose the transaction records during January 1, 2018 and March 31, 2018, including 116,293,867 external transactions and internal transactions in total, as the input of graph construction. This is the most active period with various activities. By parsing these transactions, we obtain 16,599,825 active accounts, including 14,450,993 EOAs and 2,148,831 CAs\footnote{Besides the EOAs and CAs, we abstract a system account which is in charge of paying out ETH bonuses to miners.}. Fig.~\ref{fig:degree} shows all these degree distributions of Ethereum transaction graph which follow the power law. It means that few accounts make large number of transactions and few accounts make transaction with large ETH as well.
 
 Since I$^2$GL uses a semi-supervised learning method, a small set of labeled accounts should be prepared for training. We obtain these labeled examples from \emph{Etherscan}\footnote{Etherscan LabelCloud, https://etherscan.io/labelcloud} and \emph{Searchain}\footnote{Searchain, http://www.searchain.io/}.
 
@@ -35,7 +33,7 @@ Since I$^2$GL uses a semi-supervised learning method, a small set of labeled acc
   \input{fig/weighted_out.tex}
     } \\
   \end{tabular}
-\caption{Degree distributions.}
+\caption{Degree distributions in Ethereum transaction graph.}
 \label{fig:degree}
 \end{figure*}
 

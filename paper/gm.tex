@@ -60,7 +60,7 @@ The set $E$ contains edges, each of which can be represented as a quintuple, i.e
 %Analogously, the number of edges in ETG is represented as $|E|$.
 
 \textbf{Phase 2: Graph embedding}.
-Graph embedding provides an effective yet efficient way to solve the graph analytics problem~\cite{cai2018comprehensive}. The embedding process can be defined as follows: given $G=(V,E)$, we represent each node $v_{i}$ in a low-dimensional vector space $\vec{y_i}$. Based on such vectors \textcolor{red}{(represented as a matrix $Y$)}, node classification can then be computed efficiently with high accuracy.
+Graph embedding provides an effective yet efficient way to solve the graph analytics problem~\cite{cai2018comprehensive}. The embedding process can be defined as follows: given $G=(V,E)$, we represent each node $v_{i}$ in a low-dimensional vector space $\vec{y_i}$. Based on such vectors (represented as a matrix $Y$), node classification can then be computed efficiently with high accuracy.
 
 Typical network embedding techniques, such as random-walk based and deep learning based models, use the pure network structure to map into the embedding space~\cite{goyal2018capturing}. Our model is primarily motivated as an extension of GCNs (Graph Convolutional Networks)~\cite{kipf2016semi,schlichtkrull2018modeling}, which expand the convolution operator onto the non-Euclid graph structural space, and show effectiveness for entity classification in large-scale relational data.
 
