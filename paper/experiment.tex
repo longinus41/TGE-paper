@@ -7,11 +7,39 @@ In this section, we conduct experiments to evaluate the performance of I$^2$GL. 
 \subsection{Data Collection}
 We collect data by running a  Ethereum client\footnote{Parity Ethereum Client, https://www.parity.io/ethereum/}, which synchronizes all historical transaction records from the Ethereum blockchain. We choose the transaction records during January 1, 2018 and March 31, 2018, including 116,293,867 external transactions and internal transactions in total, as the input of graph construction. This is the most active period with various activities. By parsing these transactions, we obtain 16,599,825 active accounts, including 14,450,993 EOAs and 2,148,831 CAs\footnote{Besides the EOAs and CAs, we abstract a system account which is in charge of paying out ETH bonuses to miners.}.
 
+Fig.~\ref{fig:degree} shows the degree distributions of Ethereum transaction graph.
+
 Since I$^2$GL uses a semi-supervised learning method, a small set of labeled accounts should be prepared for training. We obtain these labeled examples from \emph{Etherscan}\footnote{Etherscan LabelCloud, https://etherscan.io/labelcloud} and \emph{Searchain}\footnote{Searchain, http://www.searchain.io/}.
 
 %Specially, \textcolor{red}{\{unclear\}we extend the pre-processing scheme to adapt our model} by constructing four relation graphs, which contains ETH transfer graph, contract creation graph, contract invocation graph and mining reward graph. In each graph, repeated edges between the same node pair are merged using the method introduced in Section \ref{sec:approach}.
 
 %Last, a set of accounts with label introduced before is provided to train the model and evaluate classification accuracy. It is hard to reveal the identity of addresses since the anonymity of blockchain. We obtain these labeled examples in two ways, \emph{Etherscan}\footnote{Etherscan LabelCloud, https://etherscan.io/labelcloud} and \emph{Searchain}\footnote{Searchain, http://www.searchain.io/}. In the label set, the number of samples of each category is 100.
+\begin{figure*}
+\setlength{\tabcolsep}{-5pt}
+  \centering
+  \begin{tabular}{cccc}
+	\subfigure[in-degree distribution]{
+		\label{fig:in-degree}
+  \input{fig/degree_in.tex}
+    } &
+	\subfigure[out-degree distribution]{
+		\label{fig:second-oder_result}
+  \input{fig/degree_out.tex}
+    } &
+	\subfigure[weighted in-degree distribution]{
+		\label{fig:asymmetric_order_result}
+  \input{fig/weighted_in.tex}
+    } &
+	\subfigure[weighted out-degree distribution]{
+		\label{fig:time-density_result}
+  \input{fig/weighted_out.tex}
+    } \\
+  \end{tabular}
+\caption{Degree distributions.}
+\label{fig:degree}
+\end{figure*}
+
+
 
 \subsection{Identity Categorization}
 
