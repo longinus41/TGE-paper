@@ -16,11 +16,16 @@ In this section, we propose I$^2$GL, an identity inference approach based on gra
     {\bf \small Symbol}&\qquad {\bf\small Meaning}\\
     \hline
     \vspace{1mm}\\[-3mm]
+    \vspace{1mm}
     $G$      &   \tabincell{l}{The transaction graph}\\
     \vspace{1mm}
-    $V$          &  \tabincell{l}{Nodes set which is equal to accounts set}\\
+    $V$          &  \tabincell{l}{Set of nodes in the graph}\\
     \vspace{1mm}
-    $E$          &  \tabincell{l}{Edges set which is equal to transactions set}\\
+    $E$          &  \tabincell{l}{Set of edges in the graph}\\
+    \vspace{1mm}
+    $Y$   &  \tabincell{l}{Embedding of the graph}\\
+    \vspace{1mm}
+    $\vec{y_i}$   &  \tabincell{l}{Embedding of the node $v_i$}\\
     \vspace{1mm}
     $(v_i,v_j,w,h,r)$  &   \tabincell{l}{Directed edge from node $v_i$ to $v_j$, with weight $w$, \\block height $h$ and relation $r$}\\
     \vspace{1mm}
@@ -28,11 +33,13 @@ In this section, we propose I$^2$GL, an identity inference approach based on gra
     \vspace{1mm}
     $E_{i}^{-}$   &  \tabincell{l}{Set of edges that initiated from node $v_i$}\\
     \vspace{1mm}
-    $X$    &	\tabincell{l}{Feature matrix of nodes}\\
+    $X$    &	\tabincell{l}{Feature matrix of all nodes}\\
     \vspace{1mm}
-    $A^r,a^r_{ij}$    &	\tabincell{l}{Adjacency matrix of relation $r$, and the element \\is defined as first-order proximity}\\
+    $\vec{x_i}$   &  \tabincell{l}{Feature vector of the node $v_i$}\\
     \vspace{1mm}
-    $T^r,t^r_{ij}$    &	\tabincell{l}{Time-density matrix of relation $r$, and the element \\is defined as time variance of edges between node $v_i$ \\and $v_j$}\\
+    $A^r,a^r_{ij}$    &	\tabincell{l}{Adjacency matrix of relation $r$, and the element \\is defined as first-order proximity between node $v_i$ \\and $v_j$}\\
+    \vspace{1mm}
+    $T^r,t^r_{ij}$    &	\tabincell{l}{Time-density matrix of relation $r$, and the element \\is defined as time variance of edges between node \\$v_i$ and $v_j$}\\
     \hline
     \hline
   \end{tabular}
@@ -58,10 +65,9 @@ The set $E$ contains edges, each of which can be represented as a quintuple, i.e
 %Analogously, the number of edges in ETG is represented as $|E|$.
 
 \textbf{Phase 2: Graph embedding}.
-Graph embedding provides an effective yet efficient way to solve the graph analytics problem~\cite{cai2018comprehensive}. The embedding process can be defined as follows: given $G=(V,E)$, we represent each node $v$ in a low-dimensional vector space $\vec{y_v}$. Based on such vectors, node classification can then be computed efficiently with high accuracy.
+Graph embedding provides an effective yet efficient way to solve the graph analytics problem~\cite{cai2018comprehensive}. The embedding process can be defined as follows: given $G=(V,E)$, we represent each node $v_{i}$ in a low-dimensional vector space $\vec{y_i}$. Based on such vectors \textcolor{red}{(represented as a matrix $Y$)}, node classification can then be computed efficiently with high accuracy.
 
-Typical network embedding techniques, such as random-walk based and deep learning based models, use the pure network structure to map into the embedding space~\cite{goyal2018capturing}. Our model is primarily motivated as an extension of GCNs (Graph Convolutional Networks)~\cite{kipf2016semi,schlichtkrull2018modeling}, which expand the convolution operator onto the non-Euclid  graph strucuture space, and  shows effectiveness for entity classification in large-scale relational data.
-
+Typical network embedding techniques, such as random-walk based and deep learning based models, use the pure network structure to map into the embedding space~\cite{goyal2018capturing}. Our model is primarily motivated as an extension of GCNs (Graph Convolutional Networks)~\cite{kipf2016semi,schlichtkrull2018modeling}, \textcolor{red}{which expand the convolution operator onto the non-Euclid graph structural space, and shows effectiveness for entity classification in large-scale relational data.}
 
 \textbf{Phase 3: Node classification}.
 The final objective of I$^2$GL is to predict account identities on the transaction graph. Given a labeled accounts set, supervised or semi-supervised methods can be used for entities classification. An intuitive way is simply stacking GCN layers of the form with a softmax ($\cdot$) activation on the output of the last layer~\cite{schlichtkrull2018modeling}. A loss function, such as cross-entropy error function, can be used as the objective in training.
@@ -78,7 +84,7 @@ The transaction graph can be constructed based on original transaction records s
 
 %Different from other studies~\cite{kipf2016semi,schlichtkrull2018modeling}, the graph is translated into
 
-\paragraph{Account representations} To encode the overall structural and additional information of accounts, we denote the account representations as a feature matrix $X \in \mathbb{R}^{N \times d}$, where each account contains the following $d$ pre-defined features.
+\paragraph{Account representations} To encode the overall structural and additional information of accounts, we denote the account representations as a feature matrix $X \in \mathbb{R}^{N \times d}$, where each account \textcolor{red}{is depicted as $\vec{x_i}$} contains the following $d$ pre-defined features.
 
 \begin{itemize}
 	\item \emph{in-degree}: the number of incoming edges of a node, that is, the number of transactions pointing to an account. The in-degree of node $v_i$ can be counted as $|E_{i}^{+}|$, and $E_{i}^{+}=\{(v_j,v_i,w,h,r)| \forall v_j \in V\}$.
@@ -106,8 +112,8 @@ On one hand, for types II, III and IV, we calculate the frequency of repeated ed
 %Specially, the adjacent matrices are modified to preserve the asymmetric proximity of transaction graph, which will be addressed in detail later.
 
 \paragraph{Time-density matrices}
-\textcolor{red}{Note that $a^r_{ij}$ in adjacent matrix $A^r$ indicates the number of edges belonging to relation $r$ between nodes $v_i$ and $v_j$.}
-\textcolor{red}{In fact, more information could be exploited on transaction graph. Within each block, transactions are labeled with block height which can be regarded as timestamp. These repeated edges are located at different time intervals along the time axis. Based on such information, we expand on these adjacent features to open a new dimension.}
+Note that $a^r_{ij}$ in adjacent matrix $A^r$ indicates the number of edges belonging to relation $r$ between nodes $v_i$ and $v_j$.
+In fact, more information could be exploited on transaction graph. Within each block, transactions are labeled with block height which can be regarded as timestamp. These repeated edges are located at different time intervals along the time axis. Based on such information, we expand on these adjacent features to open a new dimension.
 
 
 \begin{figure}[htbp]
@@ -129,7 +135,7 @@ On one hand, for types II, III and IV, we calculate the frequency of repeated ed
 \label{fig:time_std}
 \end{figure}
 
-\textcolor{red}{Fig.~\ref{fig:time_std} illustrates the distribution of time variance when transaction happens of whole accounts and hack \& phish accounts in Ethereum. We observe that the time variance distribution of hack \& phish accounts is more concentrated compared with other accounts, since they are more active in a short period. This insight inspires us to use time information such as the variance of time transaction happens.}
+Fig.~\ref{fig:time_std} illustrates the distribution of time variance when transaction happens of whole accounts and hack \& phish accounts in Ethereum. We observe that the time variance distribution of hack \& phish accounts is more concentrated compared with other accounts, since they are more active in a short period. This insight inspires us to use time information such as the variance of time transaction happens.
 
 To describe time-density information, we use a set of matrices $\{T^1,T^2,\dots,T^R|T^r\in \mathbb{R}^{N \times N}\}$. Given a sequence $\{h_{ij1}^r,h_{ij2}^r,\dots,h_{ijm}^r | h_{ijk}^r>0\}$ as the block height of $m$ transactions in relation $r$ between node $v_i$ and $v_j$, the time-density of each relation $r$ is computed as%Equation \ref{eq:time}
 
@@ -197,4 +203,4 @@ We use the cross-entropy loss function as the training objective:
 \begin{equation}
 L=-\sum_{i=1}^T\sum_{j=1}^m y_{i,j}\log p_{i,j}+\lambda ||\theta||^2
 \end{equation}
-where $T$ is the number of training samples, $y_{i,j}$ is the true probability of node $v_i$ belonging to category $j$, $\theta$ is the set of all parameters and $\lambda$ is the coefficient for $L_2$  regularization. The output of the last \textcolor{red}{GCN} layer is a probability matrix $P=\{p_1,p_2,...,p_N|p_i\in \mathbb{R}^{N \times m}\}$, where $p_i=\{p_{i,1},p_{i,2},...,p_{i,m}\}$ describes the probability of classifying node $v_i$ into $m$ categories.
+where $T$ is the number of training samples, $y_{i,j}$ is the true probability of node $v_i$ belonging to category $j$, $\theta$ is the set of all parameters and $\lambda$ is the coefficient for $L_2$  regularization. The output of the last GCN layer is a probability matrix $P=\{p_1,p_2,...,p_N|p_i\in \mathbb{R}^{N \times m}\}$, where $p_i=\{p_{i,1},p_{i,2},...,p_{i,m}\}$ describes the probability of classifying node $v_i$ into $m$ categories.
