@@ -60,7 +60,7 @@ The set $E$ contains edges, each of which can be represented as a quintuple, i.e
 \textbf{Phase 2: Graph embedding}.
 Graph embedding provides an effective yet efficient way to solve the graph analytics problem~\cite{cai2018comprehensive}. The embedding process can be defined as follows: given $G=(V,E)$, we represent each node $v$ in a low-dimensional vector space $\vec{y_v}$. Based on such vectors, node classification can then be computed efficiently with high accuracy.
 
-Typical network embedding techniques, such as random-walk based and deep learning based models, use the pure network structure to map into the embedding space~\cite{goyal2018capturing}. Our model is primarily motivated as an extension of GCNs (Graph Convolutional Networks)~\cite{kipf2016semi,schlichtkrull2018modeling}, which puts the features of nodes and edges into the representation, since it shows effectiveness for entity classification in large-scale relational data.
+Typical network embedding techniques, such as random-walk based and deep learning based models, use the pure network structure to map into the embedding space~\cite{goyal2018capturing}. Our model is primarily motivated as an extension of GCNs (Graph Convolutional Networks)~\cite{kipf2016semi,schlichtkrull2018modeling}, which expand the convolution operator onto the non-Euclid  graph strucuture space, and  shows effectiveness for entity classification in large-scale relational data.
 
 
 \textbf{Phase 3: Node classification}.
@@ -76,7 +76,7 @@ The transaction graph can be constructed based on original transaction records s
 
 %(1) a node representation matrix that captures the structural and additional information of accounts, (2) a list of adjacency matrices which describe different relations, and (3) a list of time-density matrices that represent transaction intensiveness between each pair of nodes.
 
-%Different from other studies~\cite{kipf2016semi,schlichtkrull2018modeling}, the graph is translated into 
+%Different from other studies~\cite{kipf2016semi,schlichtkrull2018modeling}, the graph is translated into
 
 \paragraph{Account representations} To encode the overall structural and additional information of accounts, we denote the account representations as a feature matrix $X \in \mathbb{R}^{N \times d}$, where each account contains the following $d$ pre-defined features.
 
@@ -197,4 +197,4 @@ We use the cross-entropy loss function as the training objective:
 \begin{equation}
 L=-\sum_{i=1}^T\sum_{j=1}^m y_{i,j}\log p_{i,j}+\lambda ||\theta||^2
 \end{equation}
-where $T$ is the number of training samples, $y_{i,j}$ is the true probability of node $v_i$ belonging to category $j$, $\theta$ is the set of all parameters and $\lambda$ is the coefficient for $L_2$  regularization. The output of the last \textcolor{red}{GCN} layer is a probability matrix $P=\{p_1,p_2,...,p_N|p_i\in \mathbb{R}^{N \times m}\}$, where $p_i=\{p_{i,1},p_{i,2},...,p_{i,m}\}$ describes the probability of classifying node $v_i$ into $m$ categories. 
+where $T$ is the number of training samples, $y_{i,j}$ is the true probability of node $v_i$ belonging to category $j$, $\theta$ is the set of all parameters and $\lambda$ is the coefficient for $L_2$  regularization. The output of the last \textcolor{red}{GCN} layer is a probability matrix $P=\{p_1,p_2,...,p_N|p_i\in \mathbb{R}^{N \times m}\}$, where $p_i=\{p_{i,1},p_{i,2},...,p_{i,m}\}$ describes the probability of classifying node $v_i$ into $m$ categories.
