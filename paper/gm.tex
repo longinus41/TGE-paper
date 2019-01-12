@@ -198,4 +198,4 @@ We use the cross-entropy loss function as the training objective:
 \begin{equation}
 L=-\sum_{i=1}^T\sum_{j=1}^m y_{i,j}\log p_{i,j}+\lambda ||\theta||^2
 \end{equation}
-where $T$ is the number of training samples, $y_{i,j}$ is the true probability of node $v_i$ belonging to category $j$, $\theta$ is the set of all parameters and $\lambda$ is the coefficient for $L_2$  regularization. The output of the last GCN layer is a probability matrix $P=\{p_1,p_2,...,p_N|p_i\in \mathbb{R}^{N \times m}\}$, where $p_i=\{p_{i,1},p_{i,2},...,p_{i,m}\}$ describes the probability of classifying node $v_i$ into $m$ categories.
+where $T$ is the number of training samples, $y_{i,j}$ is the true probability of node $v_i$ belonging to category $j$, $\theta$ is the set of all parameters and $\lambda$ is the coefficient for $L_2$  regularization. The output of the last GCN layer is a probability matrix \textcolor{red}{$P=\{\vec{p_1},\vec{p_2},...,\vec{p_N}|\vec{p_i}\in \mathbb{R}^{1 \times m}\}$, where $\vec{p_i}$ describes the probability of classifying node $v_i$ into $m$ categories.}
