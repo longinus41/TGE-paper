@@ -49,7 +49,7 @@ In this section, we propose the design of I$^2$GL. We first give an overview of 
 \subsection{Overview}
 \label{subsec:methodology}
 %In I$^2$GL, identity inferring task is turned into node classification problem, simply, predicting the identity of accounts on a small sample of labeled accounts and the topology of the transaction graph.
-The basic idea of I$^2$GL is to present the accounts in cryptocurrency and associated transactions as a graph. In the graph, accounts are represented as nodes with low dimensional vectors by embedding technique. Then, the identify inference is to classify nodes on the graph by given a labeled training set. Specifically, I$^2$GL consists of three phases: graph construction, graph embedding and node classification, as shown in Fig.~\ref{fig:architecture}. The main notations used in this section are summarized in TABLE~\ref{tab:notations}.
+The basic idea of I$^2$GL is to present the accounts in cryptocurrency and associated transactions as a graph. In the graph, accounts are represented as nodes with low dimensional vectors by embedding technique. Then, the identify inference is to classify nodes on the graph by given a labeled training set. Specifically, I$^2$GL consists of three phases: graph construction, graph embedding, and node classification, as shown in Fig.~\ref{fig:architecture}. The main notations used in this section are summarized in TABLE~\ref{tab:notations}.
 
 \input{fig/overview.tex}
 
@@ -65,9 +65,9 @@ Graph embedding provides an effective yet efficient way to solve the graph analy
 Typical network embedding techniques, such as random-walk based and deep learning based models, use the pure network structure to map into the embedding space~\cite{goyal2018capturing}. Our model is primarily motivated as an extension of GCNs (Graph Convolutional Networks)~\cite{kipf2016semi,schlichtkrull2018modeling}, which expand the convolution operator onto the non-Euclid graph structural space, and show effectiveness for entity classification in large-scale relational data.
 
 \textbf{Phase 3: Node classification}.
-The final objective of I$^2$GL is to predict account identities on the transaction graph. Given a labeled accounts set, supervised or semi-supervised methods can be used for entities classification. An intuitive way is simply stacking GCN layers of the form with a softmax ($\cdot$) activation on the output of the last layer~\cite{schlichtkrull2018modeling}. A loss function, such as cross-entropy error function, can be used as the objective in training.
+The final objective of I$^2$GL is to predict account identities on the transaction graph. Given a labeled account set, supervised or semi-supervised methods can be used for entities classification. An intuitive way is simply stacking GCN layers of the form with a softmax ($\cdot$) activation on the output of the last layer~\cite{schlichtkrull2018modeling}. A loss function, such as cross-entropy error function, can be used as the objective in training.
 
-Last but not the least, the categorization is important to performance of classification. For cryptocurrencies that support smart contracts, such as Ethereum, we propose a coarse taxonomy illustrated in TABLE~\ref{table:identity}, whose details will be presented in Section \ref{sec:experiments}.
+Last but not least, the categorization is important to the performance of classification. For cryptocurrencies that support smart contracts, such as Ethereum, we propose a coarse taxonomy illustrated in TABLE~\ref{table:identity}, whose details will be presented in Section \ref{sec:experiments}.
 
  %To be frank, the perfect categorization does not exist because Ethereum and Ethereum-like blockchains are still in a development stage. \textcolor{red}{For accounts in Ethereum, we propose} a coarse but effective taxonomy.
 
@@ -91,7 +91,7 @@ The transaction graph can be constructed based on original transaction records s
 	\item \emph{account type}: whether the account is a smart contract or normal one.
 \end{itemize}
 
-\paragraph{Adjacency matrices} Different from social networks, edges in the transaction graph stand for heterogeneous activities such as money transfer, contract creation and contract invocation. Obviously, such %multi-relations can not be measured in a uniform weighted model.
+\paragraph{Adjacency matrices} Different from social networks, edges in the transaction graph stand for heterogeneous activities such as money transfer, contract creation, and contract invocation. Obviously, such %multi-relations can not be measured in a uniform weighted model.
 activitities should be represented as different edge types instead of being measured in uniform weighted graph.
 
 To address the challenge, we divide the raw transaction graph into several sub-graphs and capture the relations of graph neighboring nodes using adjacent matrices. The set of adjacency matrices, $\{A^1,A^2,\dots,A^R|A^r\in \mathbb{R}^{N \times N}\}$, describes $R$ relations among $N$ nodes in the transaction graph. It is conceivable that the strategy of division has a large influence on classification performance.
@@ -100,7 +100,7 @@ In I$^2$GL, four major types of transactions are considered, including (I) \text
 
 On one hand, for types II, III and IV, we calculate the frequency of repeated edges between a pair of nodes as the adjacent weight in the corresponding relation adjacent matrix. For cryptocurrency transferring, on the other hand, it is not sensible to use the assets amount directly as the adjacent weight. That is because the accounts have varied enormously in terms of cryptocurrency transferring which will lead to underflow and overflow in the process of training.
 
- Taking Ethereum transactions as an example, the amount of assets transferring is discretized into three ranges: (1) small transfers whose transaction values are less than 1 ETH (the cryptocurrency used in Ethereum); (2) medium transfers with transaction values between 1 ETH and 10 ETH; and (3) large transfers whose transaction values are more then 10 ETH. Then the ETH transferring matrix can be calculated in a similar way with other relations.
+ Taking Ethereum transactions as an example, the amount of assets transferring is discretized into three ranges: (1) small transfers whose transaction values are less than 1 ETH (the cryptocurrency used in Ethereum); (2) medium transfers with transaction values between 1 ETH and 10 ETH; and (3) large transfers whose transaction values are more than 10 ETH. Then the ETH transferring matrix can be calculated in a similar way with other relations.
 
 %forward transactions introduced above and 4 reverse relations in order to pass information from the opposite direction. Besides, a self loop as a special relation type is included to retain information of the previous layer in the GCN network.
 
@@ -108,7 +108,7 @@ On one hand, for types II, III and IV, we calculate the frequency of repeated ed
 
 \paragraph{Time-density matrices}
 Note that $a^r_{ij}$ in adjacent matrix $A^r$ indicates the number of edges belonging to relation $r$ between nodes $v_i$ and $v_j$.
-In fact, more information could be exploited on transaction graph. Within each block, transactions are labeled with block height which can be regarded as timestamp. These repeated edges are located at different time intervals along the time axis. Based on such information, we expand on these adjacent features to open a new dimension.
+In fact, more information could be exploited on transaction graphs. Within each block, transactions are labeled with block heights which can be regarded as timestamps. These repeated edges are located at different time intervals along the time axis. Based on such information, we expand on these adjacent features to open a new dimension.
 
 
 \begin{figure}[htbp]
@@ -153,7 +153,7 @@ H^{(l+1)}=\delta(\sum_{r\in R} (T^r\odot (D^r)^{-1}A^r)H^{(l)}W_r^{(l)}),\forall
 
 \noindent where $H^{(l)}$ is the matrix of activations of the $l$-th layer, and here the $0$ layer is set as the account representations, that is, $H^{(0)}=X$. We use $\delta(\cdot)$ to denote an activation function such as the ReLU$(\cdot)$ = max$(0,\cdot)$. Note that $A^r$ is the adjacent matrix of relation $r$, and $D^r$ is a diagonal matrix of relation $r$ where $d^r_{ii}=\sum_{j}a^r_{ij}$. The symbol $\odot$ indicates point-wise multiplication.
 
-The edge weight $a^r_{ij}$ in adjacency matrix $A^r$ is defined as the \emph{first-order proximity}~\cite{tang2015line} which represents similarity between nodes $v_i$ and $v_j$. Further, the \emph{second-order proximity} evaluates the similarity of two nodes by comparing their neighborhood~\cite{goyal2018graph}. In cryptocurrency transaction graph, we find that second-order proximity also plays an important role in preserving the local structure. As shown in Figure \ref{fig:high_order}, nodes $v_a$ and $v_c$ are smart contracts and node $v_b$ is a normal user. Obviously, $v_a$ is not adjacent to $v_c$  but they have a similar neighbor structure. First-order proximity may miss the similarity of nodes that are separated far away, but second-order proximity can capture this similarity.
+The edge weight $a^r_{ij}$ in adjacency matrix $A^r$ is defined as the \emph{first-order proximity}~\cite{tang2015line} which represents similarity between nodes $v_i$ and $v_j$. Further, the \emph{second-order proximity} evaluates the similarity of two nodes by comparing their neighborhood~\cite{goyal2018graph}. In the cryptocurrency transaction graph, we find that second-order proximity also plays an important role in preserving the local structure. As shown in Figure \ref{fig:high_order}, nodes $v_a$ and $v_c$ are smart contracts and node $v_b$ is a normal user. Obviously, $v_a$ is not adjacent to $v_c$  but they have a similar neighbor structure. First-order proximity may miss the similarity of nodes that are separated far away, but second-order proximity can capture this similarity.
 
 We feed the input into a GCN model with 2 hidden layers, as a trade-off between preserving second-order proximity and introducing noise. The input of the $l$-th layer is $H^{(l)}=\{h_1^{(l)},h_2^{(l)},...,h_N^{(l)}|h_i^{(l)}\in \mathbb{R}^{N \times d^{(l)}}\}$. Hence, the method can be treated as a special case of the forward updating process as
 
