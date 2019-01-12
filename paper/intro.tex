@@ -34,7 +34,7 @@ Specifically, I$^2$GL adopts Graph Convolutional Network (GCN), a powerful deep 
 
  By carefully examining the transaction graph, we find that it has many unique features different from these traditional networks, which can be exploited to further improve the identity inference performance. In Ethereum, there exists multiple types of activities, e.g., money transfer, contract creation and invocation, among nodes. Therefore, instead of using a single edge with weight to describe node relationship in traditional graph, we create multiple edges between a pair of nodes in transaction graph, each of which represent a type of activities. Besides, we observe that even though two types of accounts conduct the same amount of transactions during a period, the transaction density over time is different. I$^2$GL enhances GCN by integrating this time-density feature into the graph learning process. Other features such as second-order proximity and asymmetric proximity in cryptocurrency transaction graph are also considered. The main contributions of this paper is summarized as follows.
 
-(1) To the best of our knowledge, we are the first to apply graph deep learning based on GCN for identity inference on Ethereum. 
+(1) To the best of our knowledge, we are the first to apply graph deep learning based on GCN for identity inference on \textcolor{red}{blockchain}. 
 
 (2) Motivated by special features of transaction graph, we propose several novel designs to enhance the performance of traditional GCN.
 
