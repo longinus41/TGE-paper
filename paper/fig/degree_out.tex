@@ -9,10 +9,16 @@ width=.22\textwidth,
 height=.20\textwidth,
 ylabel=Probability,
 xlabel=out-degree,
+every axis y label/.append style={
+      yshift=-8pt,
+    },
+every axis x label/.append style={
+      yshift=4pt,
+    },
 every x tick scale label/.style={at={(xticklabel cs:1)},anchor=south west},
   label style={font=\tiny},
 tick label style={font=\tiny} ,
-] 
+]
 \addplot  plot coordinates {
 (0.0, 5.03431102238e-05)
 (19860.32, 4.55404127627e-09)
