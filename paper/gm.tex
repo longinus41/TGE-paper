@@ -96,7 +96,7 @@ activitities should be represented as different edge types instead of being meas
 
 To address the challenge, we divide the raw transaction graph into several sub-graphs and capture the relations of graph neighboring nodes using adjacent matrices. The set of adjacency matrices, $\{A^1,A^2,\dots,A^R|A^r\in \mathbb{R}^{N \times N}\}$, describes $R$ relations among $N$ nodes in the transaction graph. It is conceivable that the strategy of division has a large influence on classification performance.
 
-In I$^2$GL, four major types of transactions are considered, including (I) \texttt{CALL} transactions with weight $w>0$, (II) \texttt{CALL} transactions with weight $w=0$, (III) \texttt{CREATION} transactions and (IV) \texttt{REWARD} transactions, which represent the relations of cryptocurrency transferring, smart contract invocation, smart contract deployment and mining rewarding, respectively. More specifically, a transaction is regarded as type I if an account transfer some ETH (cryptocurrency in Ethereum) to another one. And the ERC-20 token transferring transactions are regarded as type II since they are contract invocation without any ETH.
+In I$^2$GL, four major types of transactions are considered, including (I) \texttt{CALL} transactions with weight $w>0$, (II) \texttt{CALL} transactions with weight $w=0$, (III) \texttt{CREATION} transactions and (IV) \texttt{REWARD} transactions, which represent the relations of cryptocurrency transferring, smart contract invocation, smart contract deployment and mining rewarding, respectively \textcolor{red}{in usual}. More specifically, a transaction is regarded as type I if an account transfer some ETH (cryptocurrency in Ethereum) to another one. And the ERC-20 token transferring transactions are regarded as type II since they are contract invocation without any ETH.
 
 On one hand, for types II, III and IV, we calculate the frequency of repeated edges between a pair of nodes as the adjacent weight in the corresponding relation adjacent matrix. For cryptocurrency transferring, on the other hand, it is not sensible to use the assets amount directly as the adjacent weight. That is because the accounts have varied enormously in terms of cryptocurrency transferring which will lead to underflow and overflow in the process of training.
 
@@ -131,7 +131,7 @@ In fact, more information could be exploited on transaction graphs. Within each 
 \end{figure}
 
 %Fig.~\ref{fig:time_std} illustrates the distribution of time variance when transaction happens of whole accounts and hack \& phish accounts in Ethereum. 
-We observe that the time variance distribution of Phish/Hack accounts is more concentrated compared with other accounts, because they are more active in a short period. This observation inspires us to exploit transaction time information to increase inference performance.
+\textcolor{red}{As shown in Fig.~\ref{fig:time_std},} we observe that the time variance distribution of Phish/Hack accounts is more concentrated compared with other accounts, because they are more active in a short period. This observation inspires us to exploit transaction time information to increase inference performance.
 
 To describe time-density information, we use a set of matrices $\{T^1,T^2,\dots,T^R|T^r\in \mathbb{R}^{N \times N}\}$. Given a sequence $\{h_{ij1}^r,h_{ij2}^r,\dots,h_{ijm}^r | h_{ijk}^r>0\}$ as the block height of $m$ transactions in relation $r$ between node $v_i$ and $v_j$, the time-density of each relation $r$ is computed as%Equation \ref{eq:time}
 
